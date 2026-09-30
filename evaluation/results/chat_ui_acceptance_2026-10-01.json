@@ -1,0 +1,235 @@
+{
+  "scope": "Core v2 single chat UI; existing deterministic contracts preserved",
+  "verified_on": "2026-10-01",
+  "base_commit": "34ec091f78062380ee574054f424439491ebef89",
+  "authoritative_document_set": {
+    "id": "ADS-CE-2026-CORE",
+    "version": 1
+  },
+  "ruleset": {
+    "id": "CRS-CE-2026-CORE",
+    "version": 2
+  },
+  "test_data": "Existing public synthetic fixtures only; no real student or approval reference",
+  "review_method": "Same operator in Builder / critical Reviewer / Verifier roles; not independent external review",
+  "browser_checks": [
+    {
+      "id": "remaining-preserved",
+      "pass": true,
+      "details": {
+        "length": 735
+      }
+    },
+    {
+      "id": "provenance-remaining",
+      "pass": true,
+      "details": {
+        "answer": true,
+        "rules": true,
+        "graph": true,
+        "sources": true,
+        "version": true
+      }
+    },
+    {
+      "id": "provenance-course",
+      "pass": true,
+      "details": {
+        "answer": true,
+        "rules": true,
+        "graph": true,
+        "sources": true,
+        "version": true
+      }
+    },
+    {
+      "id": "provenance-simulation",
+      "pass": true,
+      "details": {
+        "answer": true,
+        "rules": true,
+        "graph": true,
+        "sources": true,
+        "version": true
+      }
+    },
+    {
+      "id": "simulation-keeps-actual",
+      "pass": true
+    },
+    {
+      "id": "browser-llm-core-consistency",
+      "pass": true
+    },
+    {
+      "id": "shift-enter-keeps-draft",
+      "pass": true
+    },
+    {
+      "id": "korean-enter-sends-once",
+      "pass": true
+    },
+    {
+      "id": "reader-scroll-preserved",
+      "pass": true,
+      "details": {
+        "scrollBefore": 0,
+        "scrollAfter": 0
+      }
+    },
+    {
+      "id": "latest-button-works",
+      "pass": true
+    },
+    {
+      "id": "invalid-json-rejected",
+      "pass": true,
+      "details": {
+        "notice": "학생 상태 JSON 오류: Expected property name or '}' in JSON at position 1 (line 1 column 2)",
+        "probe_correction": "Initial probe assumed different Korean wording; validate actual rejection and unchanged applied state."
+      }
+    },
+    {
+      "id": "panel-keeps-draft",
+      "pass": true
+    },
+    {
+      "id": "clear-student-preserves-chat",
+      "pass": true,
+      "details": {
+        "clearNotice": "적용 학생 정보와 마지막 과목 참조를 비웁니다. 대화와 검토 중인 파일은 유지됩니다."
+      }
+    },
+    {
+      "id": "policy-without-student",
+      "pass": true
+    },
+    {
+      "id": "personal-without-student-safe",
+      "pass": true
+    },
+    {
+      "id": "refresh-is-empty",
+      "pass": true
+    },
+    {
+      "id": "course-without-student",
+      "pass": true
+    },
+    {
+      "id": "actual-graph-nonempty",
+      "pass": true,
+      "details": {
+        "remaining_rules": 19,
+        "remaining_edges": 77,
+        "course_pdf": [
+          262,
+          262
+        ]
+      }
+    },
+    {
+      "id": "late-normalization-after-edit-rejected",
+      "pass": true
+    },
+    {
+      "id": "reextract-invalidates-staged-apply",
+      "pass": true
+    },
+    {
+      "id": "reextract-new-candidates-not-auto-applied",
+      "pass": true
+    }
+  ],
+  "responsive_checks": {
+    "layout": [
+      {
+        "clientWidth": 360,
+        "composerRight": 348,
+        "scrollWidth": 360,
+        "width": 360
+      },
+      {
+        "clientWidth": 390,
+        "composerRight": 378,
+        "scrollWidth": 390,
+        "width": 390
+      },
+      {
+        "clientWidth": 768,
+        "composerRight": 748,
+        "scrollWidth": 768,
+        "width": 768
+      },
+      {
+        "clientWidth": 1280,
+        "composerRight": 1120,
+        "scrollWidth": 1280,
+        "width": 1280
+      }
+    ],
+    "upload_panel": [
+      {
+        "panelClient": 305,
+        "panelRight": 341,
+        "panelScroll": 305,
+        "rootScroll": 360,
+        "rows": 43,
+        "width": 360
+      },
+      {
+        "panelClient": 335,
+        "panelRight": 371,
+        "panelScroll": 335,
+        "rootScroll": 390,
+        "rows": 43,
+        "width": 390
+      },
+      {
+        "panelClient": 713,
+        "panelRight": 749,
+        "panelScroll": 713,
+        "rootScroll": 768,
+        "rows": 43,
+        "width": 768
+      },
+      {
+        "panelClient": 743,
+        "panelRight": 1020,
+        "panelScroll": 743,
+        "rootScroll": 1280,
+        "rows": 43,
+        "width": 1280
+      }
+    ]
+  },
+  "responsive_method": "Same-origin test-only wrapper around unchanged Handler and application HTML; actual iframe innerWidth measured",
+  "regression": {
+    "passed": 217,
+    "failed": 0,
+    "existing_preserved": 215
+  },
+  "student_ux_api": {
+    "passed": 100,
+    "failed": 0,
+    "reviewer_passed": 4,
+    "llm_pairs_consistent": 10
+  },
+  "mock_pdf_e2e": {
+    "passed": 4,
+    "failed": 0,
+    "llm_pairs_consistent": 4
+  },
+  "independent_scenarios": {
+    "passed": 49,
+    "failed": 0,
+    "skipped": 1,
+    "reviewer_passed": 31,
+    "llm_pairs_consistent": 49
+  },
+  "limitations": [
+    "Actual OS IME and physical mobile keyboard not exercised; composition guards tested in actual client function",
+    "Existing CTX_04 SKIP and Extended/B/C scope preserved"
+  ],
+  "quality_gate": "PASS"
+}

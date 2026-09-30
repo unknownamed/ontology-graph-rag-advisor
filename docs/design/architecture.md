@@ -85,3 +85,9 @@ flowchart LR
 ## 정책 질문과 개인 판정의 분기
 
 서버는 학생 상태 없이도 `POLICY_LOOKUP`을 허용하고 허용된 `Requirement`·`PolicyFact`·편성 과목 조회를 수행한다. 개인 이수값이 없는 복합 질문은 확인된 정책 결과를 먼저 반환하고 개인 계산만 `NEEDS_INFORMATION`으로 표시한다. 정책 합산·잔여·상한 연산은 서버의 결정적 계산기와 `ExecutionTrace`에서 수행하며, LLM은 수치나 적용 대상을 만들 수 없다. 현재 활성 RuleSet v2는 동일 PDF의 추가 확인 사실 두 건으로만 v1을 보강했다. 공식 대체 지정 목록, 최종 승인 기록, 2026 상담 의무 횟수와 과거 전체 RuleSet은 별도 공식 자료가 없으므로 확정하지 않는다.
+
+## 페이지 안의 채팅 상태 (2026-10-01)
+
+프론트는 기존 단일 HTML과 `/api/query`, `/api/extract`, `/api/normalize-upload`, `/curriculum.pdf` 경로를 유지한다. `ChatSession`은 적용 StudentState, 업로드 pending, context, 요청 revision을 분리한다. 업로드의 추출·정규화는 검토 후보만 만들고 명시적 적용에서 현재 학생을 교체한다. 각 답변은 요청 당시 학생 복사본과 반환 AnswerPayload·ExecutionTrace에 고정된다. 늦은 응답은 revision/generation 검사로 차단한다. 서버의 판정·규칙·해석 계약은 변경하지 않았다.
+
+대화는 현재 페이지의 메모리에서만 유지하며 새로고침은 빈 상태로 시작한다. 세부 상태·초기화 범위·근거 표시 계약은 [채팅 UI 설계](chat_session_ui.md)에 있다.

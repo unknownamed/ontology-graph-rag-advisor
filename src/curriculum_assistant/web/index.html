@@ -1,128 +1,107 @@
 <!doctype html>
 <html lang="ko">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>교육과정 판정 조교 · 로컬 프로토타입</title>
-  <style>
-    :root { color-scheme: light; --ink:#142533; --muted:#627483; --line:#d7e0e5; --paper:#fff; --wash:#f2f5f6; --teal:#087d72; --deep:#113f52; --amber:#aa6517; }
-    * { box-sizing:border-box; } body { margin:0; color:var(--ink); font:15px/1.55 system-ui,"Malgun Gothic",sans-serif; background:var(--wash); }
-    .app { min-height:100vh; display:grid; grid-template-columns:minmax(300px,360px) minmax(0,1fr); }
-    aside { background:#e8f0f1; border-right:1px solid var(--line); padding:26px 20px; height:100vh; overflow:auto; }
-    main { display:flex; flex-direction:column; height:100vh; min-width:0; }
-    h1 { font-size:21px; margin:0 0 4px; letter-spacing:-.03em; color:var(--deep); } h2 { font-size:15px; margin:25px 0 8px; }
-    p { margin:5px 0 12px; } .muted { color:var(--muted); font-size:13px; } .tag { display:inline-block; font-size:12px; color:#056a60; background:#d9eeea; border-radius:100px; padding:3px 9px; margin-top:8px; }
-    textarea, input { font:inherit; } textarea { width:100%; min-height:330px; resize:vertical; border:1px solid #b7c8d0; border-radius:10px; background:#fff; padding:12px; color:var(--ink); font:12px/1.5 ui-monospace,Consolas,monospace; }
-    button { background:var(--deep); color:white; border:0; border-radius:9px; padding:10px 16px; font:inherit; cursor:pointer; } button:hover { background:#0e5c69; } button:disabled { opacity:.55; cursor:wait; }
-    label.switch { display:flex; align-items:center; gap:7px; margin:13px 0; font-size:13px; }
-    .chat-head { background:var(--paper); border-bottom:1px solid var(--line); padding:20px 30px; }
-    .chat-head h2 { margin:0; font-size:18px; } .chat-head p { margin:2px 0 0; }
-    #messages { flex:1; overflow:auto; padding:26px clamp(18px,5vw,76px); display:flex; flex-direction:column; gap:16px; }
-    .message { max-width:880px; padding:15px 18px; border-radius:16px; white-space:pre-wrap; overflow-wrap:anywhere; }
-    .user { align-self:flex-end; background:#dcebe8; border-bottom-right-radius:4px; }
-    .assistant { align-self:flex-start; background:#fff; box-shadow:0 1px 3px #1232; border-bottom-left-radius:4px; width:min(100%,880px); }
-    .role { color:var(--muted); font-size:12px; font-weight:700; margin-bottom:5px; } .answer { font-size:16px; }
-    .composer { background:#fff; border-top:1px solid var(--line); padding:18px clamp(18px,5vw,76px) 22px; display:flex; gap:10px; }
-    .composer input { flex:1; min-width:0; border:1px solid #b7c8d0; border-radius:10px; padding:10px 13px; }
-    details { white-space:normal; border-top:1px solid var(--line); margin-top:15px; padding-top:10px; font-size:13px; }
-    summary { cursor:pointer; color:var(--teal); font-weight:700; }
-    .section { margin-top:15px; padding-top:12px; border-top:1px solid #edf1f2; } .section h3 { font-size:13px; margin:0 0 5px; color:var(--deep); }
-    .line { padding:5px 0; border-bottom:1px dashed #edf1f2; } .mono { font-family:ui-monospace,Consolas,monospace; font-size:11px; overflow-wrap:anywhere; }
-    .pill { display:inline-block; border:1px solid var(--line); border-radius:20px; padding:1px 7px; margin:2px 3px 2px 0; }
-    a { color:#096e86; } .graph-wrap { overflow:auto; border:1px solid var(--line); border-radius:8px; background:#fafcfc; max-height:420px; }
-    svg { display:block; } .notice { color:var(--amber); }
-    .upload-panel { padding:12px; background:#fff; border:1px solid var(--line); border-radius:10px; }
-    .upload-panel input[type=file] { max-width:100%; font-size:12px; }
-    .candidate { border-top:1px solid var(--line); padding:10px 0; font-size:13px; }
-    .candidate-list { max-height:380px; overflow:auto; border:1px solid var(--line); border-radius:8px; padding:0 10px; margin-top:8px; background:#fafcfc; }
-    .candidate input[type=text], .candidate input[type=number] { border:1px solid #b7c8d0; border-radius:5px; padding:3px 5px; width:82px; }
-    .candidate input[type=number] { width:55px; }
-    .candidate small { display:block; color:var(--muted); overflow-wrap:anywhere; }
-    .review-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:7px; margin:9px 0; }
-    .review-grid label { display:flex; flex-direction:column; font-size:12px; color:var(--muted); }
-    .review-grid input,.review-grid select { width:100%; border:1px solid #b7c8d0; border-radius:5px; padding:4px; color:var(--ink); }
-    .review-debug { white-space:pre-wrap; overflow-wrap:anywhere; max-height:300px; overflow:auto; font:11px/1.5 ui-monospace,Consolas,monospace; background:#f6f8f8; padding:9px; }
-    @media(max-width:850px) { .app { display:block; } aside { height:auto; max-height:330px; } main { height:calc(100vh - 330px); min-height:500px; } textarea { min-height:130px; } }
-  </style>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>교육과정 조교 · 로컬 채팅</title>
+<style>
+:root{color-scheme:light;--ink:#203142;--muted:#566b7c;--line:#d8e2ec;--wash:#eaf1f8;--deep:#28333f;--teal:#245e85;--amber:#855112}
+*{box-sizing:border-box}body{margin:0;color:var(--ink);font:16px/1.65 system-ui,"Malgun Gothic",sans-serif;background:var(--wash)}
+button,input,textarea,select{font:inherit}button{border:1px solid transparent;border-radius:12px;background:var(--deep);color:white;padding:10px 16px;cursor:pointer}button:hover{background:#3d5264}button:disabled{opacity:.55;cursor:default}button.secondary{background:#fff;color:var(--ink);border-color:var(--line)}button.secondary:hover{background:#f1f5fa}button:focus-visible,summary:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:3px solid #297db4;outline-offset:3px}
+[hidden]{display:none!important}.app{height:100vh;height:100dvh;display:flex;flex-direction:column;overflow:hidden}.chat-head{background:#f8fbfe;border-bottom:1px solid var(--line);padding:14px max(20px,calc((100vw - 960px)/2));display:flex;align-items:center;justify-content:space-between;gap:12px}h1{font-size:21px;letter-spacing:-.04em;margin:0}h2{font-size:18px;margin:0 0 10px}h3{font-size:15px;margin:0 0 7px}p{margin:6px 0 12px}.muted{color:var(--muted);font-size:13px}.tag{font-size:12px;color:var(--teal)}#student-badge{display:block;font-size:13px;color:var(--muted)}.header-tools{display:flex;gap:8px;flex-shrink:0}
+#messages{flex:1;min-height:0;overflow:auto;overscroll-behavior:contain;padding:28px max(20px,calc((100vw - 920px)/2));display:flex;flex-direction:column;gap:20px;scrollbar-gutter:stable}.welcome{margin:auto;width:min(100%,650px);padding:30px 10px}.welcome h2{font-size:28px;font-weight:650;letter-spacing:-.05em}.welcome p{color:var(--muted)}.examples{display:flex;flex-wrap:wrap;gap:8px;margin:22px 0}.examples button{font-size:14px;background:#f8fbff;color:#315269;border-color:#cbdce9}
+.message{max-width:100%;overflow-wrap:anywhere}.message.user{align-self:flex-end;max-width:85%;background:#d1e3f4;padding:14px 20px;border-radius:20px 20px 5px 20px}.message.assistant{align-self:flex-start;width:100%;background:white;padding:20px 24px;border:1px solid #dfe8f0;border-radius:20px 20px 20px 5px;box-shadow:0 2px 8px #23435d06}.role{font-size:12px;font-weight:650;color:var(--muted);margin-bottom:7px}.answer{white-space:pre-wrap;font-size:16px;line-height:1.8}.reply-context{font-size:12px;color:var(--muted);margin-top:12px}.file-card{border:1px solid #cbdce9;border-radius:14px;padding:16px;background:#f5f9fd;white-space:normal}.file-card strong{display:block}.file-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}.file-actions button{font-size:14px}.file-state{font-size:14px;color:var(--muted);margin:6px 0}.notice{color:var(--amber)}
+.composer-shell{padding:14px max(20px,calc((100vw - 960px)/2)) 16px;background:var(--wash);flex-shrink:0}.composer{background:var(--deep);border-radius:24px;display:flex;align-items:flex-end;gap:10px;padding:12px;box-shadow:0 3px 16px #1b304415}.composer textarea{border:0;outline:none;background:transparent;color:#fff;resize:none;flex:1;min-width:0;min-height:48px;max-height:140px;padding:10px 4px;line-height:1.5}.composer textarea::placeholder{color:#c2cdd6}.composer button{min-height:44px;min-width:44px;padding:10px;flex-shrink:0}.composer .attach{background:#425260;font-size:23px;line-height:1}.composer .send{background:#d5e6f5;color:#243e52;padding:10px 16px}.composer-note{display:flex;justify-content:space-between;gap:12px;font-size:12px;color:var(--muted);padding:8px 4px 0;margin:0}.busy{color:var(--teal)}#latest{position:fixed;bottom:150px;right:20px;background:#fff;color:var(--teal);border-color:var(--line);box-shadow:0 2px 8px #2233}
+.composer:focus-within{outline:2px solid #7dabc9;outline-offset:3px}#messages:focus-visible{outline:2px solid #297db4;outline-offset:-2px}details{white-space:normal;border-top:1px solid var(--line);margin-top:15px;padding-top:12px;font-size:14px}summary{cursor:pointer;color:var(--teal);font-weight:600}summary:hover{text-decoration:underline}.section{margin-top:16px;padding-top:14px;border-top:1px solid #edf1f5}.line{padding:6px 0;border-bottom:1px dashed #e6edf3;overflow-wrap:anywhere}.mono{font:12px/1.6 ui-monospace,Consolas,monospace;overflow-wrap:anywhere}a{color:#1a648b}.graph-wrap{overflow:auto;border:1px solid var(--line);border-radius:10px;background:#f8fbfe;max-height:350px;margin-top:10px}svg{display:block}.candidate-list{max-height:360px;overflow:auto;border:1px solid var(--line);border-radius:10px;padding:0 12px;margin-top:8px;background:#f9fbfd}.candidate{border-top:1px solid var(--line);padding:14px 0;font-size:14px}.candidate small{display:block;color:var(--muted);overflow-wrap:anywhere}
+dialog{width:min(760px,calc(100% - 24px));max-height:calc(100dvh - 32px);padding:0;border:1px solid var(--line);border-radius:20px;color:var(--ink);box-shadow:0 16px 70px #182c4b33}dialog::backdrop{background:#1f344561}.panel-head{position:sticky;top:0;background:#fff;border-bottom:1px solid var(--line);padding:16px 20px;display:flex;justify-content:space-between;align-items:center;gap:12px;z-index:1}.panel-head h2{margin:0}.panel-body{padding:20px}.review-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:14px 0}.review-grid label{min-width:0;overflow-wrap:anywhere;display:flex;flex-direction:column;gap:4px;font-size:13px;color:var(--muted)}.review-grid input,.review-grid select{width:100%;min-height:40px;border:1px solid #b5c8d8;border-radius:8px;padding:6px;color:var(--ink);background:#fff}.switch{display:flex;align-items:center;gap:8px;margin:18px 0}.switch input,input[type=checkbox]{width:18px;height:18px;accent-color:var(--teal)}#state{width:100%;min-height:220px;border:1px solid #b5c8d8;border-radius:10px;padding:12px;resize:vertical;font:12px/1.6 ui-monospace,Consolas,monospace;color:var(--ink)}.review-debug{white-space:pre-wrap;overflow-wrap:anywhere;max-height:300px;overflow:auto;background:#f4f7fa;border-radius:10px;padding:12px;font:12px/1.6 ui-monospace,Consolas,monospace}.panel-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}.pending-note{padding:12px;border-radius:10px;background:#fff5df;color:#75500c;font-size:14px}
+@media(max-width:600px){.chat-head{padding:12px 14px}.chat-head h1{font-size:19px}.header-tools button{padding:8px 10px;font-size:13px}#messages{padding:20px 12px;gap:16px}.message.assistant{padding:17px 16px}.message.user{padding:12px 16px;max-width:92%}.composer-shell{padding:10px 12px 12px}.composer{border-radius:20px;padding:8px;gap:6px}.composer textarea{font-size:16px}.composer .send{padding:10px 12px}.composer-note{font-size:11px}.welcome{padding:20px 6px}.welcome h2{font-size:24px}.panel-body{padding:16px}.panel-head{padding:14px 16px}.review-grid{grid-template-columns:1fr 1fr;gap:8px}.graph-wrap{max-height:280px}}
+</style>
 </head>
 <body>
-<div class="app">
-  <aside>
-    <h1>교육과정 판정 조교</h1>
-    <p class="muted">2026년도 교육과정 PDF · 로컬 실행</p>
-    <span class="tag">컴퓨터공학과 2026 적용 범위</span>
-    <h2>학생 상태 입력</h2>
-    <p class="muted">실제 학생 자료를 업로드해 확인하거나, 검증된 구조화 학생 상태를 직접 입력하세요.</p>
-    <textarea id="state" spellcheck="false" aria-label="학생 상태 JSON"></textarea>
-    <p id="state-status" class="muted">실제 학생 자료 미업로드 상태입니다. 과목·정책 질문은 바로 할 수 있습니다.</p>
-    <h2>이수자료 가져오기</h2>
-    <div class="upload-panel">
-      <input id="upload-file" type="file" accept=".pdf,.docx,.hwp,.png,.jpg,.jpeg,.webp" aria-label="이수자료 파일">
-    <p class="muted">PDF·DOCX·이미지와 텍스트 추출 가능한 HWP 5에서 후보를 찾습니다. 원문 값과 공식 과목표를 대조한 뒤 직접 정정·확인해 주세요. 전체 성적표 여부와 적용 교육과정은 자동 확정되지 않습니다.</p>
-      <button id="extract" type="button">후보 추출</button>
-      <button id="reset-upload" type="button">업로드 세션 초기화</button>
-      <p id="upload-status" class="muted"></p>
-      <div id="student-review"></div>
-      <div id="candidates"></div>
-      <pre id="review-output" class="review-debug" hidden></pre>
-    </div>
-    <label class="switch"><input type="checkbox" id="llm" checked> 로컬 LLM 질문 해석·답변 말투 보조</label>
-    <p class="muted">판정과 학점 계산은 규칙 엔진이 수행합니다. 모델의 질문 해석과 답변 말투 선택은 서버가 검증합니다.</p>
-    <h2>현재 적재 범위</h2>
-    <p class="muted">컴퓨터공학과 전공 43과목, 원문 페이지와 대조한 교양 280과목. 2006–2025 학점표는 출처를 연결해 조회할 수 있지만 과거 이수 판정은 지원하지 않습니다. 평가 전용 자료는 사용하지 않습니다.</p>
-  </aside>
-  <main>
-    <header class="chat-head">
-      <h2>질문과 판정</h2>
-      <p class="muted">예: “고자구 몇 학점이야?”, “자료구조 들으면 전공학점은?”, “졸업 가능하고 필수 뭐 남았어?”</p>
-    </header>
-    <div id="messages" aria-live="polite"></div>
-    <form id="form" class="composer">
-      <input id="question" aria-label="한국어 질문" placeholder="교육과정과 이수 상태를 질문하세요" autocomplete="off">
-      <button id="send" type="submit">질문</button>
-    </form>
-  </main>
+<main class="app">
+<header class="chat-head"><div><h1>교육과정 조교</h1><span id="student-badge" role="status">학생 자료 없음</span></div><div class="header-tools"><button id="student-settings" type="button" class="secondary">학생 정보 · 설정</button></div></header>
+<div id="messages" role="log" aria-label="현재 채팅 대화" aria-live="polite" aria-relevant="additions" tabindex="0">
+<section id="welcome" class="welcome"><span class="tag">2026 컴퓨터공학과 · 로컬 Core Prototype</span><h2>교육과정, 함께 확인해요.</h2><p>과목이나 교육과정 기준은 바로 물어보세요.<br>내 이수 상태를 확인하려면 성적표를 첨부하고 검토 후 적용해 주세요.</p><div class="examples"><button type="button" data-question="고자구 몇 학점이야?">과목 학점 확인</button><button type="button" data-question="교양 최소학점 기준은?">교양 기준 확인</button></div><p class="muted">판정과 계산은 검증된 지식그래프와 Rule Engine이 수행합니다.</p></section>
 </div>
+<button id="latest" type="button" hidden>새 메시지 ↓</button>
+<div class="composer-shell"><form id="form" class="composer"><button id="attach" class="attach" type="button" aria-label="이수자료 첨부" title="이수자료 첨부">＋</button><textarea id="question" rows="1" aria-label="한국어 질문" placeholder="교육과정에 대해 질문하세요" autocomplete="off"></textarea><button id="send" class="send" type="submit">전송</button></form><p class="composer-note"><span id="request-status" role="status">Enter 전송 · Shift+Enter 줄바꿈</span><span>이 페이지 안에서만 유지 · 새로고침 시 초기화</span></p></div>
+</main>
+<input id="upload-file" type="file" accept=".pdf,.docx,.hwp,.png,.jpg,.jpeg,.webp" aria-label="이수자료 파일" hidden>
+<dialog id="settings-panel" aria-labelledby="settings-title"><header class="panel-head"><h2 id="settings-title">학생 정보 · 설정</h2><button class="secondary" type="button" data-close="settings-panel" aria-label="학생 정보 설정 닫기">닫기</button></header><div class="panel-body"><div id="applied-summary"></div><p id="state-status" class="muted" role="status"></p><label class="switch"><input type="checkbox" id="llm" checked> 로컬 LLM 질문 해석·답변 말투 보조</label><p class="muted">판정·학점 계산은 Rule Engine이 수행합니다. 마지막으로 확인한 과목을 참조하는 후속 질문을 지원하며 대화 전체를 기억하지는 않습니다.</p><details><summary>고급: 구조화 StudentState 확인 · 교체</summary><p class="muted">아래 편집은 아직 적용되지 않습니다. 적용 버튼으로 기존 학생 상태를 교체합니다. 미확인 값은 검증 완료로 바뀌지 않습니다.</p><textarea id="state" spellcheck="false" aria-label="학생 상태 JSON"></textarea><button id="apply-state" type="button">학생 상태 적용</button></details><details><summary>현재 지원 범위 · 자료 안내</summary><p>ADS-CE-2026-CORE v1 / CRS-CE-2026-CORE v2 · 국내 일반 학생 단일전공</p><p class="muted">컴퓨터공학과 43과목 · 원문 대조 교양 280과목. 과거 연도의 학점표 조회와 해당 학생의 전체 졸업 판정은 다릅니다. 졸업요건상 후보는 실제 다음 학기 개설·선수과목·시간표를 보장하지 않습니다.</p><p class="muted">PDF·DOCX·PNG 추출 경로를 검증했습니다. JPG/JPEG/WEBP와 텍스트 추출 가능한 HWP 5 경로도 있으며 형식별 검증에 제한이 있습니다. 파일당 10MB 이하입니다. 업로드 자료는 학생 입력이며 규칙 원천이 아닙니다.</p></details><div class="panel-actions"><button id="clear-student" class="secondary" type="button">적용 학생 정보 비우기</button><button id="reset-all" class="secondary" type="button">전체 초기화</button></div><p class="muted">이 탭의 메모리에만 보관합니다. 새로고침하면 대화·학생 상태·파일 후보·후속 질문 참조가 사라집니다. 영구 저장하지 않습니다.</p></div></dialog>
+<dialog id="upload-panel" aria-labelledby="upload-title"><header class="panel-head"><h2 id="upload-title">이수자료 검토</h2><button type="button" class="secondary" data-close="upload-panel" aria-label="이수자료 검토 닫기">닫기</button></header><div class="panel-body"><p id="upload-status" role="status" class="muted">첨부 버튼에서 파일을 선택하세요.</p><p class="pending-note">검토 중인 후보는 판정에 사용하지 않습니다. 정규화 결과를 확인한 뒤 학생 이수정보로 적용하세요. 기존 학생 상태에는 임의로 합치지 않습니다.</p><div id="student-review"></div><div id="candidates"></div><div id="normalized-summary"></div><button id="apply-upload" type="button" hidden>학생 이수정보로 적용</button><details id="review-debug" hidden><summary>원문 · 정규화 · 연결 상태 상세 (JSON)</summary><pre id="review-output" class="review-debug"></pre></details><div class="panel-actions"><button id="reset-upload" type="button" class="secondary">검토 중인 업로드 폐기</button></div></div></dialog>
+<dialog id="confirm-panel" aria-labelledby="confirm-title"><header class="panel-head"><h2 id="confirm-title">변경 범위 확인</h2></header><div class="panel-body"><p id="confirm-description"></p><div class="panel-actions"><button id="confirm-cancel" type="button" class="secondary">취소</button><button id="confirm-accept" type="button">확인 후 진행</button></div></div></dialog>
 <script>
-const stateBox = document.getElementById('state');
-const statusBox = document.getElementById('state-status');
-const messages = document.getElementById('messages');
-const question = document.getElementById('question');
-const send = document.getElementById('send');
-const uploadFile = document.getElementById('upload-file');
-const uploadStatus = document.getElementById('upload-status');
-const candidatesBox = document.getElementById('candidates');
-const studentReview = document.getElementById('student-review');
-const reviewOutput = document.getElementById('review-output');
-let context = {};
-let uploadGeneration = 0;
-let normalizedUploadReady = false;
-function clearUploadDerivedState() {
-  uploadGeneration += 1;
-  normalizedUploadReady = false;
-  stateBox.value = '';
-  studentReview.replaceChildren();
-  candidatesBox.replaceChildren();
-  reviewOutput.textContent = '';
-  reviewOutput.hidden = true;
-  messages.replaceChildren();
-  question.value = '';
-  context = {};
-  send.disabled = false;
-  statusBox.textContent = '실제 학생 자료 미업로드 상태입니다. 과목·정책 질문은 바로 할 수 있습니다.';
+/* SESSION_START: pure in-memory lifecycle; no storage or student inference. */
+class ChatSession {
+  constructor(){this.applied=null;this.context={};this.pending=null;this.uploadGeneration=0;this.revision=0;this.serial=0;this.active=null;}
+  copy(value){return value==null?null:JSON.parse(JSON.stringify(value));}
+  selectUpload(file){this.uploadGeneration++;this.pending=file?{file,stage:'SELECTED'}:null;return this.uploadGeneration;}
+  uploadCurrent(token){return token===this.uploadGeneration&&this.pending!==null;}
+  apply(state){this.applied=this.copy(state);this.context={};this.revision++;this.active=null;}
+  beginQuery(){if(this.active)return null;const token={serial:++this.serial,revision:this.revision,state:this.copy(this.applied),context:this.copy(this.context)};this.active=token;return token;}
+  queryCurrent(token){return this.active===token&&token.revision===this.revision;}
+  finishQuery(token,context){if(!this.queryCurrent(token))return false;if(context)this.context=this.copy(context);this.active=null;return true;}
+  resetUpload(){this.selectUpload(null);}
+  resetAll(){this.resetUpload();this.apply(null);}
 }
-function resetUploadSession() {
-  clearUploadDerivedState();
-  uploadFile.value = '';
-  uploadStatus.textContent = '새 성적표 파일을 선택하고 후보 추출을 누르세요.';
+function shouldSendEnter(event,composing){return event.key==='Enter'&&!event.shiftKey&&!event.isComposing&&!composing&&event.keyCode!==229;}
+/* SESSION_END */
+const session=new ChatSession();
+const stateBox=document.getElementById('state'),statusBox=document.getElementById('state-status'),messages=document.getElementById('messages'),question=document.getElementById('question'),send=document.getElementById('send'),uploadFile=document.getElementById('upload-file'),uploadStatus=document.getElementById('upload-status'),candidatesBox=document.getElementById('candidates'),studentReview=document.getElementById('student-review'),reviewOutput=document.getElementById('review-output');
+let pendingCard=null,queryController=null,pendingReply=null,composing=false;
+function showPanel(id){document.getElementById(id).showModal();}
+document.querySelectorAll('[data-close]').forEach(button=>button.addEventListener('click',()=>document.getElementById(button.dataset.close).close()));
+document.getElementById('student-settings').addEventListener('click',()=>showPanel('settings-panel'));
+document.getElementById('attach').addEventListener('click',()=>uploadFile.click());
+function updateStudentView(){
+  statusBox.className='muted';
+  const state=session.applied,pending=session.pending;
+  const label=state?(state.simulation_context?'가정 시뮬레이션':state.applicability_status==='VERIFIED'&&!(state.unresolved_completion_records?.length)?'이수정보 적용됨':'이수정보 적용됨 · 확인 필요'):'학생 자료 없음';
+  document.getElementById('student-badge').textContent=label+(pending&&pending.stage!=='APPLIED'?' · 새 자료 검토 중':'');
+  const summary=document.getElementById('applied-summary');summary.replaceChildren();
+  if(state){line(summary,`현재 적용 상태: ${state.student_state_id||'ID 미확인'} · 입학연도 ${state.admission_year??'미확인'} · 이수기록 ${state.course_attempts?.length||0}건`);line(summary,`학점 기준 ${state.credit_policy_year??'미확인'} · 과목표 ${state.catalog_year??'미확인'} · 적용 조건 ${state.applicability_status||'미확인'}`);}
+  else line(summary,'학생 자료 없음 · 공식 과목과 일반 정책은 바로 질문할 수 있습니다.');
+  statusBox.textContent=pending&&pending.stage!=='APPLIED'?'새 파일은 아직 적용되지 않았습니다. 질문에는 기존 적용 학생 상태를 사용합니다.':'학생 상태를 바꾸면 마지막 과목 참조를 초기화합니다. 이전 답변은 당시 입력과 근거를 유지합니다.';
 }
-resetUploadSession();
-document.getElementById('reset-upload').addEventListener('click', resetUploadSession);
-stateBox.addEventListener('input', () => {
-  send.disabled = false;
-});
+function clearUploadDerivedState(){
+  session.resetUpload();studentReview.replaceChildren();studentReview._fields=null;candidatesBox.replaceChildren();reviewOutput.textContent='';document.getElementById('review-debug').hidden=true;document.getElementById('normalized-summary').replaceChildren();document.getElementById('apply-upload').hidden=true;
+  if(pendingCard){if(pendingCard.stage.textContent!=='학생 이수정보로 적용됨')pendingCard.stage.textContent='검토 종료 · 이 파일의 후보는 현재 적용되지 않습니다.';pendingCard.extract.hidden=true;pendingCard.review.hidden=true;pendingCard.discard.hidden=true;}
+  pendingCard=null;updateStudentView();
+}
+function resetUploadSession(){clearUploadDerivedState();uploadFile.value='';uploadStatus.textContent='검토 중인 업로드를 폐기했습니다. 대화와 적용 학생 정보는 유지됩니다.';}
+document.getElementById('reset-upload').addEventListener('click',()=>{resetUploadSession();document.getElementById('upload-panel').close();});
+function cancelPendingQuery(){if(queryController)queryController.abort();if(pendingReply){pendingReply.querySelector('.answer').textContent='학생 상태 변경으로 이전 요청을 취소했습니다. 현재 상태로 다시 질문해 주세요.';pendingReply=null;}send.disabled=false;document.getElementById('request-status').textContent='Enter 전송 · Shift+Enter 줄바꿈';}
+function askConfirmation(description){
+  const panel=document.getElementById('confirm-panel');document.getElementById('confirm-description').textContent=description;panel.showModal();
+  return new Promise(resolve=>{const finish=value=>{panel.close();panel.oncancel=null;resolve(value);};document.getElementById('confirm-accept').onclick=()=>finish(true);document.getElementById('confirm-cancel').onclick=()=>finish(false);panel.oncancel=event=>{event.preventDefault();finish(false);};});
+}
+async function applyStudent(state){
+  if(session.applied&&!await askConfirmation('현재 학생 상태를 새 상태로 교체합니다. 기존 이수기록과 합치지 않으며 후속 질문의 과목 참조는 초기화합니다. 이전 대화와 답변 당시 근거는 유지합니다.'))return false;
+  cancelPendingQuery();session.apply(state);stateBox.value=state?JSON.stringify(state,null,2):'';updateStudentView();return true;
+}
+document.getElementById('apply-state').addEventListener('click',async()=>{try{const value=JSON.parse(stateBox.value);if(value===null||typeof value!=='object'||Array.isArray(value))throw Error('학생 상태는 JSON 객체여야 합니다.');if(!Object.keys(value).length)throw Error('빈 객체는 적용할 수 없습니다. 학생 정보 비우기를 사용하세요.');if(await applyStudent(value)){statusBox.textContent='입력한 학생 상태가 적용되었습니다. 검증 상태는 입력값 그대로 유지됩니다.';}}catch(error){statusBox.textContent='학생 상태 JSON 오류: '+error.message;statusBox.className='notice';}});
+document.getElementById('clear-student').addEventListener('click',async()=>{if(await askConfirmation('적용 학생 정보와 마지막 과목 참조를 비웁니다. 대화와 검토 중인 파일은 유지됩니다.')){cancelPendingQuery();session.apply(null);stateBox.value='';updateStudentView();}});
+document.getElementById('reset-all').addEventListener('click',async()=>{if(!await askConfirmation('이 탭의 대화, 적용 학생 정보, 선택 파일, 추출·정규화 후보, 후속 질문 참조, 질문 입력을 모두 지웁니다. 공식 규정·RuleSet은 변경하지 않습니다.'))return;cancelPendingQuery();resetUploadSession();session.resetAll();stateBox.value='';question.value='';messages.querySelectorAll('.message').forEach(node=>node.remove());document.getElementById('welcome').hidden=false;document.getElementById('latest').hidden=true;updateStudentView();document.getElementById('settings-panel').close();});
+question.addEventListener('compositionstart',()=>{composing=true;});question.addEventListener('compositionend',()=>{composing=false;});question.addEventListener('keydown',event=>{if(shouldSendEnter(event,composing)){event.preventDefault();document.getElementById('form').requestSubmit();}});
+question.addEventListener('input',()=>{question.style.height='auto';question.style.height=Math.min(question.scrollHeight,140)+'px';});
+document.querySelectorAll('[data-question]').forEach(button=>button.addEventListener('click',()=>{question.value=button.dataset.question;question.focus();}));
+document.getElementById('latest').addEventListener('click',()=>{messages.scrollTop=messages.scrollHeight;document.getElementById('latest').hidden=true;});messages.addEventListener('scroll',()=>{if(messages.scrollHeight-messages.scrollTop-messages.clientHeight<100)document.getElementById('latest').hidden=true;});
+const KIND_LABELS={CurriculumVersion:'교육과정',CatalogEntry:'교육과정 편성',Requirement:'요건',Course:'과목',CourseClassification:'이수구분',PolicyFact:'정책 사실',Department:'학과'};
+const REL_LABELS={SATISFIES:'요건에 연결',HAS_COURSE:'과목 포함',HAS_REQUIREMENT:'요건 포함',CLASSIFIED_AS:'이수구분',OFFERS:'과목 편성',HAS_POLICY_FACT:'정책 포함',IN_CURRICULUM:'적용 교육과정'};
+const AREA_LABELS={GRADUATION_TOTAL:'졸업 총학점',GENERAL_TOTAL:'교양',GENERAL_BASIC:'기초교양',GENERAL_BALANCED:'균형교양',GENERAL_EXPANDED:'확대교양',MAJOR_REQUIRED:'전공필수',MAJOR_REQUIRED_COURSES:'지정 전공필수 과목',MAJOR_ELECTIVE:'최소전공 전공선택',MAJOR_ADVANCED:'심화전공',MAJOR_TOTAL:'전공 합계',FREE_CHOICE:'자유선택'};
+const STATUS_LABELS={SATISFIED:'충족',UNSATISFIED:'미충족',NEEDS_INFORMATION:'확인 필요',NOT_APPLICABLE:'적용 대상 아님'};
+function ruleLabel(payload,id){const rule=(payload.evidence?.rules||[]).find(r=>r.rule_id===id);if(!rule)return id;if(rule.area)return (AREA_LABELS[rule.area]||rule.area)+(rule.rule_type==='CREDIT_CAP'?' 산입 상한':'');const keys={thesis_passed:'졸업논문 합격 증빙',thesis_final_semester_enrollment:'최종학기 졸업논문 신청 증빙',graduation_certification_passed:'졸업인증 증빙'};return keys[rule.evidence_key]||{REQUIRED_COURSES:'지정 전공필수',ALL_AREAS:'교양 영역 이수',ANY_COURSE:'필수 교양 선택 과목군',ANY_COURSE_OR_EXEMPTION:'영어교양 또는 면제',REQUIRED_EVIDENCE:'졸업 필수 증빙'}[rule.rule_type]||rule.rule_type;}
+function displayNode(node){const kind=KIND_LABELS[node.kind]||'관계 개체';return `${kind} · ${AREA_LABELS[node.label]||node.label}`;}
 function el(tag, text, cls) { const node=document.createElement(tag); if(text!==undefined) node.textContent=String(text); if(cls) node.className=cls; return node; }
-function addMessage(role, content) { const wrap=el('article',undefined,'message '+role); wrap.append(el('div',role==='user'?'질문':'판정 조교','role')); wrap.append(el('div',content,'answer')); messages.append(wrap); messages.scrollTop=messages.scrollHeight; return wrap; }
+function addMessage(role, content) {
+  const follow = messages.scrollHeight-messages.scrollTop-messages.clientHeight < 100;
+  document.getElementById('welcome').hidden=true;
+  const wrap=el('article',undefined,'message '+role);
+  wrap.append(el('div',role==='user'?'나':'교육과정 조교','role'),el('div',content,'answer'));
+  messages.append(wrap);
+  if(follow)requestAnimationFrame(()=>{messages.scrollTop=messages.scrollHeight;});
+  else document.getElementById('latest').hidden=false;
+  return wrap;
+}
 function section(root,title) { const box=el('div',undefined,'section'); box.append(el('h3',title)); root.append(box); return box; }
 function line(root,text) { root.append(el('div',text,'line')); }
 function listRows(root, rows, format) { if(!rows?.length) { line(root,'기록 없음'); return; } rows.forEach(row=>line(root,format(row))); }
@@ -151,71 +130,78 @@ function candidateDetails(root,title,courses,payload) {
   });
 }
 function reviewField(root,label,value='',type='text') { const wrap=el('label');wrap.append(el('span',label));const input=el('input');input.type=type;input.value=value??'';input.setAttribute('aria-label',label);wrap.append(input);root.append(wrap);return input; }
+
 uploadFile.addEventListener('change',()=>{
-  clearUploadDerivedState();
-  if(uploadFile.files?.length)statusBox.textContent='파일이 선택되었습니다. StudentState는 아직 생성되지 않았습니다.';
-  uploadStatus.textContent=uploadFile.files?.length?'학생별 계산은 자료 검토·정규화 후 가능합니다. 과목·정책 질문은 바로 할 수 있습니다.':'새 성적표 파일을 선택하고 후보 추출을 누르세요.';
+  const file=uploadFile.files?.[0];if(!file)return;
+  clearUploadDerivedState();session.selectUpload(file);
+  const wrap=addMessage('user','');const card=el('div',undefined,'file-card');wrap.querySelector('.answer').append(card);
+  card.append(el('strong',file.name),el('div',`${(file.size/1000000).toFixed(2)} MB · 로컬 이수자료`,'muted'));
+  const stage=el('p','파일 선택됨 · 아직 추출하거나 학생 상태에 적용하지 않았습니다.','file-state');card.append(stage);
+  const actions=el('div',undefined,'file-actions'),extract=el('button','후보 추출'),review=el('button','추출 결과 확인','secondary'),discard=el('button','선택 파일 폐기','secondary');extract.type=review.type=discard.type='button';review.hidden=true;actions.append(extract,review,discard);card.append(actions);
+  pendingCard={wrap,stage,extract,review,discard};extract.addEventListener('click',extractPendingUpload);review.addEventListener('click',()=>showPanel('upload-panel'));discard.addEventListener('click',resetUploadSession);
+  uploadStatus.textContent='파일 선택됨 · 후보 추출 후 검토할 수 있습니다.';updateStudentView();
 });
-document.getElementById('extract').addEventListener('click',async()=>{
-  const file=uploadFile.files?.[0];
-  if(!file){uploadStatus.textContent='파일을 선택해 주세요.';return;}
-  if(file.size>10000000){uploadStatus.textContent='파일은 10MB 이하여야 합니다.';return;}
-  clearUploadDerivedState();
-  statusBox.textContent='업로드 자료 추출 중입니다. StudentState는 아직 생성되지 않았습니다.';
-  const generation = uploadGeneration;
-  const button=document.getElementById('extract');button.disabled=true;uploadStatus.textContent='로컬에서 텍스트를 추출하고 있습니다.';
-  try {
-    const bytes=new Uint8Array(await file.arrayBuffer());
-    let binary='';for(let i=0;i<bytes.length;i+=32768)binary+=String.fromCharCode(...bytes.subarray(i,i+32768));
-    const response=await fetch('/api/extract',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({filename:file.name,content_base64:btoa(binary)})});
-    const result=await response.json();if(generation!==uploadGeneration)return;if(!response.ok)throw Error(result.detail||result.error);
-    uploadStatus.textContent=`${result.file_type}에서 후보 ${result.candidate_count}건. 페이지 ${result.document_coverage.page_count??'확인 불가'}, 읽기 실패 페이지 ${(result.document_coverage.unreadable_pages||[]).join(', ')||'없음'}. ${result.warnings.join(' ')}`;
-    const meta=el('div',undefined,'review-grid');studentReview.append(el('h3','학생 정보 확인'),meta);
-    const observed=key=>result.student_fields[key]?.status==='UNVERIFIED'?result.student_fields[key].observations[0].raw:'';
-    const sid=reviewField(meta,'학번 확인',observed('student_id'));
-    const dept=reviewField(meta,'학과 확인',observed('department'));
-    const admission=reviewField(meta,'입학연도 확인',observed('admission_year'),'number');
-    const creditYear=reviewField(meta,'적용 학점기준 연도 확인','','number');
-    const catalogYear=reviewField(meta,'적용 과목표 연도 확인','','number');
-    const program=el('select');program.setAttribute('aria-label','전공유형 확인');[['','미확인'],['SINGLE','단일전공'],['MINOR','부전공'],['DOUBLE','복수전공']].forEach(([value,label])=>{const option=el('option',label);option.value=value;program.append(option);});const programWrap=el('label');programWrap.append(el('span','전공유형 확인'),program);meta.append(programWrap);
-    const confirmIdentity=el('input');confirmIdentity.type='checkbox';confirmIdentity.setAttribute('aria-label','학생 정보 직접 확인');studentReview.append(confirmIdentity,document.createTextNode(' 위 학생 정보 직접 확인'));
-    studentReview._fields={sid,dept,admission,creditYear,catalogYear,program,confirmIdentity};
-    result.candidates.forEach(candidate=>{
-      const row=el('div',undefined,'candidate');
-      const raw=candidate.raw_values;
-      row.append(el('div',`원문 ${candidate.location}: 코드 ${raw.course_code??'미확인'} · 과목명 ${raw.course_name??'미확인'} · 학점 ${raw.earned_credits??'미확인'} · 학기 ${raw.semester??'미확인'} · 성적 ${raw.grade??raw.completion_marker??'미확인'}`));
-      row.append(el('small',`2026 과목표 연결 ${candidate.resolution_status} · 과목 ${candidate.catalog_course_id??'없음'} ${candidate.catalog_name??''} / ${candidate.catalog_credits??'미확인'}학점 · ${candidate.confidence}${candidate.ocr_confidence_score!=null?' '+candidate.ocr_confidence_score.toFixed(2):''}`));
-      const fields=el('div',undefined,'review-grid');row.append(fields);
-      const code=reviewField(fields,'과목코드 정정 '+candidate.candidate_id,raw.course_code||'');
-      const name=reviewField(fields,'과목명 정정 '+candidate.candidate_id,raw.course_name||'');
-      const credit=reviewField(fields,'취득학점 정정 '+candidate.candidate_id,raw.earned_credits??'','number');
-      const semester=reviewField(fields,'이수 학기 정정 '+candidate.candidate_id,raw.semester||'');
-      const classification=reviewField(fields,'자료의 이수구분 '+candidate.candidate_id,raw.classification||'');
-      const completion=el('select');completion.setAttribute('aria-label','이수 상태 확인 '+candidate.candidate_id);[['UNKNOWN','미확인'],['COMPLETED','이수 완료'],['IN_PROGRESS','수강 중'],['FAILED','미이수/실패']].forEach(([value,label])=>{const option=el('option',label);option.value=value;completion.append(option);});fields.append(completion);
-      if(raw.grade){completion.value=['F','U'].includes(raw.grade)?'FAILED':/^(?:[A-D][+0-]?|S|P)$/.test(raw.grade)?'COMPLETED':'UNKNOWN';}
-      const check=el('input');check.type='checkbox';check.setAttribute('aria-label','원문과 정정값 확인 '+candidate.candidate_id);row.append(check,document.createTextNode(' 이 행의 원문·정정값 직접 확인'));
-      row.append(el('small',candidate.snippet));
-      row._candidate={check,code,name,credit,semester,classification,completion,id:candidate.candidate_id};candidatesBox.append(row);
-    });
-    const confirm=el('button','정규화된 StudentState 생성');confirm.type='button';
-    confirm.addEventListener('click',async()=>{
-      const f=studentReview._fields;
-      const records=[...candidatesBox.querySelectorAll('.candidate')].map(x=>x._candidate).map(x=>({candidate_id:x.id,course_code:x.code.value,course_name:x.name.value,earned_credits:x.credit.value,semester:x.semester.value,classification:x.classification.value,completion_status:x.completion.value,confirmed:x.check.checked}));
-      const review={student_fields:{student_id:f.sid.value,department:f.dept.value,admission_year:f.admission.value,credit_policy_year:f.creditYear.value,catalog_year:f.catalogYear.value,program_type:f.program.value,confirmed:f.confirmIdentity.checked},records};
-      confirm.disabled=true;uploadStatus.textContent='원문 후보와 공식 카탈로그를 대조하고 있습니다.';
-      try{const response=await fetch('/api/normalize-upload',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({filename:file.name,content_base64:btoa(binary),source_id:result.source_id,review})});const normalized=await response.json();if(generation!==uploadGeneration)return;if(!response.ok)throw Error(normalized.detail||normalized.error);
-        stateBox.value=JSON.stringify(normalized.student_state,null,2);normalizedUploadReady=true;send.disabled=false;
-        statusBox.textContent='업로드 기반 StudentState 후보가 생성되었습니다.';
-        uploadStatus.textContent=`새 StudentState 생성: 판정 사용 가능 ${normalized.usable_record_count}건, 확인 필요 ${normalized.unresolved_record_count}건. 전체 성적표와 적용 교육과정은 미확인으로 유지합니다.`;
-        reviewOutput.hidden=false;reviewOutput.textContent=JSON.stringify({raw_student_fields:normalized.raw_student_fields,student_field_reviews:normalized.student_field_reviews,document_coverage:normalized.document_coverage,records:normalized.records,needs_user_confirmation:normalized.needs_user_confirmation},null,2);
-      }catch(error){if(generation===uploadGeneration)uploadStatus.textContent='정규화 실패: '+error.message;}finally{confirm.disabled=false;}
-    });candidatesBox.append(confirm);
-  }catch(error){if(generation===uploadGeneration)uploadStatus.textContent='추출 실패: '+error.message;}finally{button.disabled=false;}
-});
+async function extractPendingUpload(){
+  const pending=session.pending,card=pendingCard;if(!pending||!card||card.extract.disabled)return;
+  const file=pending.file,generation=++session.uploadGeneration;
+  if(file.size>10000000){card.stage.textContent='추출 불가 · 파일은 10MB 이하여야 합니다.';return;}
+  pending.normalized=null;document.getElementById('apply-upload').hidden=true;card.review.hidden=true;
+  pending.stage='EXTRACTING';card.extract.disabled=true;card.stage.textContent='로컬에서 후보 추출 중 · 기존 학생 상태는 그대로 사용합니다.';uploadStatus.textContent=card.stage.textContent;updateStudentView();
+  try{
+    const bytes=new Uint8Array(await file.arrayBuffer());let binary='';for(let i=0;i<bytes.length;i+=32768)binary+=String.fromCharCode(...bytes.subarray(i,i+32768));
+    const content=btoa(binary);const response=await fetch('/api/extract',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({filename:file.name,content_base64:content})});const result=await response.json();if(!session.uploadCurrent(generation))return;if(!response.ok)throw Error(result.detail||result.error);
+    pending.stage='EXTRACTED';pending.extracted=result;pending.content=content;
+    card.stage.textContent=`후보 ${result.candidate_count}건 추출 · 학생 상태 미적용`;
+    card.review.hidden=false;card.extract.textContent='후보 다시 추출';
+    uploadStatus.textContent=`${file.name} · ${result.file_type} 후보 ${result.candidate_count}건 · 페이지 ${result.document_coverage.page_count??'확인 불가'} · 읽기 실패 페이지 ${(result.document_coverage.unreadable_pages||[]).join(', ')||'없음'}. ${(result.warnings||[]).join(' ')}`;
+    renderUploadReview(result);updateStudentView();showPanel('upload-panel');
+  }catch(error){if(session.uploadCurrent(generation)){pending.stage='FAILED';card.stage.textContent='추출 실패: '+error.message;uploadStatus.textContent=card.stage.textContent;updateStudentView();}}
+  finally{if(session.uploadCurrent(generation))card.extract.disabled=false;}
+}
+function renderUploadReview(result){
+  studentReview.replaceChildren();candidatesBox.replaceChildren();document.getElementById('normalized-summary').replaceChildren();document.getElementById('apply-upload').hidden=true;document.getElementById('review-debug').hidden=true;session.pending.normalized=null;
+  const meta=el('div',undefined,'review-grid');studentReview.append(el('h3','학생 정보 확인'),meta);
+  const observed=key=>result.student_fields[key]?.status==='UNVERIFIED'?result.student_fields[key].observations[0].raw:'';
+  const sid=reviewField(meta,'학번 확인',observed('student_id')),dept=reviewField(meta,'학과 확인',observed('department')),admission=reviewField(meta,'입학연도 확인',observed('admission_year'),'number'),creditYear=reviewField(meta,'적용 학점기준 연도 확인','','number'),catalogYear=reviewField(meta,'적용 과목표 연도 확인','','number');
+  const program=el('select');program.setAttribute('aria-label','전공유형 확인');[['','미확인'],['SINGLE','단일전공'],['MINOR','부전공'],['DOUBLE','복수전공']].forEach(([value,label])=>{const option=el('option',label);option.value=value;program.append(option);});const programWrap=el('label');programWrap.append(el('span','전공유형 확인'),program);meta.append(programWrap);
+  const confirmIdentity=el('input');confirmIdentity.type='checkbox';confirmIdentity.setAttribute('aria-label','학생 정보 직접 확인');const identityLabel=el('label',undefined,'switch');identityLabel.append(confirmIdentity,document.createTextNode('위 학생 정보 직접 확인'));studentReview.append(identityLabel);
+  studentReview._fields={sid,dept,admission,creditYear,catalogYear,program,confirmIdentity};
+  candidatesBox.append(el('h3',`이수기록 ${result.candidate_count}건 · 원문 대조 및 정정`));
+  result.candidates.forEach(candidate=>{
+    const row=el('div',undefined,'candidate'),raw=candidate.raw_values;
+    row.append(el('div',`원문 ${candidate.location}: 코드 ${raw.course_code??'미확인'} · 과목명 ${raw.course_name??'미확인'} · 학점 ${raw.earned_credits??'미확인'} · 학기 ${raw.semester??'미확인'} · 성적 ${raw.grade??raw.completion_marker??'미확인'}`));
+    row.append(el('small',`공식 과목표 연결 ${candidate.resolution_status} · ${candidate.catalog_course_id??'없음'} ${candidate.catalog_name??''} / ${candidate.catalog_credits??'미확인'}학점 · 추출 신뢰 ${candidate.confidence}${candidate.ocr_confidence_score!=null?' '+candidate.ocr_confidence_score.toFixed(2):''}`));
+    const fields=el('div',undefined,'review-grid');row.append(fields);
+    const code=reviewField(fields,'과목코드 정정 '+candidate.candidate_id,raw.course_code||''),name=reviewField(fields,'과목명 정정 '+candidate.candidate_id,raw.course_name||''),credit=reviewField(fields,'취득학점 정정 '+candidate.candidate_id,raw.earned_credits??'','number'),semester=reviewField(fields,'이수 학기 정정 '+candidate.candidate_id,raw.semester||''),classification=reviewField(fields,'자료의 이수구분 '+candidate.candidate_id,raw.classification||'');
+    const completion=el('select');completion.setAttribute('aria-label','이수 상태 확인 '+candidate.candidate_id);[['UNKNOWN','미확인'],['COMPLETED','이수 완료'],['IN_PROGRESS','수강 중'],['FAILED','미이수/실패']].forEach(([value,label])=>{const option=el('option',label);option.value=value;completion.append(option);});const completionLabel=el('label');completionLabel.append(el('span','이수 상태 확인'),completion);fields.append(completionLabel);
+    if(raw.grade)completion.value=['F','U'].includes(raw.grade)?'FAILED':/^(?:[A-D][+0-]?|S|P)$/.test(raw.grade)?'COMPLETED':'UNKNOWN';
+    const check=el('input');check.type='checkbox';check.setAttribute('aria-label','원문과 정정값 확인 '+candidate.candidate_id);const checkLabel=el('label',undefined,'switch');checkLabel.append(check,document.createTextNode('이 행의 원문·정정값 직접 확인'));row.append(checkLabel,el('small',candidate.snippet));
+    row._candidate={check,code,name,credit,semester,classification,completion,id:candidate.candidate_id};candidatesBox.append(row);
+  });
+  const normalize=el('button','정규화 결과 생성');normalize.type='button';candidatesBox.append(normalize);normalize.addEventListener('click',()=>normalizePendingUpload(normalize));
+  // Any correction invalidates the staged normalized object, never the applied one.
+  session.pending.reviewRevision=0;
+  for(const target of [studentReview,candidatesBox])target.oninput=()=>{if(session.pending){session.pending.reviewRevision++;session.pending.normalized=null;session.pending.stage='EXTRACTED';pendingCard.stage.textContent='정정값 검토 중 · 현재 적용 학생 상태는 변경하지 않았습니다.';updateStudentView();document.getElementById('apply-upload').hidden=true;document.getElementById('normalized-summary').textContent='정정값이 바뀌었습니다. 정규화 결과를 다시 생성하세요.';}};
+}
+async function normalizePendingUpload(button){
+  const pending=session.pending,generation=session.uploadGeneration;if(!pending?.extracted||pending.stage==='EXTRACTING'||button.disabled)return;const reviewRevision=pending.reviewRevision;
+  pending.normalized=null;document.getElementById('apply-upload').hidden=true;
+  const f=studentReview._fields,records=[...candidatesBox.querySelectorAll('.candidate')].map(x=>x._candidate).map(x=>({candidate_id:x.id,course_code:x.code.value,course_name:x.name.value,earned_credits:x.credit.value,semester:x.semester.value,classification:x.classification.value,completion_status:x.completion.value,confirmed:x.check.checked}));
+  const review={student_fields:{student_id:f.sid.value,department:f.dept.value,admission_year:f.admission.value,credit_policy_year:f.creditYear.value,catalog_year:f.catalogYear.value,program_type:f.program.value,confirmed:f.confirmIdentity.checked},records};
+  button.disabled=true;uploadStatus.textContent='원문 후보와 정정값을 정규화하고 있습니다.';
+  try{const response=await fetch('/api/normalize-upload',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({filename:pending.file.name,content_base64:pending.content,source_id:pending.extracted.source_id,review})});const normalized=await response.json();if(!session.uploadCurrent(generation))return;if(!response.ok)throw Error(normalized.detail||normalized.error);
+    if(reviewRevision!==pending.reviewRevision){uploadStatus.textContent='정규화 도중 정정값이 변경되어 이전 결과를 폐기했습니다. 다시 생성하세요.';return;}
+    pending.normalized=normalized;pending.stage='NORMALIZED';pendingCard.stage.textContent=`정규화 후보 생성 · 사용 가능 ${normalized.usable_record_count}건 / 확인 필요 ${normalized.unresolved_record_count}건 · 아직 미적용`;
+    const box=document.getElementById('normalized-summary');box.replaceChildren();line(box,`이수정보 후보: 사용 가능 ${normalized.usable_record_count}건 · 확인 필요 ${normalized.unresolved_record_count}건`);line(box,'전체 성적표·적용 교육과정·별도 졸업 증빙은 자동 확정하지 않습니다.');
+    document.getElementById('apply-upload').hidden=false;document.getElementById('review-debug').hidden=false;reviewOutput.textContent=JSON.stringify(normalized,null,2);uploadStatus.textContent=pendingCard.stage.textContent;updateStudentView();
+  }catch(error){if(session.uploadCurrent(generation))uploadStatus.textContent='정규화 실패: '+error.message;}
+  finally{if(session.uploadCurrent(generation))button.disabled=false;}
+}
+document.getElementById('apply-upload').addEventListener('click',async()=>{const pending=session.pending;if(!pending?.normalized)return;if(!await applyStudent(pending.normalized.student_state))return;pending.stage='APPLIED';pendingCard.stage.textContent='학생 이수정보로 적용됨';document.getElementById('apply-upload').hidden=true;updateStudentView();document.getElementById('upload-panel').close();addMessage('assistant',`검토한 이수정보 ${pending.normalized.student_state.course_attempts?.length||0}건을 새 학생 상태로 적용했습니다. 미확인 정보는 그대로 유지했습니다. 같은 채팅방에서 질문해 주세요.`);});
 function detailView(wrap,payload,state) {
-  const det=el('details'); det.append(el('summary','판단 과정과 원문 근거 펼쳐보기')); wrap.append(det);
+  const det=el('details'); det.append(el('summary','판단 근거 보기')); wrap.append(det); det.className='evidence';
   const authority=payload.authority||{};
-  let sourceBox=section(det,'적용 공식 규정과 RuleSet');
+  let sourceBox=section(det,'적용 공식 규정과 RuleSet'); sourceBox.dataset.part='authority';
   if(authority.document_set&&authority.ruleset){
     line(sourceBox,`문서 집합: ${authority.document_set.set_id} v${authority.document_set.set_version} · RuleSet: ${authority.ruleset.ruleset_id} v${authority.ruleset.ruleset_version}`);
     (authority.documents||[]).forEach(doc=>line(sourceBox,`${doc.title} (${doc.document_id})`));
@@ -223,25 +209,28 @@ function detailView(wrap,payload,state) {
     (payload.requirement_results||[]).forEach(result=>{const source=authority.rule_sources?.[result.rule_id];if(source)line(sourceBox,`${result.rule_id} v${source.rule_version} · 출처 ${source.source_documents.join(', ')}${source.supersedes?' · 이전 '+source.supersedes+' 대체':''}`);});
     (authority.unresolved_conflicts||[]).forEach(conflict=>line(sourceBox,`미해결 규칙 충돌: ${conflict.conflict_id} · ${conflict.source_documents.join(', ')}`));
   }else line(sourceBox,'적용 규정 버전을 확인할 수 없습니다.');
-  let box=section(det,'1. 질문 해석');
+  let box=section(det,'질문 해석 · 로컬 LLM'); box.dataset.part='interpretation';
   const parsed=payload.interpretation;
   if(parsed) { line(box,`해석 상태: ${parsed.interpretation_status}`); line(box,`의도: ${parsed.structured_query?.intent||'확인 필요'} · 과목: ${parsed.structured_query?.course_id||'없음'} · 규칙군: ${(parsed.structured_query?.topics||[]).join(', ')||'없음'}`); if(parsed.llm) line(box,`로컬 모델: ${parsed.llm.status}${parsed.llm.wall_seconds!=null?' · '+parsed.llm.wall_seconds+'초':''}`); }
   else line(box,`구조화 입력: ${payload.decision?.intent||'없음'}`);
   if(payload.llm_expression) line(box,`로컬 모델 답변 말투: ${payload.llm_expression.status}${payload.llm_expression.wall_seconds!=null?' · '+payload.llm_expression.wall_seconds+'초':''}`);
-  box=section(det,'2. 학생 정보');
+  box=section(det,'1. 이 답변에 사용한 학생 정보와 조건');
   line(box,`학생 상태 ID: ${state.student_state_id||'없음'} · 입학연도: ${state.admission_year??'미확인'} · 학점 기준: ${state.credit_policy_year??'미확인'} · 과목표: ${state.catalog_year??'미확인'}`);
   line(box,`이수기록 범위: ${state.completion_coverage||'미확인'} · 실제 이수 후보: ${state.course_attempts?.length||0}건`);
   (state.course_attempts||[]).filter(a=>a.evidence_locator).forEach(a=>line(box,`${a.course_id}: 사용자 확인 자료 ${a.evidence_locator.filename} · ${a.evidence_locator.location}`));
   const evidence=payload.evidence||{};
-  box=section(det,'3. 실제 조회한 관계');
+  box=section(det,'2. 실제 조회한 관계 · 관계 그래프');
   const relationRows=evidence.relationship_details||[];
   const shownRelations=[...relationRows.filter(edge=>edge.kind==='SATISFIES').slice(0,40),
     ...relationRows.filter(edge=>edge.kind!=='SATISFIES').slice(0,40)];
-  listRows(box,shownRelations,edge=>`${edge.id}: ${edge.src} → ${edge.dst} (${edge.kind})`);
-  if(relationRows.length>shownRelations.length)line(box,`실제 조회 관계 ${relationRows.length}건 중 ${shownRelations.length}건을 화면에 표시합니다. 전체 관계는 API EvidenceBundle에 있습니다.`);
+  const nodeById=new Map((evidence.nodes||[]).map(n=>[n.id,n]));
+  const relationships=el('details');relationships.append(el('summary',`조회 관계 ${relationRows.length}건 · 연결 보기`));box.append(relationships);
+  shownRelations.forEach(edge=>{const row=el('div',undefined,'line');row.dataset.relationshipId=edge.id;const a=nodeById.get(edge.src),b=nodeById.get(edge.dst);row.append(el('div',`${a?displayNode(a):edge.src} → ${b?displayNode(b):edge.dst} · ${REL_LABELS[edge.kind]||edge.kind}`));const ids=el('details');ids.append(el('summary','관계 식별자'),el('div',`${edge.id}: ${edge.src} → ${edge.dst} (${edge.kind})`,'mono'));row.append(ids);relationships.append(row);});
+  if(relationRows.length>shownRelations.length)line(box,`실제 조회 관계 ${relationRows.length}건 중 ${shownRelations.length}건을 화면에 표시합니다. 전체 반환 관계는 아래 상세 실행 기록의 EvidenceBundle에서 확인할 수 있습니다.`);
+  line(box,'그림은 실행 결과에서 사용한 관계와 최대 12개 후보의 연결을 표시합니다. 물리적인 노드 방문 순서가 아닙니다. 전체 반환 관계는 상세 실행 기록에 있습니다.');
   const graph=el('div',undefined,'graph-wrap'); graph.append(drawGraph(payload)); box.append(graph);
-  box=section(det,'4. 실행한 규칙 검증과 원문 규칙 조회');
-  if(payload.requirement_results?.length)listRows(box,payload.requirement_results,r=>`${r.rule_id}: ${r.status} · 관찰 ${r.observed??'미확인'} / 요구 ${r.required??'미확인'}`);
+  box=section(det,'3. 적용 규칙과 검증 결과');
+  if(payload.requirement_results?.length)payload.requirement_results.forEach(r=>{const row=el('div',`${ruleLabel(payload,r.rule_id)}: ${STATUS_LABELS[r.status]||r.status} · 관찰 ${r.observed??'미확인'} / 요구 ${r.required??'미확인'}`,'line');row.dataset.ruleId=r.rule_id;row.dataset.status=r.status;row.dataset.observed=JSON.stringify(r.observed??null);row.dataset.required=JSON.stringify(r.required??null);const ids=el('details');ids.append(el('summary','Rule 식별자'),el('div',r.rule_id,'mono'));row.append(ids);box.append(row);});
   else if(!payload.decision?.lookup_result?.rules?.length&&!payload.decision?.lookup_result?.policy_facts?.length)line(box,'기록 없음');
   if(payload.scenario_decision){const before=new Map((payload.requirement_results||[]).map(r=>[r.rule_id,r]));
     (payload.scenario_decision.requirement_results||[]).filter(r=>before.has(r.rule_id)&&before.get(r.rule_id).status!==r.status)
@@ -249,7 +238,7 @@ function detailView(wrap,payload,state) {
   (payload.decision?.lookup_result?.rules||[]).forEach(r=>line(box,`${r.rule_id}: 원문 규칙 조회 · ${r.rule_type}${r.required_value!=null?' · 기준 '+r.required_value+'학점':''}`));
   (payload.decision?.lookup_result?.policy_facts||[]).forEach(f=>line(box,`${f.policy_fact_id}: 원문 정책 사실 조회 · ${f.predicate}`));
   Object.entries(payload.decision?.lookup_result?.rule_applicability||{}).forEach(([ruleId,scope])=>line(box,`${ruleId}: 적용 범위 ${scope.status} · 이유 ${scope.reason} · 근거 ${(scope.source_refs||[]).join(', ')}`));
-  box=section(det,'5. 계산');
+  box=section(det,'학점 계산 · 남은 요건 · 졸업요건상 후보');
   if(payload.decision?.intent==='POLICY_LOOKUP')line(box,'원문 규칙 조회이며 학생 이수학점 계산은 수행하지 않았습니다.');
   (payload.decision?.lookup_result?.calculations||[]).forEach(calc=>{
     const labels={required_amount:'필요',earned_amount:'취득',recognized_amount:'인정',remaining_amount:'부족',excess_amount:'초과',capped_amount:'상한',excluded_amount:'제외'};
@@ -257,11 +246,11 @@ function detailView(wrap,payload,state) {
     line(box,`정책 계산 ${calc.operation}: ${values.join(' · ')} · Rule ${calc.source_rule_ids.join(', ')}`);
   });
   const amount=payload.credited_amount;
-  if(amount) { line(box,`졸업 산입 합계: ${amount.total??'미확인'} · 확인된 하한: ${amount.confirmed_minimum}`); Object.entries(amount.by_area||{}).forEach(([area,value])=>line(box,`${area}: ${value??'미확인'}`)); }
+  if(amount) { line(box,`졸업 산입 합계: ${amount.total??'미확인'} · 확인된 하한: ${amount.confirmed_minimum}`); Object.entries(amount.by_area||{}).forEach(([area,value])=>line(box,`${AREA_LABELS[area]||area}: ${value??'미확인'}`)); }
   const remaining=payload.decision?.remaining_requirements;
   if(remaining){
     line(box,`충족 ${remaining.satisfied_requirements.length}건 · 미충족 ${remaining.unsatisfied_requirements.length}건 · 확인 필요 ${remaining.needs_information.length}건`);
-    Object.entries(remaining.progress||{}).forEach(([area,p])=>line(box,`${area}: ${p.current??'미확인'} / ${p.required} · ${p.status}${p.is_lower_bound?' (확인된 하한)':''}`));
+    Object.entries(remaining.progress||{}).forEach(([area,p])=>line(box,`${AREA_LABELS[area]||area}: ${p.current??'미확인'} / ${p.required} · ${STATUS_LABELS[p.status]||p.status}${p.is_lower_bound?' (확인된 하한)':''}`));
     const courses=payload.decision?.candidate_courses||[];
     const presentation=payload.remaining_presentation;
     line(box,'졸업요건상 후보이며 수강 우선순위가 아닙니다. 다음 학기 개설·선수과목·시간표 충돌은 미확인입니다.');
@@ -286,14 +275,19 @@ function detailView(wrap,payload,state) {
     line(box,`가정 변화: 총학점 ${payload.scenario_delta.total_credit_change??'미확인'} · 전공 ${payload.scenario_delta.major_credit_change??'미확인'} · 졸업판정 미리보기 ${payload.scenario_delta.graduation_preview_before} → ${payload.scenario_delta.graduation_preview_after}`);
     line(box,`미이수 지정 필수: ${payload.scenario_delta.missing_required_before?.join(', ')??'미확인'} → ${payload.scenario_delta.missing_required_after?.join(', ')??'미확인'}`);
   }
-  box=section(det,'6. 판정과 실행 순서');
+  box=section(det,'실제 실행 기록'); box.dataset.part='trace';
   if(payload.decision) line(box,`상태: ${payload.decision.decision_status??payload.decision.lookup_status} · 졸업: ${payload.decision.graduation_outcome} · 결정 ID: ${payload.decision.decision_id}`);
   listRows(box,payload.execution_trace?.events||[],event=>`${event.sequence}. ${event.event_type}${event.operation?' · '+event.operation:''}${event.rule_id?' · '+event.rule_id:''}`);
-  box=section(det,'7. 교육과정 PDF 근거');
+  box=section(det,'4. 교육과정 PDF 원문 근거');
   const seen=new Set();
   (evidence.facts||[]).forEach(f=>{const p=f.source?.pdf_page;if(Number.isInteger(p)&&!seen.has('p'+p)){sourceLink(box,p,`과목표 PDF ${p}쪽`);seen.add('p'+p);}});
   Object.values(evidence.source_locators||{}).forEach(s=>{const p=s.pdf_page_start;if(Number.isInteger(p)&&!seen.has(s.id)){sourceLink(box,p,`${s.title} · PDF ${p}쪽`);seen.add(s.id);}});
   if(!seen.size) line(box,'실행에 사용된 원문 위치가 없습니다.');
+  const advanced=el('details'); advanced.append(el('summary','5. 적용 규정 · 질문 해석 · 상세 실행 기록'));
+  ['authority','interpretation','trace'].forEach(part=>advanced.append(det.querySelector(`[data-part=${part}]`)));
+  const raw=el('details');raw.append(el('summary','전체 AnswerPayload · EvidenceBundle · ExecutionTrace (JSON)'),el('pre',JSON.stringify(payload,null,2),'review-debug'));
+  advanced.append(raw);det.append(advanced);
+  const identity=el('p',state.student_state_id?`답변 당시 학생 상태: ${state.student_state_id} · 이후 학생 정보 변경과 별개로 보존됩니다.`:'학생 자료 없이 공식 과목·정책을 조회한 답변입니다.','muted');det.prepend(identity);
 }
 function drawGraph(payload) {
   const evidence=payload.evidence||{};
@@ -319,28 +313,27 @@ function drawGraph(payload) {
   svg.setAttribute('width','850');svg.setAttribute('height',height);
   const points=new Map();groups.forEach((group,col)=>group.forEach((n,i)=>points.set(n.id,{x:30+col*270,y:20+i*55})));
   edges.forEach(edge=>{const a=points.get(edge.src),b=points.get(edge.dst);if(!a||!b)return;const ln=document.createElementNS(svg.namespaceURI,'line');ln.dataset.relationshipId=edge.id;ln.setAttribute('x1',a.x+210);ln.setAttribute('y1',a.y+18);ln.setAttribute('x2',b.x);ln.setAttribute('y2',b.y+18);ln.setAttribute('stroke','#8aa9af');ln.setAttribute('stroke-width','1.5');svg.append(ln);});
-  nodes.forEach(n=>{const p=points.get(n.id);const rect=document.createElementNS(svg.namespaceURI,'rect');rect.setAttribute('x',p.x);rect.setAttribute('y',p.y);rect.setAttribute('width','210');rect.setAttribute('height','38');rect.setAttribute('rx','8');rect.setAttribute('fill',n.kind==='Requirement'?'#e6eff9':'#dff1ed');rect.setAttribute('stroke','#a9c9c7');svg.append(rect);const title=document.createElementNS(svg.namespaceURI,'title');title.textContent=`${n.kind}: ${n.id}`;rect.append(title);const text=document.createElementNS(svg.namespaceURI,'text');text.setAttribute('x',p.x+7);text.setAttribute('y',p.y+23);text.setAttribute('font-size','11');text.textContent=n.label.length>29?n.label.slice(0,28)+'…':n.label;svg.append(text);});
+  nodes.forEach(n=>{const p=points.get(n.id);const rect=document.createElementNS(svg.namespaceURI,'rect');rect.dataset.nodeId=n.id;rect.setAttribute('x',p.x);rect.setAttribute('y',p.y);rect.setAttribute('width','210');rect.setAttribute('height','38');rect.setAttribute('rx','8');rect.setAttribute('fill',n.kind==='Requirement'?'#e6eff9':'#dff1ed');rect.setAttribute('stroke','#a9c9c7');svg.append(rect);const title=document.createElementNS(svg.namespaceURI,'title');title.textContent=`${n.kind}: ${n.id}`;rect.append(title);const text=document.createElementNS(svg.namespaceURI,'text');text.setAttribute('x',p.x+7);text.setAttribute('y',p.y+23);text.setAttribute('font-size','11');const label=displayNode(n);text.textContent=label.length>29?label.slice(0,28)+'…':label;svg.append(text);});
   return svg;
 }
+
 document.getElementById('form').addEventListener('submit',async event=>{
-  event.preventDefault();const text=question.value.trim();if(!text)return;
-  const generation = uploadGeneration;
-  let state={};try {
-    if(stateBox.value.trim()&&(!uploadFile.files?.length||normalizedUploadReady)){
-      state=JSON.parse(stateBox.value);
-      if(state===null||typeof state!=='object'||Array.isArray(state))throw new Error('학생 상태는 JSON 객체여야 합니다.');
-      statusBox.textContent='학생 상태 JSON 형식 확인됨';
-    }else statusBox.textContent='학생 상태 미확인: 과목·정책 조회만 가능하며 개인 판정에는 확인된 자료가 필요합니다.';
-    statusBox.className='muted';
-  }
-  catch(error) { statusBox.textContent='학생 상태 JSON 오류: '+error.message;statusBox.className='notice';return; }
-  addMessage('user',text);question.value='';send.disabled=true;
-  try {const response=await fetch('/api/query',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({...(Object.keys(state).length?{student_state:state}:{}),utterance:text,context,use_local_llm:document.getElementById('llm').checked})});const payload=await response.json();if(generation!==uploadGeneration)return;
-    if(!response.ok) {const missingStudent=payload.detail==='StudentState is required for personal credit and graduation decisions';addMessage('assistant',missingStudent?'학생 이수 상태가 없어 개인별 인정학점·졸업 여부를 계산할 수 없습니다. 성적표를 확인해 입력하거나, 일반 정책을 물을 때는 기준·한도임을 명확히 해 주세요.':`입력 확인 필요: ${payload.detail||payload.error}`);return;}
-    const wrap=addMessage('assistant',payload.answer_text||'판정 결과가 없습니다.');if(payload.interpretation?.context)context=payload.interpretation.context;detailView(wrap,payload,state);
-  } catch(error) {if(generation===uploadGeneration)addMessage('assistant','로컬 서버 연결을 확인해 주세요: '+error.message);}
-  finally {if(generation===uploadGeneration){send.disabled=false;question.focus();}}
+  event.preventDefault();const text=question.value.trim();if(!text||composing||session.active)return;
+  const token=session.beginQuery();if(!token)return;
+  addMessage('user',text);question.value='';question.style.height='auto';send.disabled=true;document.getElementById('request-status').textContent='응답을 기다리고 있습니다…';
+  const reply=addMessage('assistant','질문을 확인하고 있습니다…');pendingReply=reply;const controller=new AbortController();queryController=controller;
+  try{
+    const response=await fetch('/api/query',{method:'POST',headers:{'Content-Type':'application/json'},signal:controller.signal,body:JSON.stringify({...(token.state?{student_state:token.state}:{}),utterance:text,context:token.context,use_local_llm:document.getElementById('llm').checked})});const payload=await response.json();if(!session.queryCurrent(token))return;
+    if(!response.ok){const missing=payload.detail==='StudentState is required for personal credit and graduation decisions';reply.querySelector('.answer').textContent=missing?'개인별 이수학점·졸업 요건은 학생 이수정보를 적용한 뒤 계산할 수 있습니다. 과목·일반 교육과정 기준은 성적표 없이도 질문할 수 있습니다.':`입력 확인 필요: ${payload.detail||payload.error}`;session.finishQuery(token);return;}
+    // Freeze each answer to its request-time input and returned evidence, never current state.
+    const snapshot=session.copy(payload);reply.querySelector('.answer').textContent=snapshot.answer_text||'판정 결과가 없습니다.';
+    reply.dataset.studentRevision=String(token.revision);reply.dataset.decisionId=snapshot.decision?.decision_id||'';
+    reply.append(el('p',`${snapshot.decision?.intent==='WHAT_IF'?'가상 이수 결과 · 실제 이수정보는 변경하지 않았습니다. · ':''}${token.state?'답변 당시 학생 상태 '+(token.state.student_state_id||'ID 미확인'):'학생 자료 없이 조회'}${snapshot.authority?.ruleset?' · RuleSet v'+snapshot.authority.ruleset.ruleset_version:''}`,'reply-context'));
+    detailView(reply,snapshot,token.state||{});session.finishQuery(token,snapshot.interpretation?.context);
+  }catch(error){if(session.queryCurrent(token)){reply.querySelector('.answer').textContent=error.name==='AbortError'?'요청을 취소했습니다.':'로컬 서버 연결을 확인해 주세요: '+error.message;session.finishQuery(token);}}
+  finally{if(queryController===controller){queryController=null;pendingReply=null;send.disabled=!!session.active;document.getElementById('request-status').textContent='Enter 전송 · Shift+Enter 줄바꿈';}}
 });
+updateStudentView();
 </script>
 </body>
 </html>
