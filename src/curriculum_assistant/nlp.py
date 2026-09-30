@@ -17,7 +17,13 @@ def _policy_topics(question: str) -> list[str]:
     if any(term in clean for term in ("지금", "현재", "남았", "남은", "남음", "부족", "이수하면", "들으면",
                                      "추가", "안들은", "안들었", "빠진", "빠졌", "인정받", "졸업가능",
                                      "졸업할수", "졸업돼", "졸업됨", "졸업여부", "이수기록", "성적표", "넣어도", "산입해")):
-        return []
+        # Policy questions can discuss a *category's* residual credits or a
+        # hypothetical cap without supplying a student's completed records.
+        if not any(term in clean for term in ("잔여학점", "초과", "상한", "적용기준", "이수기준",
+                                              "이전학번", "과거학번", "기존학번", "심층상담", "현재규정", "공식문서")) and not (
+            "단일전공" in clean and "부전공" in clean
+        ):
+            return []
     if "얼마나" in clean and "인정" in clean:
         return []
     if re.search(r"(^|\s)(나|나는|내|제가|저는|우리)(\s|$)", question):
@@ -26,13 +32,16 @@ def _policy_topics(question: str) -> list[str]:
     if ("요건" in clean and ("졸업" in clean or "판정" in clean)
             and any(term in clean for term in ("종류", "목록", "어떤", "전체", "보여", "뭐"))):
         topics.add("ALL_REQUIREMENTS")
-    if "교육과정" in clean and any(term in clean for term in ("적용", "학번", "입학")):
+    if ("교육과정" in clean and any(term in clean for term in ("적용", "학번", "입학", "개편", "변경"))) or (
+        any(term in clean for term in ("이전학번", "과거학번", "기존학번", "입학연도", "복학생", "재입학", "전과"))
+        and any(term in clean for term in ("기준", "적용", "과목", "학점", "교육과정"))
+    ):
         topics.add("APPLICABILITY")
     if "졸업학점" in clean or ("졸업" in clean and "총학점" in clean):
         topics.add("GRADUATION_CREDITS")
-    if "교양" in clean and any(term in clean for term in ("학점", "상한", "최소")):
+    if "교양" in clean and any(term in clean for term in ("학점", "상한", "최소", "이수기준")):
         topics.add("GENERAL_CREDITS")
-    if "균형교양" in clean and any(term in clean for term in ("영역", "과목", "각")):
+    if "균형교양" in clean and any(term in clean for term in ("영역", "과목", "각", "제외", "의무")):
         topics.add("GENERAL_AREAS")
     major_clean = clean.replace("단일전공", "").replace("복수전공", "").replace("부전공", "")
     if "전공" in major_clean and "학점" in clean:
@@ -41,25 +50,53 @@ def _policy_topics(question: str) -> list[str]:
         topics.add("MAJOR_CREDITS")
     if "전공필수" in clean and any(term in clean for term in ("과목", "모두", "뭐", "지정", "목록", "전체")):
         topics.add("REQUIRED_COURSES")
-    if any(term in clean for term in ("졸업논문", "심층상담")):
+    if "졸업논문" in clean:
         topics.update(("REQUIRED_COURSES", "GRADUATION_CONDITIONS"))
+    elif "심층상담" in clean:
+        topics.add("REQUIRED_COURSES")
     if "졸업인증" in clean:
         topics.add("GRADUATION_CONDITIONS")
     if "권장" in clean:
         topics.add("RECOMMENDATIONS")
-    if any(term in clean for term in ("동일과목", "대체과목", "재수강", "중복")):
+    if any(term in clean for term in ("동일과목", "대체", "재수강")) or ("중복" in clean and "잔여학점" not in clean):
         topics.add("EQUIVALENCE")
     if "경과조치" in clean:
         topics.add("TRANSITION")
     if any(term in clean for term in ("복수전공", "부전공")):
         topics.add("MULTI_PROGRAM")
-    if any(term in clean for term in ("자유선택", "잔여학점")):
+    if "자유선택" in clean or ("잔여학점" in clean and "교양잔여학점" not in clean):
         topics.add("FREE_CHOICE")
+    if "졸업잔여학점" in clean:
+        topics.update(("GRADUATION_CREDITS", "GENERAL_CREDITS", "MAJOR_CREDITS"))
+    if "심층상담" in clean and any(term in clean for term in ("횟수", "몇번", "한번", "학기", "이수")):
+        topics.add("REQUIRED_COURSES")
+    if any(term in clean for term in ("편입생", "재직자", "성인학습자", "야간학과", "계약학과")) and "교양" in clean:
+        topics.update(("GENERAL_CREDITS", "GENERAL_AREAS"))
     return sorted(topics)
 
 
 def _norm(text: str) -> str:
     return re.sub(r"[^가-힣a-zA-Z0-9ⅠⅡ]", "", text).lower()
+
+
+def partial_policy_query(question: str) -> dict | None:
+    """Return only source-backed policy components of a mixed personal query."""
+    clean = _norm(question)
+    if not any(term in clean for term in ("기준", "최소", "필요", "요건")):
+        return None
+    topics = []
+    if "교양" in clean and any(term in clean for term in ("학점", "요건")):
+        topics.append("GENERAL_CREDITS")
+    if "전공" in clean and any(term in clean for term in ("학점", "요건")):
+        topics.append("MAJOR_CREDITS")
+    if "졸업" in clean and "학점" in clean:
+        topics.append("GRADUATION_CREDITS")
+    if not topics:
+        return None
+    year = re.search(r"(20\d{2})(?:학번|학년도입학생|년입학생)", clean)
+    return {"intent": "POLICY_LOOKUP", "topics": sorted(set(topics)),
+            "partial_student_information": True,
+            **({"entry_year": int(year.group(1))} if year else {})}
 
 
 def _entities(question: str, catalog: dict) -> tuple[list[str], list[str]]:
@@ -178,13 +215,47 @@ def interpret(question: str, catalog: dict, context: dict | None = None) -> dict
                 or ("전필" in clean and any(term in clean for term in ("뭐남았", "뭐남아")))
                 or ("전공" in clean and "남은거" in clean)
                 or ("교양" in clean and "뭐더" in clean))
+    if planning and "교양" in clean and "잔여학점" in clean and not personal and not any(
+        term in clean for term in ("앞으로", "다음엔", "다음에", "내가", "나는", "제가", "저는")
+    ):
+        planning = False
     topics = [] if planning else _policy_topics(question)
     if topics:
-        policy_program = "DOUBLE" if "복수전공" in clean else "MINOR" if "부전공" in clean else "SINGLE" if "단일전공" in clean else None
+        policy_program = "SINGLE" if "단일전공" in clean else "DOUBLE" if "복수전공" in clean or "제2전공" in clean else "MINOR" if "부전공" in clean else None
+        compared_program = "MINOR" if policy_program == "SINGLE" and "부전공" in clean else None
+        categories = (["TRANSFER"] if "편입생" in clean or "편입" in clean else []) + (
+            ["EMPLOYED_ADULT"] if "재직자" in clean or "성인학습자" in clean else []) + (
+            ["NIGHT"] if "야간학과" in clean else []) + (
+            ["CONTRACT"] if "계약학과" in clean else [])
         entry_match = re.search(r"(20\d{2})(?:학번|학년도입학생|년입학생)", clean)
+        historical_scope = not entry_match and any(term in clean for term in ("이전학번", "과거학번", "기존학번", "구학번"))
+        earned = None
+        if "교양" in clean and any(term in clean for term in ("초과", "상한", "인정", "이수")):
+            linked = re.search(r"(\d{1,3})학점(?:을|를)?(?:이수|취득)", clean)
+            if linked and "교양" in clean[max(0, linked.start() - 28):linked.start()]:
+                earned = int(linked.group(1))
+        calculations = []
+        if "교양잔여학점" in clean:
+            calculations.append("GENERAL_REMAINDER")
+        if "졸업잔여학점" in clean:
+            calculations.append("GRADUATION_REMAINDER")
+        if "전공선택" in clean and (any(term in clean for term in ("심화전공", "합계", "합치", "합산")) or "+" in question):
+            calculations.append("MAJOR_ELECTIVE_WITH_ADVANCED")
+        focus = ("DOUBLE_COUNT" if "중복" in clean and "잔여학점" in clean else
+                 "APPLICABILITY_CHOICE" if "교육과정" in clean and "선택" in clean and "적용" in clean else
+                 "COUNSELING_SCHEDULE" if "심층상담" in clean and any(term in clean for term in ("횟수", "몇번", "한번", "학기")) else
+                 "GENERAL_AREA_COURSE_CREDITS" if "균형교양" in clean and "과목" in clean and re.search(r"\d+학점", clean) else
+                 "GENERAL_AREA_DOUBLE_COUNT" if "균형교양" in clean and "한과목" in clean and "두영역" in clean else None)
         return {"interpretation_status": "RESOLVED", "ambiguities": [],
                 "structured_query": {"intent": "POLICY_LOOKUP", "topics": topics,
                                      **({"program_type": policy_program} if policy_program else {}),
+                                     **({"compared_program_type": compared_program} if compared_program else {}),
+                                     **({"student_category": categories[0]} if len(categories) == 1 else {}),
+                                     **({"student_categories": categories} if len(categories) > 1 else {}),
+                                     **({"historical_scope_requested": True} if historical_scope else {}),
+                                     **({"requested_calculations": calculations} if calculations else {}),
+                                     **({"policy_focus": focus} if focus else {}),
+                                     **({"hypothetical_general_earned": earned} if earned is not None else {}),
                                      **({"entry_year": int(entry_match.group(1))} if entry_match else {})}, "context": context or {}}
     codes, ambiguity = _entities(question, catalog)
     if ambiguity:

@@ -81,3 +81,7 @@ flowchart LR
 한국어 질문은 서버의 허용된 `REMAINING_PLAN`과 영역 필터로 구조화된다. 실제 StudentState와 고정된 `CRS-CE-2026-CORE v1`으로 먼저 기존 Rule Engine의 `RequirementResult`를 계산한다. 서버가 VERIFIED 편성행을 `FETCH_CATALOG_SET`으로, 미충족 요건의 `SATISFIES` 간선을 `FETCH_COURSE_REQUIREMENT_LINKS`로 조회한다. `RemainingRequirementSummary`는 실행된 요건 결과를 투영하고 `CandidateCourse`는 조회된 간선과 실제 인정 과목을 대조해 분류한다. 결정·근거·실행 이벤트를 같은 스냅샷에 고정한 뒤 서버 템플릿으로 답한다. 로컬 LLM은 판정이나 과목 선택을 바꿀 수 없다. 가상 추가 이수는 기존 별도 `WHAT_IF` 경로를 사용한다. 학년 메타데이터, 미확인 개설/선수과목 정보는 요건 계산에 들어가지 않는다.
 
 학생용 표시에서는 기존 결정과 후보를 바꾸지 않고 `remaining_presentation`으로 전공/교양 및 연결된 미충족 Rule별 후보 수를 계산한다. 기본 채팅 답변은 현재 상태, 필수, 부족 학점, 후보 수, 미확인 사항을 구분한다. 전체 후보는 펼쳐보기에서 요청할 때만 화면에 채우며 각 행의 실제 `SATISFIES` 관계, Rule 출처, PDF 페이지를 보여준다. 표시 투영은 서버 verifier가 원래 `DeterministicDecision`과 대조한다.
+
+## 정책 질문과 개인 판정의 분기
+
+서버는 학생 상태 없이도 `POLICY_LOOKUP`을 허용하고 허용된 `Requirement`·`PolicyFact`·편성 과목 조회를 수행한다. 개인 이수값이 없는 복합 질문은 확인된 정책 결과를 먼저 반환하고 개인 계산만 `NEEDS_INFORMATION`으로 표시한다. 정책 합산·잔여·상한 연산은 서버의 결정적 계산기와 `ExecutionTrace`에서 수행하며, LLM은 수치나 적용 대상을 만들 수 없다. 현재 활성 RuleSet v2는 동일 PDF의 추가 확인 사실 두 건으로만 v1을 보강했다. 공식 대체 지정 목록, 최종 승인 기록, 2026 상담 의무 횟수와 과거 전체 RuleSet은 별도 공식 자료가 없으므로 확정하지 않는다.

@@ -11,7 +11,7 @@ from .engine import execute
 from .file_extract import extract_upload, normalize_upload
 from .graph import Graph
 from .local_llm import express_with_local_llm, interpret_with_local_llm
-from .nlp import interpret
+from .nlp import interpret, partial_policy_query
 
 ROOT = Path(__file__).resolve().parents[2]
 PAGE = Path(__file__).parent / "web/index.html"
@@ -95,7 +95,12 @@ class Handler(BaseHTTPRequestHandler):
                                         "answer_text": "질문에서 과목이나 의도를 확정할 수 없습니다. 표현을 더 구체적으로 알려 주세요."})
             if state is None:
                 if query["intent"] not in {"COURSE_LOOKUP", "POLICY_LOOKUP", "CATALOG_AGGREGATE", "ENTITY_CHECK"}:
-                    raise ValueError("StudentState is required for personal credit and graduation decisions")
+                    fallback = partial_policy_query(request.get("utterance", "")) if parsed is not None else None
+                    if fallback is None:
+                        raise ValueError("StudentState is required for personal credit and graduation decisions")
+                    parsed = {**parsed, "personal_intent_without_state": query["intent"],
+                              "structured_query": fallback}
+                    query = fallback
                 state = catalog_query_context()
             payload = execute(self.graph, state, query)
             if request.get("use_local_llm", True):

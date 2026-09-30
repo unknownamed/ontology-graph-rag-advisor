@@ -148,6 +148,14 @@ def validate_registry(catalog: dict) -> None:
         if {(e["document_id"], e["source_ref"]) for e in rule["supporting_evidence"]} != {
                 (locators[ref]["source_document_id"], ref) for ref in rule["source_refs"]}:
             raise ValueError("Rule evidence does not match document locators")
+    policy_ids = set()
+    for fact in catalog.get("policy_facts", []):
+        refs = fact.get("source_refs", [])
+        if (fact["policy_fact_id"] in policy_ids or fact.get("verification_status") != "VERIFIED"
+                or not refs or not set(refs).issubset(locators)
+                or any(locators[ref]["source_document_id"] not in included for ref in refs)):
+            raise ValueError("Verified policy fact requires unique identity and official PDF evidence")
+        policy_ids.add(fact["policy_fact_id"])
     for conflict in ruleset["unresolved_conflicts"]:
         if conflict["resolution_status"] != "UNRESOLVED" or not set(conflict["source_documents"]).issubset(included):
             raise ValueError("RuleSet conflict provenance or status is invalid")
@@ -478,6 +486,35 @@ class RuleSetStore:
             if new != old and (new["rule_version"] != old["rule_version"] + 1
                                or new["supersedes"] != rule_ref(old)):
                 raise ValueError("Changed rules need an explicit version lineage")
+        entry = self._save(catalog)
+        temporary = self.directory / "active.json.tmp"
+        temporary.write_text(json.dumps(entry, indent=2) + "\n", encoding="utf-8")
+        temporary.replace(self.pointer)
+        return catalog
+
+    def activate_source_refinement(self, catalog: dict) -> dict:
+        """Version newly verified facts from an already registered official PDF.
+
+        The document set and executable rules stay byte-identical. This is a
+        reviewed data migration, never an automatic text-to-rule conversion.
+        """
+        current = self.load_active()
+        unchanged_keys = set(current) - {"curriculum_ruleset", "policy_facts"}
+        if (set(catalog) != set(current)
+                or any(catalog[key] != current[key] for key in unchanged_keys)
+                or catalog["curriculum_ruleset"]["ruleset_version"] != current["curriculum_ruleset"]["ruleset_version"] + 1):
+            raise ValueError("Source refinement may only append sourced policy facts")
+        previous_ruleset = current["curriculum_ruleset"]
+        revised_ruleset = catalog["curriculum_ruleset"]
+        allowed_metadata = {"ruleset_version", "created_at", "verification_summary"}
+        if (set(previous_ruleset) != set(revised_ruleset)
+                or any(revised_ruleset[key] != previous_ruleset[key]
+                       for key in set(previous_ruleset) - allowed_metadata)):
+            raise ValueError("Source refinement cannot change executable RuleSet scope or membership")
+        old = {fact["policy_fact_id"]: fact for fact in current["policy_facts"]}
+        new = {fact["policy_fact_id"]: fact for fact in catalog["policy_facts"]}
+        if not set(old) < set(new) or any(new[key] != value for key, value in old.items()):
+            raise ValueError("Source refinement must preserve all earlier policy facts")
         entry = self._save(catalog)
         temporary = self.directory / "active.json.tmp"
         temporary.write_text(json.dumps(entry, indent=2) + "\n", encoding="utf-8")

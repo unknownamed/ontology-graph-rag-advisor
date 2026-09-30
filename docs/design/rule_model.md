@@ -68,3 +68,5 @@
 ## 구현 확장: 규칙 정의 조회
 
 `POLICY_LOOKUP`은 `Requirement` 노드의 `required_value`, `course_ids`, `areas`, 적용 `program_types`를 조회할 수 있다. 이 경로는 `RequirementResult`의 `SATISFIED`/`UNSATISFIED`를 만들지 않는다. 학생 개인의 요건 충족을 묻는 질문은 기존 Rule Engine으로 보내고, 단일전공 78학점과 복수전공 45학점을 같은 적용 범위로 합치지 않는다. 적용연도·권장·경과조치 등 비계산 사실은 별도 `PolicyFact`로 조회하며, 공식 동일·대체 지정 목록이 없다는 상태를 그대로 보존한다.
+
+현재 활성 RuleSet v2는 교육과정 PDF 33쪽의 편입생 교양 의무 면제, 야간·재직자/성인학습자 관련·계약학과의 영역별 최소 면제, 일부 학과 유형의 교양 최소 26학점 및 상한 초과분 처리 사실을 추가한다. 적용 대상은 `student_category`와 그 증빙, `program_type`, 입학연도·학점기준연도·과목표 연도를 분리해 검사한다. 적용/비적용 결과에는 근거 `policy_fact_id`와 실행 이벤트를 남긴다. 해당 학생의 학과 유형 또는 과거 RuleSet이 확인되지 않으면 2026 일반 학생 기준을 개인 판정에 전용하지 않는다. 이 v2는 기존 19개 실행 `Requirement`의 요구값과 Rule ID를 변경하지 않는다.

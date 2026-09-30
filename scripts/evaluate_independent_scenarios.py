@@ -885,10 +885,10 @@ def main() -> None:
               "CTX_04는 누락 학기에 특정 필수과목을 이수하지 않았다는 공식 증거가 없어 SKIP으로 유지한다.", ""]
     lines += ["", "## 판정 기준", "",
               "질문세트의 개념적 의도는 `INTENT_FAMILIES`의 일반 의미군으로 현재 API 의도와 비교했다. "
-              "단순 문장 일치나 Rule Engine 직접 호출은 PASS 근거가 아니다. ",
+              "단순 문장 일치나 Rule Engine 직접 호출은 PASS 근거가 아니다.",
               "기대 학점 기준은 VERIFIED 카탈로그의 졸업 요건값과 합성 fixture에서 유도했다. "
               "출처는 교육과정 PDF의 SHA-256, 반환된 원문 페이지 및 실제 조회·규칙 이벤트와 대조했다. "
-              "승인 요청서 PDF는 열지 않았다. 상세 API 응답과 모든 검사는 JSON 결과 파일을 참조한다.", ""]
+              "독립 시나리오 평가기는 승인 요청서를 입력으로 사용하지 않았다. 상세 API 응답과 모든 검사는 JSON 결과 파일을 참조한다.", ""]
     REPORT.write_text("\n".join(lines), encoding="utf-8")
     print(f"PASS {count['PASS']} / FAIL {count['FAIL']} / SKIP {count['SKIP']}; "
           f"LLM {summary['llm_checks']}; leakage {'PASS' if leakage['pass'] else 'FAIL'}")

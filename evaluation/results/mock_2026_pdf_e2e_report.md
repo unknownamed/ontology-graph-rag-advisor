@@ -15,19 +15,19 @@
 
 - 읽힌 페이지 2쪽, 후보 43건, 확정 연결 43건, 요건 상태 {"SATISFIED": 18, "NOT_APPLICABLE": 1}.
 - 총 인정학점 131, 전공 인정학점 96; 부족 학점 {}, 미이수 필수 {}.
-- 실행 EX-73b7204f3158a94b: 실제 이벤트 109건, 관계 148개, 공식 PDF 근거 위치 8개.
+- 실행 EX-86dbddd91fbc3140: 실제 이벤트 109건, 관계 148개, 공식 PDF 근거 위치 8개.
 
 ## mock_2026_partial
 
 - 읽힌 페이지 1쪽, 후보 28건, 확정 연결 28건, 요건 상태 {"UNSATISFIED": 6, "NOT_APPLICABLE": 1, "SATISFIED": 12}.
 - 총 인정학점 74, 전공 인정학점 39; 부족 학점 {"R-CE-2026-ADVANCED-CREDITS": 33, "R-CE-2026-MAJOR-ELECTIVE-CREDITS": 3, "R-CE-2026-MAJOR-REQUIRED-CREDITS": 3, "R-CE-2026-MAJOR-TOTAL-CREDITS": 39, "R-GRAD-2026-TOTAL-CREDITS": 56}, 미이수 필수 {"R-CE-2026-REQUIRED-COURSES": ["CDA0143"]}.
-- 실행 EX-d154dfed2a73396c: 실제 이벤트 80건, 관계 106개, 공식 PDF 근거 위치 8개.
+- 실행 EX-a30d3f735a79f8d8: 실제 이벤트 80건, 관계 106개, 공식 PDF 근거 위치 8개.
 
 ## mock_2026_boundary
 
 - 읽힌 페이지 2쪽, 후보 42건, 확정 연결 42건, 요건 상태 {"SATISFIED": 17, "NOT_APPLICABLE": 1, "UNSATISFIED": 1}.
 - 총 인정학점 131, 전공 인정학점 96; 부족 학점 {}, 미이수 필수 {"R-CE-2026-REQUIRED-COURSES": ["CDA0034"]}.
-- 실행 EX-00101508cc3a9f9d: 실제 이벤트 108건, 관계 148개, 공식 PDF 근거 위치 8개.
+- 실행 EX-5285df7f3cdfa019: 실제 이벤트 108건, 관계 148개, 공식 PDF 근거 위치 8개.
 
 - 가정 과목 CDA0034: 졸업 상태 NOT_ELIGIBLE_PDF → ELIGIBLE_PDF; 학점 변화 0, 변경 요건 [{"rule_id": "R-CE-2026-REQUIRED-COURSES", "before": "UNSATISFIED", "after": "SATISFIED"}].
 
@@ -35,4 +35,4 @@
 
 - 읽힌 페이지 2쪽, 후보 43건, 확정 연결 42건, 요건 상태 {"SATISFIED": 16, "NOT_APPLICABLE": 1, "NEEDS_INFORMATION": 2}.
 - 총 인정학점 None, 전공 인정학점 96; 부족 학점 {}, 미이수 필수 {}.
-- 실행 EX-b743d9885f4acbba: 실제 이벤트 108건, 관계 145개, 공식 PDF 근거 위치 8개.
+- 실행 EX-930d5366099da836: 실제 이벤트 108건, 관계 145개, 공식 PDF 근거 위치 8개.

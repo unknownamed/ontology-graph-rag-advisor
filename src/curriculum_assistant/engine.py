@@ -64,6 +64,29 @@ def _validate(student: dict, query: dict) -> None:
             raise ValueError("POLICY_LOOKUP program_type is invalid")
         if "entry_year" in query and (type(query["entry_year"]) is not int or not 1900 <= query["entry_year"] <= 2100):
             raise ValueError("POLICY_LOOKUP entry_year is invalid")
+        if query.get("compared_program_type", "MINOR") not in PROGRAM_TYPES:
+            raise ValueError("POLICY_LOOKUP compared program type is invalid")
+        if query.get("student_category", "DOMESTIC_REGULAR") not in {"DOMESTIC_REGULAR", "TRANSFER", "NIGHT", "EMPLOYED_ADULT", "CONTRACT"}:
+            raise ValueError("POLICY_LOOKUP student category is invalid")
+        categories = query.get("student_categories", [])
+        if (not isinstance(categories, list) or len(categories) > 5 or
+                any(value not in {"TRANSFER", "NIGHT", "EMPLOYED_ADULT", "CONTRACT"} for value in categories)):
+            raise ValueError("POLICY_LOOKUP student categories are invalid")
+        if query.get("historical_scope_requested", False) not in {True, False}:
+            raise ValueError("POLICY_LOOKUP historical scope flag is invalid")
+        if query.get("partial_student_information", False) not in {True, False}:
+            raise ValueError("POLICY_LOOKUP partial-information flag is invalid")
+        earned = query.get("hypothetical_general_earned")
+        if earned is not None and (type(earned) is not int or not 0 <= earned <= 1000 or "GENERAL_CREDITS" not in topics):
+            raise ValueError("POLICY_LOOKUP hypothetical general credits are invalid")
+        requested = query.get("requested_calculations", [])
+        if (not isinstance(requested, list) or len(requested) > 3 or
+                not set(requested).issubset({"GENERAL_REMAINDER", "GRADUATION_REMAINDER", "MAJOR_ELECTIVE_WITH_ADVANCED"})):
+            raise ValueError("POLICY_LOOKUP calculation request is not allowlisted")
+        if query.get("policy_focus") not in {None, "DOUBLE_COUNT", "APPLICABILITY_CHOICE",
+                                             "GENERAL_AREA_COURSE_CREDITS", "GENERAL_AREA_DOUBLE_COUNT",
+                                             "COUNSELING_SCHEDULE"}:
+            raise ValueError("POLICY_LOOKUP focus is not allowlisted")
     if query.get("intent") == "CATALOG_AGGREGATE":
         if query.get("aggregate") not in {"COUNT", "SUM_CREDITS"}:
             raise ValueError("Catalog aggregate operation is not allowlisted")
@@ -211,9 +234,9 @@ def _policy_lookup(graph: Graph, student: dict, query: dict, trace: list[dict], 
     topics = sorted(set(query["topics"]))
     program_type = query.get("program_type", student["program_type"])
     entry_year = query.get("entry_year", student.get("admission_year"))
-    year_specific_rules_available = entry_year in (None, 2026)
+    year_specific_rules_available = entry_year in (None, 2026) and not query.get("historical_scope_requested", False)
     historical_needed = not year_specific_rules_available and bool(set(topics) & {"GRADUATION_CREDITS", "GENERAL_CREDITS", "MAJOR_CREDITS"})
-    missing = []
+    missing = ["STUDENT_STATE_FOR_PERSONAL_CALCULATION"] if query.get("partial_student_information") else []
     selected_rules: dict[str, dict] = {}
     selected_facts: dict[str, dict] = {}
     selected_courses: dict[str, dict] = {}
@@ -221,7 +244,7 @@ def _policy_lookup(graph: Graph, student: dict, query: dict, trace: list[dict], 
     lookup_topics = list(topics)
     if not year_specific_rules_available and "APPLICABILITY" not in lookup_topics:
         lookup_topics.append("APPLICABILITY")
-    if historical_needed and entry_year <= 2024 and "TRANSITION" not in lookup_topics:
+    if historical_needed and entry_year is not None and entry_year <= 2024 and "TRANSITION" not in lookup_topics:
         lookup_topics.append("TRANSITION")
     for topic in lookup_topics:
         if topic in POLICY_RULE_TOPICS:
@@ -230,6 +253,10 @@ def _policy_lookup(graph: Graph, student: dict, query: dict, trace: list[dict], 
                        reason="2026_RULES_NOT_VERIFIED_FOR_ENTRY_YEAR")
                 continue
             candidate_ids = _policy_rule_ids(graph.catalog, topic)
+            if topic == "REQUIRED_COURSES" and program_type == "MINOR":
+                # The main-major nine-course list is not the three courses
+                # marked for a student minoring in computer engineering.
+                candidate_ids = []
             ids = [rule["rule_id"] for rule in graph.catalog["requirements"]
                    if rule["rule_id"] in candidate_ids and program_type in rule.get("program_types", PROGRAM_TYPES)
                    and (topic != "ALL_REQUIREMENTS" or rule["verification_status"] == "VERIFIED")]
@@ -246,20 +273,27 @@ def _policy_lookup(graph: Graph, student: dict, query: dict, trace: list[dict], 
                         entry = _fetch_entry(graph, code, trace, bundle)
                         if entry and entry["verification_status"] == "VERIFIED":
                             selected_courses[code] = entry
-        else:
-            facts = graph.query("FETCH_POLICY_FACTS", curriculum_id="CURRICULUM-CE-2026", topic=topic)
+        facts = (graph.query("FETCH_POLICY_FACTS", curriculum_id="CURRICULUM-CE-2026", topic=topic)
+                 if any(fact["topic"] == topic for fact in graph.catalog["policy_facts"]) else [])
+        if facts:
             _event(trace, "GRAPH_QUERY", operation="FETCH_POLICY_FACTS", filters={"topic": topic},
                    returned_ids=[f["policy_fact_id"] for f in facts] + [f["relationship_id"] for f in facts])
-            for fact in facts:
-                if topic == "MULTI_PROGRAM" and fact["value"]["program_type"] != program_type:
-                    _event(trace, "POLICY_SCOPE_EXCLUDED", topic=topic, policy_fact_id=fact["policy_fact_id"],
-                           reason="DIFFERENT_PROGRAM_TYPE")
-                    continue
-                selected_facts[fact["policy_fact_id"]] = fact
-                bundle["nodes"][fact["policy_fact_id"]] = {"id": fact["policy_fact_id"], "kind": "PolicyFact", "label": fact["predicate"]}
-                bundle["relationships"].add(fact["relationship_id"])
-                bundle["relationship_details"][fact["relationship_id"]] = fact["relationship_detail"]
-    if historical_needed and program_type == "SINGLE":
+        for fact in facts:
+            if topic == "MULTI_PROGRAM" and fact["value"]["program_type"] not in {program_type, query.get("compared_program_type")}:
+                _event(trace, "POLICY_SCOPE_EXCLUDED", topic=topic, policy_fact_id=fact["policy_fact_id"],
+                       reason="DIFFERENT_PROGRAM_TYPE")
+                continue
+            selected_facts[fact["policy_fact_id"]] = fact
+            bundle["nodes"][fact["policy_fact_id"]] = {"id": fact["policy_fact_id"], "kind": "PolicyFact", "label": fact["predicate"]}
+            bundle["relationships"].add(fact["relationship_id"])
+            bundle["relationship_details"][fact["relationship_id"]] = fact["relationship_detail"]
+    if "MULTI_PROGRAM" in topics and program_type == "MINOR":
+        for course in graph.catalog["courses"]:
+            if course.get("minor_required") and course["verification_status"] == "VERIFIED":
+                entry = _fetch_entry(graph, course["course_id"], trace, bundle)
+                if entry and entry["classification_verification_status"] == "VERIFIED":
+                    selected_courses[course["course_id"]] = entry
+    if historical_needed and entry_year is not None and program_type == "SINGLE":
         cid = f"CURRICULUM-CE-{entry_year}"
         facts = graph.query("FETCH_POLICY_FACTS", curriculum_id=cid, topic="HISTORICAL_CREDITS")
         _event(trace, "GRAPH_QUERY", operation="FETCH_POLICY_FACTS", filters={"topic": "HISTORICAL_CREDITS", "curriculum_id": cid},
@@ -273,10 +307,85 @@ def _policy_lookup(graph: Graph, student: dict, query: dict, trace: list[dict], 
     if not year_specific_rules_available and set(topics) & POLICY_RULE_TOPICS and not any(
         fact["topic"] == "HISTORICAL_CREDITS" for fact in selected_facts.values()
     ):
-        missing.append(f"APPLICABLE_CURRICULUM_RULES_FOR_ENTRY_YEAR:{entry_year}")
+        missing.append(f"APPLICABLE_CURRICULUM_RULES_FOR_ENTRY_YEAR:{entry_year or 'UNKNOWN'}")
+    category = query.get("student_category")
+    categories = sorted(set(query.get("student_categories", [])))
+    applicability = {}
+    exception = next((fact for fact in selected_facts.values()
+                      if fact["predicate"] == "GENERAL_AREA_APPLICABILITY_EXCEPTIONS"), None)
+    for rule in selected_rules.values():
+        reason = "PROGRAM_TYPE_MATCH"
+        status = "APPLICABLE"
+        if rule["rule_id"].startswith("R-GE-") and categories and exception:
+            values = exception["value"]
+            possible = []
+            for member in categories:
+                if member in values["general_obligation_exempt"]:
+                    possible.append("NOT_APPLICABLE")
+                elif member in values["area_minimum_exempt"] and rule["rule_id"] != "R-GE-2026-CREDIT-CAP":
+                    possible.append("NOT_APPLICABLE")
+                else:
+                    possible.append("APPLICABLE")
+            status = possible[0] if len(set(possible)) == 1 else "NEEDS_INFORMATION"
+            reason = "MULTIPLE_CATEGORY_SCOPE" if len(set(possible)) > 1 else "CATEGORY_EXCEPTIONS"
+        elif rule["rule_id"].startswith("R-GE-") and category and exception:
+            values = exception["value"]
+            if category in values["general_obligation_exempt"]:
+                status, reason = "NOT_APPLICABLE", "TRANSFER_GENERAL_OBLIGATION_EXEMPT"
+            elif category in values["area_minimum_exempt"] and rule["rule_id"] != "R-GE-2026-CREDIT-CAP":
+                status, reason = "NOT_APPLICABLE", "CATEGORY_AREA_MINIMUM_EXEMPT"
+        applicability[rule["rule_id"]] = {"status": status, "reason": reason,
+                                            "source_refs": exception["source_refs"] if reason != "PROGRAM_TYPE_MATCH" else rule["source_refs"]}
+        _event(trace, "POLICY_APPLICABILITY", rule_id=rule["rule_id"], result=applicability[rule["rule_id"]])
+    calculations = []
+    by_area = {rule.get("area"): rule for rule in selected_rules.values()
+               if rule["rule_type"] == "MIN_CREDITS" and applicability[rule["rule_id"]]["status"] == "APPLICABLE"}
+    requested_calculations = set(query.get("requested_calculations", []))
+    if "MAJOR_ELECTIVE_WITH_ADVANCED" in requested_calculations and {"MAJOR_ELECTIVE", "MAJOR_ADVANCED"}.issubset(by_area):
+        selected = [by_area["MAJOR_ELECTIVE"], by_area["MAJOR_ADVANCED"]]
+        value = sum(rule["required_value"] for rule in selected)
+        calculations.append({"operation": "SUM_MINIMUM_COMPONENTS", "area": "MAJOR_ELECTIVE_WITH_ADVANCED",
+                             "required_amount": value, "earned_amount": None, "recognized_amount": None,
+                             "remaining_amount": None, "excess_amount": None, "capped_amount": None,
+                             "excluded_amount": None, "source_rule_ids": [rule["rule_id"] for rule in selected]})
+    if "GENERAL_REMAINDER" in requested_calculations and {"GENERAL_TOTAL", "GENERAL_BASIC", "GENERAL_BALANCED"}.issubset(by_area):
+        selected = [by_area[key] for key in ("GENERAL_TOTAL", "GENERAL_BASIC", "GENERAL_BALANCED")]
+        value = selected[0]["required_value"] - selected[1]["required_value"] - selected[2]["required_value"]
+        calculations.append({"operation": "REMAINDER_AFTER_REQUIRED_AREAS", "area": "GENERAL_REMAINDER",
+                             "required_amount": value, "earned_amount": None, "recognized_amount": None,
+                             "remaining_amount": None, "excess_amount": None, "capped_amount": None,
+                             "excluded_amount": None, "source_rule_ids": [rule["rule_id"] for rule in selected]})
+    if "GRADUATION_REMAINDER" in requested_calculations and "FREE_CHOICE" in topics and {"GRADUATION_TOTAL", "GENERAL_TOTAL", "MAJOR_TOTAL"}.issubset(by_area):
+        selected = [by_area[key] for key in ("GRADUATION_TOTAL", "GENERAL_TOTAL", "MAJOR_TOTAL")]
+        value = selected[0]["required_value"] - selected[1]["required_value"] - selected[2]["required_value"]
+        calculations.append({"operation": "GRADUATION_REMAINDER_STRUCTURE", "area": "GRADUATION_REMAINDER",
+                             "required_amount": value, "earned_amount": None, "recognized_amount": None,
+                             "remaining_amount": None, "excess_amount": None, "capped_amount": None,
+                             "excluded_amount": None, "source_rule_ids": [rule["rule_id"] for rule in selected]})
+    cap = next((rule for rule in selected_rules.values() if rule["rule_type"] == "CREDIT_CAP"
+                and rule.get("area") == "GENERAL_TOTAL" and applicability[rule["rule_id"]]["status"] == "APPLICABLE"), None)
+    earned = query.get("hypothetical_general_earned")
+    if cap and earned is not None:
+        minimum = by_area.get("GENERAL_TOTAL")
+        recognized = min(earned, cap["required_value"])
+        calculations.append({"operation": "APPLY_VERIFIED_CREDIT_CAP", "area": "GENERAL_TOTAL",
+                             "required_amount": minimum["required_value"] if minimum else None,
+                             "earned_amount": earned, "recognized_amount": recognized,
+                             "remaining_amount": max((minimum["required_value"] if minimum else 0) - recognized, 0) if minimum else None,
+                             "excess_amount": max(earned - recognized, 0), "capped_amount": cap["required_value"],
+                             "excluded_amount": earned - recognized,
+                             "source_rule_ids": [cap["rule_id"]] + ([minimum["rule_id"]] if minimum else [])})
+    for calculation in calculations:
+        _event(trace, "POLICY_CALCULATION", operation=calculation["operation"],
+               input_refs=calculation["source_rule_ids"], result=calculation)
     bundle["rules"] = list(selected_rules.values())
     bundle["policy_facts"] = list(selected_facts.values())
     result = {"topics": topics, "program_type": program_type, "entry_year": entry_year,
+              "policy_focus": query.get("policy_focus"),
+              "student_category": category, "student_categories": categories,
+              "historical_scope_requested": query.get("historical_scope_requested", False),
+              "compared_program_type": query.get("compared_program_type"),
+              "rule_applicability": applicability, "calculations": calculations,
               "rules": list(selected_rules.values()),
               "policy_facts": list(selected_facts.values()), "courses": list(selected_courses.values())}
     found = bool(selected_rules or selected_facts)
@@ -432,6 +541,18 @@ def _evaluate_rules(student: dict, graph: Graph, recognition: dict, trace: list[
     for item in rules:
         bundle["nodes"][item["rule_id"]] = {"id": item["rule_id"], "kind": "Requirement", "label": item["rule_id"]}
         bundle["relationship_details"][item["relationship_id"]] = item["relationship_detail"]
+    exception_fact = None
+    if student.get("student_category") not in {None, "DOMESTIC_REGULAR"}:
+        facts = graph.query("FETCH_POLICY_FACTS", curriculum_id="CURRICULUM-CE-2026", topic="GENERAL_AREAS")
+        _event(trace, "GRAPH_QUERY", operation="FETCH_POLICY_FACTS", filters={"topic": "GENERAL_AREAS"},
+               returned_ids=[fact["policy_fact_id"] for fact in facts] + [fact["relationship_id"] for fact in facts])
+        exception_fact = next((fact for fact in facts if fact["predicate"] == "GENERAL_AREA_APPLICABILITY_EXCEPTIONS"), None)
+        if exception_fact:
+            bundle["policy_facts"].append(exception_fact)
+            bundle["nodes"][exception_fact["policy_fact_id"]] = {"id": exception_fact["policy_fact_id"],
+                                                               "kind": "PolicyFact", "label": exception_fact["predicate"]}
+            bundle["relationships"].add(exception_fact["relationship_id"])
+            bundle["relationship_details"][exception_fact["relationship_id"]] = exception_fact["relationship_detail"]
     sums = {"MAJOR_REQUIRED": 0, "MAJOR_ELECTIVE": 0, "MAJOR_TOTAL": 0,
             "GENERAL_BASIC": 0, "GENERAL_BALANCED": 0, "GENERAL_EXPANDED": 0, "GENERAL_TOTAL": 0,
             "MAJOR_ADVANCED": 0, "FREE_CHOICE": 0, "GRADUATION_TOTAL": 0}
@@ -461,6 +582,11 @@ def _evaluate_rules(student: dict, graph: Graph, recognition: dict, trace: list[
         applicability = scope_status(rule.get("effective_scope", {}), student)
         applies = applicability != "NOT_APPLICABLE" and student["program_type"] in rule.get("program_types", PROGRAM_TYPES)
         general_rule = rid.startswith("R-GE-") or rid.startswith("R-GRAD-")
+        category = student.get("student_category")
+        verified_category = bool(student.get("student_category_evidence_id"))
+        exception_applies = bool(exception_fact and verified_category and rid.startswith("R-GE-") and (
+            category in exception_fact["value"]["general_obligation_exempt"] or
+            (category in exception_fact["value"]["area_minimum_exempt"] and rid != "R-GE-2026-CREDIT-CAP")))
         if not applies:
             result = {"requirement_id": rid, "rule_id": rid, "status": "NOT_APPLICABLE", "observed": None,
                       "required": rule.get("required_value"), "missing_amount": None, "missing_course_ids": None,
@@ -471,6 +597,19 @@ def _evaluate_rules(student: dict, graph: Graph, recognition: dict, trace: list[
                       "required": rule.get("required_value"), "missing_amount": None, "missing_course_ids": None,
                       "used_fact_ids": [], "used_relationship_ids": [rule["relationship_id"]],
                       "used_student_evidence_ids": [], "needs_information": [f"RULE_APPLICABILITY:{rid}"], "source_refs": rule["source_refs"]}
+        elif exception_applies:
+            result = {"requirement_id": rid, "rule_id": rid, "status": "NOT_APPLICABLE", "observed": None,
+                      "required": rule.get("required_value"), "missing_amount": None, "missing_course_ids": None,
+                      "used_fact_ids": [], "used_relationship_ids": [rule["relationship_id"], exception_fact["relationship_id"]],
+                      "used_student_evidence_ids": [student["student_category_evidence_id"]],
+                      "needs_information": [], "source_refs": rule["source_refs"],
+                      "applicability_policy_fact_id": exception_fact["policy_fact_id"],
+                      "applicability_source_refs": exception_fact["source_refs"],
+                      "applicability_reason": ("TRANSFER_GENERAL_OBLIGATION_EXEMPT" if
+                                               category in exception_fact["value"]["general_obligation_exempt"] else
+                                               "CATEGORY_AREA_MINIMUM_EXEMPT")}
+            _event(trace, "RULE_APPLICABILITY", rule_id=rid, input_refs=[exception_fact["policy_fact_id"],
+                   student["student_category_evidence_id"]], result=result["applicability_reason"])
         elif general_rule and (student.get("student_category") != "DOMESTIC_REGULAR" or not student.get("student_category_evidence_id")):
             result = {"requirement_id": rid, "rule_id": rid, "status": "NEEDS_INFORMATION", "observed": None,
                       "required": rule.get("required_value"), "missing_amount": None, "missing_course_ids": None,
@@ -562,9 +701,25 @@ def _evaluate_rules(student: dict, graph: Graph, recognition: dict, trace: list[
                           ([exemption["evidence_id"]] if rule["rule_type"] == "ANY_COURSE_OR_EXEMPTION" and exempted and exemption.get("evidence_id") else []),
                       "needs_information": [] if status != "NEEDS_INFORMATION" else recognition["needs_information"] or [f"RULE_INPUT:{rid}"],
                       "source_refs": rule["source_refs"]}
+        if rule["rule_type"] == "MIN_CREDITS" and result["observed"] is not None:
+            result["credit_calculation"] = {
+                "required_amount": result["required"],
+                "earned_amount": None if rule.get("area") == "GRADUATION_TOTAL" else result["observed"],
+                "recognized_amount": result["observed"], "remaining_amount": result["missing_amount"],
+                "excess_amount": None, "capped_amount": None, "excluded_amount": None,
+                "value_status": "COMPLETE" if recognition["complete"] else "CONFIRMED_MINIMUM"}
+        elif rule["rule_type"] == "CREDIT_CAP" and result["observed"] is not None:
+            counted = min(result["observed"], result["required"])
+            result["credit_calculation"] = {
+                "required_amount": None, "earned_amount": result["observed"],
+                "recognized_amount": counted, "remaining_amount": None,
+                "excess_amount": result["observed"] - counted,
+                "capped_amount": result["required"], "excluded_amount": result["observed"] - counted,
+                "value_status": "COMPLETE" if recognition["complete"] else "CONFIRMED_MINIMUM"}
         result["execution_event_ids"] = [_event(trace, "RULE_EVALUATION", rule_id=rid,
                                                    operands={"observed": result["observed"], "required": result["required"]},
                                                    calculation=rule.get("calculation", rule["rule_type"]),
+                                                   calculation_details=result.get("credit_calculation"),
                                                    input_refs=result["used_fact_ids"] + result["used_student_evidence_ids"],
                                                    result=result["status"])]
         results.append(result)
@@ -801,11 +956,11 @@ def execute(graph: Graph, student: dict, query: dict) -> dict:
     if query["intent"] == "POLICY_LOOKUP":
         topics = set(query["topics"])
         entry_year = query.get("entry_year", student.get("admission_year"))
-        scoped_rule_topics = topics & POLICY_RULE_TOPICS if entry_year in (None, 2026) else set()
+        scoped_rule_topics = topics & POLICY_RULE_TOPICS if entry_year in (None, 2026) and not query.get("historical_scope_requested") else set()
         operations = ([] if not scoped_rule_topics else ["FETCH_REQUIREMENTS"])
-        if "REQUIRED_COURSES" in scoped_rule_topics:
+        if "REQUIRED_COURSES" in scoped_rule_topics or ("MULTI_PROGRAM" in topics and query.get("program_type", student["program_type"]) == "MINOR"):
             operations.append("FETCH_CATALOG_ENTRY")
-        if topics & POLICY_FACT_TOPICS or (not scoped_rule_topics and bool(topics & POLICY_RULE_TOPICS)):
+        if topics & POLICY_FACT_TOPICS or bool(topics & {"GENERAL_CREDITS", "GENERAL_AREAS"}) or (not scoped_rule_topics and bool(topics & POLICY_RULE_TOPICS)):
             operations.append("FETCH_POLICY_FACTS")
     elif query["intent"] == "CATALOG_AGGREGATE":
         operations = ["FETCH_CATALOG_SET", "AGGREGATE_" + query["aggregate"]]

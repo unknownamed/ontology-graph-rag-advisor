@@ -127,6 +127,36 @@ def _render_policy(payload: dict) -> str:
             listed.append(f"{label} [{rule['rule_id']}; {rule['rule_type']}; {scope}; VERIFIED; PDF {','.join(map(str, pages))}쪽]")
         return f"2026 컴퓨터공학과 적용 범위에서 확인된 졸업 판정 요건 {len(listed)}건: " + "; ".join(listed) + "."
     parts: list[str] = []
+    direct: list[str] = []
+    for calculation in result.get("calculations", []):
+        if calculation["operation"] == "SUM_MINIMUM_COMPONENTS":
+            by_id = {rule["rule_id"]: rule for rule in result["rules"]}
+            operands = [by_id[rid]["required_value"] for rid in calculation["source_rule_ids"]]
+            direct.append(f"전공선택 최소 {operands[0]}학점과 심화전공 최소 {operands[1]}학점의 합은 {calculation['required_amount']}학점입니다")
+        elif calculation["operation"] == "REMAINDER_AFTER_REQUIRED_AREAS":
+            direct.append(f"교양 최소학점에서 기초·균형 최소학점을 뺀 잔여 구조는 {calculation['required_amount']}학점입니다. 특정 확대교양만으로 채워야 한다는 지정은 확인되지 않습니다")
+        elif calculation["operation"] == "GRADUATION_REMAINDER_STRUCTURE":
+            direct.insert(0, f"졸업 총학점에서 교양·전공 최소학점을 뺀 잔여 구조는 {calculation['required_amount']}학점입니다. 공식적으로 인정된 자유선택 학점 등으로 채울 수 있지만 모든 과목이 자동 인정되는 것은 아닙니다")
+        elif calculation["operation"] == "APPLY_VERIFIED_CREDIT_CAP":
+            statement = f"교양 {calculation['earned_amount']}학점 중 졸업학점으로 인정되는 교양은 {calculation['recognized_amount']}학점입니다"
+            if calculation["excess_amount"]:
+                statement += f". 상한 초과 {calculation['excess_amount']}학점은 졸업학점에서 제외됩니다"
+            if calculation["remaining_amount"]:
+                statement += f". 교양 최소 {calculation['required_amount']}학점까지는 {calculation['remaining_amount']}학점이 부족합니다"
+            direct.insert(0, statement)
+    focus = result.get("policy_focus")
+    if focus == "APPLICABILITY_CHOICE" and any(fact["predicate"] == "DEFAULT_CREDIT_POLICY_BASIS" for fact in result["policy_facts"]):
+        direct.insert(0, "교육과정을 학생이 임의로 선택 적용할 수 없습니다")
+    if focus == "GENERAL_AREA_COURSE_CREDITS" and any(rule["rule_type"] == "ALL_AREAS" for rule in result["rules"]):
+        direct.insert(0, "균형교양의 개별 과목이 반드시 3학점이어야 하는 조건은 없습니다. 영역별 1과목 이상과 균형교양 합계 12학점은 별도로 확인합니다")
+    if focus == "GENERAL_AREA_DOUBLE_COUNT" and any(rule["rule_type"] == "ALL_AREAS" for rule in result["rules"]):
+        direct.insert(0, "2026 편성표에서 한 과목은 한 균형교양 영역에 분류되므로 두 영역에 동시에 산입하지 않습니다")
+    if focus == "COUNSELING_SCHEDULE":
+        course = next((item for item in result["courses"] if item["course_id"] == "CDA0088"), None)
+        if course:
+            schedule = " 전 학년 1·2학기에 신청 가능합니다." if course.get("grade_term") == "전-1,2" else ""
+            direct.insert(0, "심층상담은 0학점 전공필수입니다." + schedule
+                          + " 신청 가능 학기와 의무 횟수는 다르며, 현재 편성표만으로 2026 적용자의 별도 의무 횟수는 확정할 수 없습니다")
     if "APPLICABILITY" in result["topics"] and result.get("entry_year") is not None:
         year = result["entry_year"]
         if year == 2026:
@@ -134,6 +164,8 @@ def _render_policy(payload: dict) -> str:
         else:
             parts.append(f"{year}학년도 입학생의 졸업학점·영역별 학점 기준은 원칙적으로 해당 입학연도 교육과정에 따릅니다")
     for rule in result["rules"]:
+        if result.get("rule_applicability", {}).get(rule["rule_id"], {}).get("status") in {"NOT_APPLICABLE", "NEEDS_INFORMATION"}:
+            continue
         kind = rule["rule_type"]
         if kind == "MIN_CREDITS":
             parts.append(f"{AREA_LABELS.get(rule['area'], rule['area'])}: 최소 {rule['required_value']}학점")
@@ -154,11 +186,24 @@ def _render_policy(payload: dict) -> str:
     for fact in result["policy_facts"]:
         predicate, value = fact["predicate"], fact["value"]
         if predicate == "DEFAULT_CREDIT_POLICY_BASIS":
-            parts.append("졸업학점과 영역별 학점은 원칙적으로 입학 당시 교육과정을 적용하며, 원문에 적힌 예외는 별도 확인합니다")
+            parts.append("졸업학점과 영역별 학점은 원칙적으로 입학 당시 교육과정을 적용합니다. 개편 후 교양 영역별 최소학점이 더 낮거나 교육과정위원회가 인정한 경우에는 개편 기준을 적용할 수 있습니다")
         elif predicate == "COURSE_TABLE_BASIS":
             parts.append("이수교과목은 개편된 교육과정을 적용하며, 재입학·전과에는 별도 적용 조건이 있습니다")
         elif predicate == "COUNTS_AS_RESIDUAL":
             parts.append("원문에 정한 자유선택과목의 이수학점은 졸업 잔여학점으로 인정됩니다")
+        elif predicate == "GENERAL_AREA_APPLICABILITY_EXCEPTIONS":
+            categories = result.get("student_categories") or ([result["student_category"]] if result.get("student_category") else [])
+            for category in categories:
+                if category == "TRANSFER":
+                    direct.append("편입생에게는 교양 이수 의무가 없습니다")
+                elif category in value["area_minimum_exempt"]:
+                    direct.append(f"{ {'NIGHT': '야간학과', 'EMPLOYED_ADULT': '재직자·성인학습자 관련 학과', 'CONTRACT': '계약학과'}[category] }는 교양 영역별 최소학점 적용 대상에서 제외됩니다")
+                    parts.append(f"해당 학과 유형의 교양 최소 총량은 {value['reduced_total_minimum']}학점입니다. 정확한 학생 소속과 적용연도 확인이 필요합니다")
+            if not categories and "GENERAL_AREAS" in result["topics"]:
+                parts.append("교양 영역별 최소학점 예외는 편입생, 야간학과, 재직자·성인학습자 관련 학과, 계약학과에 따라 다릅니다")
+        elif predicate == "GENERAL_CAP_EXCESS_TREATMENT":
+            if result.get("student_category") != "TRANSFER" and "TRANSFER" not in result.get("student_categories", []):
+                direct.append("교양 상한 초과분은 총 취득학점과 성적에는 남지만 졸업소요학점 및 졸업 잔여학점에는 산입하지 않습니다")
         elif predicate == "SAME_COURSE_REPEAT":
             parts.append("공식 지정된 동일과목의 중복 이수는 재수강으로 보아 선이수 성적을 삭제합니다")
         elif predicate == "REPLACEMENT_COURSE":
@@ -168,6 +213,9 @@ def _render_policy(payload: dict) -> str:
             parts.append(f"학과 권장 교양은 {listed}이며 이 권장 자체가 필수 이수 지정은 아닙니다")
         elif predicate == "YEAR_SCOPED_TRANSITION_EXISTS":
             year = result.get("entry_year")
+            if year == 2026:
+                parts.append("2002–2024 교육과정 적용자를 위한 학과 경과조치는 2026학년도 신입생에게 자동 적용되지 않습니다")
+                continue
             band = next((b for b in value["retroactive_credit_bands"] if year is not None and b["first_year"] <= year <= b["last_year"]), None)
             if band:
                 parts.append(f"학과 경과조치 표에는 {year} 적용연도에 교양 {band['general_total']}·전필 {band['major_required']}·전선 {band['major_elective']}학점이 소급 적용된다고 별도로 적혀 있습니다")
@@ -192,17 +240,42 @@ def _render_policy(payload: dict) -> str:
         elif predicate == "MINOR_SCOPE":
             parts.append("부전공은 주전공의 최소전공·심화전공과 부전공 21학점 이상, 지정된 부전공 필수과목을 확인해야 합니다")
             parts.append("동일 과목의 중복 인정은 9학점까지이며 졸업 총학점에는 이중 산입하지 않습니다")
+    if result.get("compared_program_type") == "MINOR" and result["program_type"] == "SINGLE":
+        direct.insert(0, "단일전공 학생에게 부전공 지정 필수과목은 추가 졸업요건으로 적용되지 않습니다")
+    if "MULTI_PROGRAM" in result["topics"] and result["program_type"] == "MINOR":
+        minor_courses = [course for course in result["courses"] if course.get("minor_required")]
+        if minor_courses:
+            parts.append("컴퓨터공학과 부전공 지정 필수과목: " + ", ".join(
+                f"{course['name']}({course['course_id']})" for course in sorted(minor_courses, key=lambda c: c["course_id"])))
+    counseling = next((course for course in result["courses"] if course["course_id"] == "CDA0088"), None)
+    if "REQUIRED_COURSES" in result["topics"] and counseling and focus != "COUNSELING_SCHEDULE":
+        schedule = (" 전 학년 1·2학기에 신청 가능한 편성입니다." if counseling.get("grade_term") == "전-1,2" else "")
+        parts.append("심층상담은 0학점 전공필수입니다." + schedule
+                     + " 신청 가능 학기와 의무 이수 횟수는 다른 개념이며, 2026 적용자의 별도 의무 횟수는 현재 확인한 편성표만으로 확정하지 않습니다")
+    if "GENERAL_AREAS" in result["topics"] and any(
+        rule["rule_type"] == "ALL_AREAS" and result.get("rule_applicability", {}).get(rule["rule_id"], {}).get("status") == "APPLICABLE"
+        for rule in result["rules"]
+    ):
+        parts.append("균형교양은 과목별 공식 편성 영역 한 개로 구분하여 같은 과목을 두 영역에 동시에 산입하지 않습니다. 네 영역에서 각 한 과목 이상과 균형교양 총 12학점을 각각 확인하며, 개별 과목이 반드시 3학점이어야 한다는 조건은 없습니다")
+    if focus == "DOUBLE_COUNT" and "FREE_CHOICE" in result["topics"] and "GENERAL_CREDITS" in result["topics"] and "MAJOR_CREDITS" in result["topics"]:
+        direct.insert(0, "이미 교양·전공으로 산입한 동일 이수학점을 졸업 잔여학점에 다시 더하지 않습니다")
     pages = sorted({payload["evidence"]["source_locators"][ref]["pdf_page_start"]
                     for item in [*result["rules"], *result["policy_facts"]] for ref in item["source_refs"]
-                    if ref in payload["evidence"]["source_locators"]})
+                    if ref in payload["evidence"]["source_locators"]}
+                   | {course["source"]["pdf_page"] for course in result["courses"]})
     scope = {"SINGLE": "단일전공", "DOUBLE": "복수전공", "MINOR": "부전공"}.get(result["program_type"], result["program_type"])
-    if payload["decision"]["needs_information"]:
+    if any(item.startswith("APPLICABLE_CURRICULUM_RULES_FOR_ENTRY_YEAR:")
+           for item in payload["decision"]["needs_information"]):
         year = result.get("entry_year")
-        parts.append(f"{year}학년도 입학생에게 적용되는 수치 기준은 확인된 표와 학생별 적용 조건을 함께 검토해야 하며 2026 수치로 확정하지 않습니다")
+        target = f"{year}학년도 입학생" if year is not None else "해당 입학연도 학생"
+        parts.append(f"{target}에게 적용되는 수치 기준은 확인된 표와 학생별 적용 조건을 함께 검토해야 하며 2026 수치로 확정하지 않습니다")
+    if "STUDENT_STATE_FOR_PERSONAL_CALCULATION" in payload["decision"]["needs_information"]:
+        parts.append("학생 이수내역이 없어 개인별 인정학점과 부족량은 아직 계산할 수 없습니다. 성적표 또는 확인된 StudentState가 필요합니다")
     year = result.get("entry_year")
-    heading = (f"컴퓨터공학과 {year}학년도 입학생 적용 원칙: " if year is not None and year != 2026
+    heading = ("기존 학번 적용 원칙: " if result.get("historical_scope_requested") else
+               f"컴퓨터공학과 {year}학년도 입학생 적용 원칙: " if year is not None and year != 2026
                else f"2026 컴퓨터공학과 {scope} 기준: ")
-    return heading + ". ".join(parts) + (f". 근거: 교육과정 PDF {', '.join(map(str, pages))}쪽." if pages else ".")
+    return heading + ". ".join([*direct, *parts]) + (f". 근거: 교육과정 PDF {', '.join(map(str, pages))}쪽." if pages else ".")
 
 
 def _render_locked(payload: dict) -> str:

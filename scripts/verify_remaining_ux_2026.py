@@ -7,7 +7,8 @@ from copy import deepcopy
 from http.server import HTTPServer
 from pathlib import Path
 
-from verify_remaining_2026_e2e import ROOT, canonical, catalog_v1, core, make_fixtures, post
+from verify_remaining_2026_e2e import ROOT, canonical, core, make_fixtures, post
+from curriculum_assistant.authority import RuleSetStore
 from curriculum_assistant.graph import Graph
 from curriculum_assistant.server import Handler
 
@@ -58,7 +59,7 @@ def check_plan(payload: dict) -> None:
 
 
 def main() -> None:
-    catalog = catalog_v1()
+    catalog = RuleSetStore(ROOT / "data/processed/ruleset_versions").load_active()
     class BoundHandler(Handler):
         pass
     server = HTTPServer(("127.0.0.1", 0), BoundHandler)

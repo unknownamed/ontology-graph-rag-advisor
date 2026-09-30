@@ -10,8 +10,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path[:0] = [str(ROOT / "src"), str(ROOT / "scripts")]
 from curriculum_assistant.graph import Graph  # noqa: E402
+from curriculum_assistant.authority import RuleSetStore  # noqa: E402
 from curriculum_assistant.server import Handler  # noqa: E402
-from generate_mock_2026_transcripts import catalog_v1  # noqa: E402
 
 
 def main() -> None:
@@ -22,7 +22,7 @@ def main() -> None:
     ready = threading.Event()
 
     def serve() -> None:
-        graph = Graph(Path(":memory:"), catalog_v1())
+        graph = Graph(Path(":memory:"), RuleSetStore(ROOT / "data/processed/ruleset_versions").load_active())
         BoundHandler.graph = graph
         ready.set()
         try:

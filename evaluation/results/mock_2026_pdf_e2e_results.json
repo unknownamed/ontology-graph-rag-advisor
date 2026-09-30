@@ -18,8 +18,8 @@
         "SATISFIED": 18,
         "NOT_APPLICABLE": 1
       },
-      "decision_id": "DEC-f2781df9fc005076",
-      "execution_id": "EX-73b7204f3158a94b",
+      "decision_id": "DEC-b29cca5ccc27a903",
+      "execution_id": "EX-86dbddd91fbc3140",
       "trace_events": 109,
       "graph_relationships": 148,
       "pdf_source_locator_count": 8,
@@ -57,8 +57,8 @@
         "NOT_APPLICABLE": 1,
         "SATISFIED": 12
       },
-      "decision_id": "DEC-f8a1425010c03f32",
-      "execution_id": "EX-d154dfed2a73396c",
+      "decision_id": "DEC-3a7d9877320cb0b0",
+      "execution_id": "EX-a30d3f735a79f8d8",
       "trace_events": 80,
       "graph_relationships": 106,
       "pdf_source_locator_count": 8,
@@ -90,8 +90,8 @@
         "NOT_APPLICABLE": 1,
         "UNSATISFIED": 1
       },
-      "decision_id": "DEC-bdc27bed8dac7d74",
-      "execution_id": "EX-00101508cc3a9f9d",
+      "decision_id": "DEC-f52ed17bc89e2fa6",
+      "execution_id": "EX-5285df7f3cdfa019",
       "trace_events": 108,
       "graph_relationships": 148,
       "pdf_source_locator_count": 8,
@@ -152,8 +152,8 @@
         "NOT_APPLICABLE": 1,
         "NEEDS_INFORMATION": 2
       },
-      "decision_id": "DEC-60574099e3d5d3c2",
-      "execution_id": "EX-b743d9885f4acbba",
+      "decision_id": "DEC-aa3bedb62e93f715",
+      "execution_id": "EX-930d5366099da836",
       "trace_events": 108,
       "graph_relationships": 145,
       "pdf_source_locator_count": 8,

@@ -145,6 +145,14 @@ AnswerPayload = { contract_version, decision: DeterministicDecision,
 
 `DeterministicDecision.remaining_requirements`와 `candidate_courses`는 RuleSet v1 및 그래프 스냅샷과 함께 해시된다. `ExecutionTrace`에는 카탈로그 조회, `SATISFIES` 관계 조회, 투영 계산 이벤트가 남는다. 가정 이수는 기존 `WHAT_IF` 계약을 사용하며 원본 StudentState를 수정하지 않는다.
 
+## 공식 PDF 정책 보강 계약 (활성 RuleSet v2)
+
+현재 활성 `CRS-CE-2026-CORE` v2는 같은 `ADS-CE-2026-CORE` v1과 실행 규칙을 유지하고, 원문 33쪽에서 재확인한 교양 적용 예외·상한 초과분 처리 `PolicyFact` 두 건만 추가한다. 불변 v1 스냅샷은 과거 판정 재현에 남는다. 위 남은 요건 계약의 RuleSet v1 기술은 최초 구현 기준이며, 실행 시에는 항상 결정과 trace에 고정된 활성 버전을 사용한다.
+
+`StructuredQuery(intent=POLICY_LOOKUP)`은 학생 상태 없는 정책 조회를 허용한다. `topics[]`, 적용 대상의 `student_categories[]`·`program_type`, `entry_year`, `historical_scope_requested`, `requested_calculations[]`는 서버가 허용 목록으로 검증한다. 학생 개인값이 필요한 질문의 정책 부분만 확정 가능하면 `partial_policy_query`와 `STUDENT_STATE_FOR_PERSONAL_CALCULATION`을 함께 반환한다. 미확인 학생 유형은 적용된 것으로 추측하지 않는다.
+
+`lookup_result.calculations[]`는 `operation`, `source_rule_ids[]`, `required_amount`, `earned_amount`, `recognized_amount`, `remaining_amount`, `excess_amount`, `capped_amount`, `excluded_amount` 중 해당 연산에 필요한 필드를 가진다. 교양 상한은 공식 42학점 규칙을 조회한 경우에만 `recognized=min(earned, cap)`, `excess=max(earned-recognized,0)`, `remaining=max(required-recognized,0)`으로 계산한다. 이는 정책 가정값 계산이지 학생 이수 인정 기록이 아니다. 개인 판정의 `RequirementResult.credit_calculation`은 실제 인정 입력과 Rule ID를 별도로 기록한다. 모든 계산은 `ExecutionTrace`의 실제 연산 이벤트와 출처 locator로 검증한다.
+
 ## 답변 불변식
 
 - `AnswerPayload.decision`은 `DeterministicDecision`과 동일 ID/해시를 가리킨다. LLM은 한국어 문장화만 하고 계산·조회·졸업 판정 필드를 쓸 권한이 없다.

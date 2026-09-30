@@ -133,6 +133,42 @@ def verify_payload(payload: dict) -> None:
             raise ValueError("Policy fact lacks an executed graph query and relation")
         if fact["verification_status"] != "VERIFIED" or not set(fact["source_refs"]).issubset(evidence["source_locators"]):
             raise ValueError("Policy fact lacks verified PDF provenance")
+    if payload["decision"]["intent"] == "POLICY_LOOKUP":
+        lookup = payload["decision"].get("lookup_result") or {}
+        rules = {rule["rule_id"]: rule for rule in lookup.get("rules", [])}
+        calculations = lookup.get("calculations", [])
+        recorded = [event for event in events if event["event_type"] == "POLICY_CALCULATION"]
+        if len(calculations) != len(recorded):
+            raise ValueError("Policy calculation has no executed trace")
+        for calculation, event in zip(calculations, recorded):
+            ids = calculation["source_rule_ids"]
+            if (event["result"] != calculation or event["input_refs"] != ids
+                    or not ids or any(rid not in rules or rules[rid]["verification_status"] != "VERIFIED" for rid in ids)):
+                raise ValueError("Policy calculation lacks verified rule inputs")
+            values = [rules[rid]["required_value"] for rid in ids]
+            operation = calculation["operation"]
+            if operation == "SUM_MINIMUM_COMPONENTS":
+                valid = calculation["required_amount"] == sum(values)
+            elif operation == "REMAINDER_AFTER_REQUIRED_AREAS":
+                valid = calculation["required_amount"] == values[0] - values[1] - values[2]
+            elif operation == "GRADUATION_REMAINDER_STRUCTURE":
+                valid = calculation["required_amount"] == values[0] - values[1] - values[2]
+            elif operation == "APPLY_VERIFIED_CREDIT_CAP":
+                earned = calculation["earned_amount"]
+                recognized = min(earned, values[0])
+                valid = (calculation["recognized_amount"] == recognized
+                         and calculation["excess_amount"] == earned - recognized
+                         and calculation["excluded_amount"] == earned - recognized
+                         and calculation["remaining_amount"] == max(values[1] - recognized, 0))
+            else:
+                valid = False
+            if not valid:
+                raise ValueError("Policy calculation differs from its verified input values")
+        for rid, assessment in lookup.get("rule_applicability", {}).items():
+            if (rid not in rules or not set(assessment["source_refs"]).issubset(evidence["source_locators"])
+                    or not any(event["event_type"] == "POLICY_APPLICABILITY" and event["rule_id"] == rid
+                               and event["result"] == assessment for event in events)):
+                raise ValueError("Policy applicability lacks PDF evidence or actual execution")
     rule_events = {event["event_id"]: event for event in events if event["event_type"] == "RULE_EVALUATION"}
     for decision in decisions:
         unhashed = {key: value for key, value in decision.items() if key not in {"canonical_result_hash", "decision_id"}}
@@ -168,10 +204,41 @@ def verify_payload(payload: dict) -> None:
                 raise ValueError("Rule result cites an unreturned graph relationship")
             if not set(result["used_student_evidence_ids"]).issubset(student_evidence_ids):
                 raise ValueError("Rule result cites missing student evidence")
+            if result.get("applicability_policy_fact_id"):
+                fact = next((item for item in evidence["policy_facts"]
+                             if item["policy_fact_id"] == result["applicability_policy_fact_id"]), None)
+                if (not fact or fact["source_refs"] != result.get("applicability_source_refs")
+                        or fact["relationship_id"] not in result["used_relationship_ids"]
+                        or not any(event["event_type"] == "RULE_APPLICABILITY"
+                                       and event["rule_id"] == result["rule_id"]
+                                       and event["result"] == result["applicability_reason"]
+                                       and fact["policy_fact_id"] in event["input_refs"] for event in events)):
+                    raise ValueError("Requirement applicability lacks executed official policy evidence")
             if not set(result["source_refs"]).issubset(evidence["source_locators"]):
                 raise ValueError("Rule result has no PDF source locator")
             if any(eid not in rule_events or rule_events[eid]["rule_id"] != result["rule_id"] or rule_events[eid]["result"] != result["status"] for eid in result["execution_event_ids"]):
                 raise ValueError("Rule result has no matching actual calculation event")
+            calculation = result.get("credit_calculation")
+            if calculation is not None:
+                source_rule = next((rule for rule in evidence["rules"] if rule["rule_id"] == result["rule_id"]), None)
+                if source_rule is None:
+                    raise ValueError("Credit calculation rule was not returned by the graph")
+                if any(rule_events[eid].get("calculation_details") != calculation for eid in result["execution_event_ids"]):
+                    raise ValueError("Credit arithmetic differs from actual rule execution")
+                if source_rule["rule_type"] == "MIN_CREDITS":
+                    valid = (calculation["required_amount"] == result["required"]
+                             and calculation["recognized_amount"] == result["observed"]
+                             and calculation["remaining_amount"] == result["missing_amount"])
+                elif source_rule["rule_type"] == "CREDIT_CAP":
+                    earned = calculation["earned_amount"]
+                    counted = min(earned, result["required"])
+                    valid = (earned == result["observed"] and calculation["recognized_amount"] == counted
+                             and calculation["excluded_amount"] == earned - counted
+                             and calculation["excess_amount"] == earned - counted)
+                else:
+                    valid = False
+                if not valid:
+                    raise ValueError("Requirement credit calculation differs from verified rule")
     actual = payload["decision"]
     affecting = {c["conflict_id"] for c in authority["unresolved_conflicts"]}
     if set(actual["unresolved_conflict_ids"]) != affecting:

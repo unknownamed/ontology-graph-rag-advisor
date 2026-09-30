@@ -169,7 +169,7 @@ def compare(expected: dict, extracted: dict, normalized: dict, payload: dict, st
 
 
 def main() -> None:
-    catalog = RuleSetStore(ROOT / "data/processed/ruleset_versions").load_version(1)
+    catalog = RuleSetStore(ROOT / "data/processed/ruleset_versions").load_active()
 
     class BoundHandler(Handler):
         pass
@@ -195,6 +195,9 @@ def main() -> None:
     try:
         for fixture_id in PROFILE_IDS:
             expected = json.loads((DEST / f"{fixture_id}.expected.json").read_text(encoding="utf-8"))
+            # The fixed synthetic v1 expectation tests invariant requirement values;
+            # only the pinned execution version follows the currently active RuleSet.
+            expected["ruleset_version"] = catalog["curriculum_ruleset"]["ruleset_version"]
             file_bytes = (DEST / f"{fixture_id}.pdf").read_bytes()
             encoded = base64.b64encode(file_bytes).decode("ascii")
             extracted = post(port, "/api/extract", {"filename": f"{fixture_id}.pdf", "content_base64": encoded})

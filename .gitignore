@@ -40,3 +40,7 @@ build/
 evaluation/results/approval_review.md
 evaluation/results/score_approval.py
 evaluation/results/student_upload_normalization_2026-09-29.md
+evaluation/results/approval_baseline_results.json
+evaluation/results/approval_baseline_report.md
+evaluation/results/approval_after_results.json
+evaluation/results/approval_after_report.md
