@@ -1,0 +1,28 @@
+{
+  "student_state": {
+    "student_state_id": "SYNTHETIC-DEMO-1",
+    "student_id": "SYNTHETIC",
+    "admission_year": 2026,
+    "department_id": "DEPT-COMPUTER-ENGINEERING",
+    "credit_policy_year": 2026,
+    "catalog_year": 2026,
+    "applicability_status": "VERIFIED",
+    "program_type": "SINGLE",
+    "completion_coverage": "PARTIAL",
+    "course_attempts": [
+      {
+        "attempt_id": "SYNTHETIC-ATTEMPT-1",
+        "course_id": "CDA0143",
+        "completion_status": "COMPLETED",
+        "verification_status": "VERIFIED",
+        "evidence_id": "SYNTHETIC-INPUT-1",
+        "earned_credits": 3
+      }
+    ]
+  },
+  "structured_query": {
+    "intent": "WHAT_IF",
+    "course_id": "CDA0163",
+    "assumed_completion": "SUCCESS"
+  }
+}

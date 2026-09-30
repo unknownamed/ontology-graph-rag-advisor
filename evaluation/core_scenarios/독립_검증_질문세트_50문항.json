@@ -1,0 +1,739 @@
+{
+  "title": "2026 컴퓨터공학과 Core Prototype 독립 검증 질문 세트",
+  "purpose": "승인 요청서와 분리된 독립 사용자 시나리오 평가",
+  "rules": {
+    "evaluation_reference_must_not_be_used": true,
+    "expected_values_must_come_from_verified_runtime_data": true,
+    "run_through_real_user_input_path": true,
+    "do_not_hardcode_question_specific_answers": true
+  },
+  "fixture_guidance": {
+    "no_student": "학생 상태 없이 사실/규칙 질의",
+    "core_partial": "일부 Core 요건 미충족",
+    "core_complete": "모든 VERIFIED Core 요건 충족",
+    "required_complete_total_short": "필수요건 충족, 총학점 부족",
+    "total_complete_required_missing": "총학점 충족, 필수과목 1개 이상 누락",
+    "missing_information": "판정 필수정보 일부 누락",
+    "one_credit_below": "총학점 기준 1학점 부족, 기타 VERIFIED 조건 충족",
+    "exact_credit_threshold_all_else_complete": "총학점 기준 정확히 충족, 기타 조건 충족",
+    "one_credit_above_all_else_complete": "총학점 기준 1학점 초과, 기타 조건 충족",
+    "duplicate_course_attempt": "동일 과목 중복 레코드",
+    "unknown_course_code": "존재하지 않는 과목 코드",
+    "malformed_completion_record": "식별 필드 누락 이수기록",
+    "same_state_different_order": "같은 StudentState를 다른 순서로 입력",
+    "required_missing_one": "전공필수 정확히 1개 누락",
+    "two_course_simulation": "두 과목 추가 가정",
+    "zero_credit_required_simulation": "VERIFIED된 0학점 요건 사례가 있으면 사용, 없으면 SKIP",
+    "conversation_course_selected": "직전 턴에서 VERIFIED 과목 선택",
+    "conversation_course_selected_core_partial": "core_partial + 직전 턴 과목 선택",
+    "missing_info_and_unsatisfied": "확인된 미충족과 정보 부족 동시 존재",
+    "old_curriculum_student": "2026 Core 범위 밖 과거 교육과정 적용자",
+    "double_major_student": "현재 Core 범위 밖 복수/제2전공 학생"
+  },
+  "scenarios": [
+    {
+      "id": "FACT_01",
+      "category": "direct_fact",
+      "question": "컴퓨터공학과 전공필수 과목이 뭐야?",
+      "fixture": "no_student",
+      "expected": {
+        "must_use_runtime_path": true,
+        "must_have_execution_trace": true,
+        "must_not_use_evaluation_reference": true,
+        "expected_intent": "LIST_REQUIRED_COURSES",
+        "must_have_evidence": true
+      },
+      "notes": ""
+    },
+    {
+      "id": "FACT_02",
+      "category": "direct_fact",
+      "question": "전공필수 과목들 몇 학점짜리인지 같이 알려줘.",
+      "fixture": "no_student",
+      "expected": {
+        "must_use_runtime_path": true,
+        "must_have_execution_trace": true,
+        "must_not_use_evaluation_reference": true,
+        "expected_intent": "LIST_REQUIRED_COURSES_WITH_CREDITS",
+        "must_have_evidence": true
+      },
+      "notes": ""
+    },
+    {
+      "id": "FACT_03",
+      "category": "direct_fact",
+      "question": "2026 컴퓨터공학과 전공 과목은 총 몇 개야?",
+      "fixture": "no_student",
+      "expected": {
+        "must_use_runtime_path": true,
+        "must_have_execution_trace": true,
+        "must_not_use_evaluation_reference": true,
+        "expected_intent": "COUNT_MAJOR_COURSES",
+        "must_have_evidence": true
+      },
+      "notes": ""
+    },
+    {
+      "id": "FACT_04",
+      "category": "direct_fact",
+      "question": "컴공 전공 과목 전체 학점 합계가 어떻게 돼?",
+      "fixture": "no_student",
+      "expected": {
+        "must_use_runtime_path": true,
+        "must_have_execution_trace": true,
+        "must_not_use_evaluation_reference": true,
+        "expected_intent": "SUM_CATALOG_MAJOR_CREDITS",
+        "must_have_evidence": true
+      },
+      "notes": ""
+    },
+    {
+      "id": "FACT_05",
+      "category": "direct_fact",
+      "question": "고급자료구조가 교육과정에 있으면 학점하고 이수구분 알려줘.",
+      "fixture": "no_student",
+      "expected": {
+        "must_use_runtime_path": true,
+        "must_have_execution_trace": true,
+        "must_not_use_evaluation_reference": true,
+        "expected_intent": "COURSE_LOOKUP",
+        "must_have_evidence": true,
+        "allowed_if_entity_missing": "NEEDS_INFORMATION"
+      },
+      "notes": "고급자료구조가 VERIFIED 카탈로그에 없으면 존재한다고 가정하지 말 것."
+    },
+    {
+      "id": "FACT_06",
+      "category": "direct_fact",
+      "question": "이 과목이 전필인지 전선인지 근거까지 보여줘: 고급자료구조",
+      "fixture": "no_student",
+      "expected": {
+        "must_use_runtime_path": true,
+        "must_have_execution_trace": true,
+        "must_not_use_evaluation_reference": true,
+        "expected_intent": "COURSE_CLASSIFICATION",
+        "must_have_evidence": true,
+        "allowed_if_entity_missing": "NEEDS_INFORMATION"
+      },
+      "notes": ""
+    },
+    {
+      "id": "FACT_07",
+      "category": "direct_fact",
+      "question": "컴퓨터공학과 졸업 판정에 쓰는 요건 종류를 보여줘.",
+      "fixture": "no_student",
+      "expected": {
+        "must_use_runtime_path": true,
+        "must_have_execution_trace": true,
+        "must_not_use_evaluation_reference": true,
+        "expected_intent": "LIST_REQUIREMENTS",
+        "must_have_evidence": true
+      },
+      "notes": ""
+    },
+    {
+      "id": "FACT_08",
+      "category": "direct_fact",
+      "question": "이 교육과정이 어떤 학생한테 적용되는지 알려줘.",
+      "fixture": "no_student",
+      "expected": {
+        "must_use_runtime_path": true,
+        "must_have_execution_trace": true,
+        "must_not_use_evaluation_reference": true,
+        "expected_intent": "CURRICULUM_APPLICABILITY",
+        "must_have_evidence": true,
+        "must_not_infer_student_year": true
+      },
+      "notes": ""
+    },
+    {
+      "id": "STU_01",
+      "category": "student_state",
+      "question": "내가 지금까지 인정받은 전공 학점이 몇 학점이야?",
+      "fixture": "core_partial",
+      "expected": {
+        "must_use_runtime_path": true,
+        "must_have_execution_trace": true,
+        "must_not_use_evaluation_reference": true,
+        "expected_intent": "CALCULATE_MAJOR_CREDITS",
+        "must_match_deterministic_decision": true
+      },
+      "notes": ""
+    },
+    {
+      "id": "STU_02",
+      "category": "student_state",
+      "question": "전공필수 중에서 내가 아직 안 들은 게 뭐야?",
+      "fixture": "core_partial",
+      "expected": {
+        "must_use_runtime_path": true,
+        "must_have_execution_trace": true,
+        "must_not_use_evaluation_reference": true,
+        "expected_intent": "MISSING_REQUIRED_COURSES",
+        "must_match_deterministic_decision": true
+      },
+      "notes": ""
+    },
+    {
+      "id": "STU_03",
+      "category": "student_state",
+      "question": "지금 내 이수내역 기준으로 어떤 졸업요건이 충족됐고 뭐가 부족해?",
+      "fixture": "core_partial",
+      "expected": {
+        "must_use_runtime_path": true,
+        "must_have_execution_trace": true,
+        "must_not_use_evaluation_reference": true,
+        "expected_intent": "REQUIREMENT_AUDIT",
+        "must_distinguish_unsatisfied_and_needs_information": true
+      },
+      "notes": ""
+    },
+    {
+      "id": "STU_04",
+      "category": "student_state",
+      "question": "내 총 인정학점이랑 전공 인정학점을 따로 알려줘.",
+      "fixture": "core_partial",
+      "expected": {
+        "must_use_runtime_path": true,
+        "must_have_execution_trace": true,
+        "must_not_use_evaluation_reference": true,
+        "expected_intent": "CREDIT_SUMMARY",
+        "must_match_deterministic_decision": true
+      },
+      "notes": ""
+    },
+    {
+      "id": "STU_05",
+      "category": "student_state",
+      "question": "필수과목은 다 들었는데 총학점이 부족하면 졸업 가능해?",
+      "fixture": "required_complete_total_short",
+      "expected": {
+        "must_use_runtime_path": true,
+        "must_have_execution_trace": true,
+        "must_not_use_evaluation_reference": true,
+        "expected_intent": "GRADUATION_CHECK",
+        "expected_decision": "UNSATISFIED"
+      },
+      "notes": ""
+    },
+    {
+      "id": "STU_06",
+      "category": "student_state",
+      "question": "총학점은 넘었는데 전공필수 하나가 빠졌어. 졸업 돼?",
+      "fixture": "total_complete_required_missing",
+      "expected": {
+        "must_use_runtime_path": true,
+        "must_have_execution_trace": true,
+        "must_not_use_evaluation_reference": true,
+        "expected_intent": "GRADUATION_CHECK",
+        "expected_decision": "UNSATISFIED"
+      },
+      "notes": ""
+    },
+    {
+      "id": "STU_07",
+      "category": "student_state",
+      "question": "내 이수내역만 보면 졸업 가능한지 판단해줘.",
+      "fixture": "core_complete",
+      "expected": {
+        "must_use_runtime_path": true,
+        "must_have_execution_trace": true,
+        "must_not_use_evaluation_reference": true,
+        "expected_intent": "GRADUATION_CHECK",
+        "expected_decision": "SATISFIED",
+        "must_require_all_verified_core_requirements": true
+      },
+      "notes": ""
+    },
+    {
+      "id": "STU_08",
+      "category": "student_state",
+      "question": "성적표 정보가 일부 빠져 있는데 지금 졸업 여부를 확정할 수 있어?",
+      "fixture": "missing_information",
+      "expected": {
+        "must_use_runtime_path": true,
+        "must_have_execution_trace": true,
+        "must_not_use_evaluation_reference": true,
+        "expected_intent": "GRADUATION_CHECK",
+        "expected_decision": "NEEDS_INFORMATION"
+      },
+      "notes": ""
+    },
+    {
+      "id": "EDGE_01",
+      "category": "boundary",
+      "question": "졸업 기준보다 딱 1학점 부족한 상태야. 결과가 어떻게 돼?",
+      "fixture": "one_credit_below",
+      "expected": {
+        "must_use_runtime_path": true,
+        "must_have_execution_trace": true,
+        "must_not_use_evaluation_reference": true,
+        "expected_intent": "GRADUATION_CHECK",
+        "expected_decision": "UNSATISFIED"
+      },
+      "notes": ""
+    },
+    {
+      "id": "EDGE_02",
+      "category": "boundary",
+      "question": "졸업 기준 학점을 정확히 맞췄어. 다른 조건도 다 충족했다면 졸업 가능해?",
+      "fixture": "exact_credit_threshold_all_else_complete",
+      "expected": {
+        "must_use_runtime_path": true,
+        "must_have_execution_trace": true,
+        "must_not_use_evaluation_reference": true,
+        "expected_intent": "GRADUATION_CHECK",
+        "expected_decision": "SATISFIED"
+      },
+      "notes": ""
+    },
+    {
+      "id": "EDGE_03",
+      "category": "boundary",
+      "question": "졸업 기준보다 1학점 더 들었고 다른 조건도 충족했어. 결과 알려줘.",
+      "fixture": "one_credit_above_all_else_complete",
+      "expected": {
+        "must_use_runtime_path": true,
+        "must_have_execution_trace": true,
+        "must_not_use_evaluation_reference": true,
+        "expected_intent": "GRADUATION_CHECK",
+        "expected_decision": "SATISFIED"
+      },
+      "notes": ""
+    },
+    {
+      "id": "EDGE_04",
+      "category": "boundary",
+      "question": "같은 과목이 이수내역에 두 번 들어가 있어. 학점을 두 번 세면 안 되지?",
+      "fixture": "duplicate_course_attempt",
+      "expected": {
+        "must_use_runtime_path": true,
+        "must_have_execution_trace": true,
+        "must_not_use_evaluation_reference": true,
+        "expected_intent": "CREDIT_AUDIT",
+        "must_not_double_count": true
+      },
+      "notes": ""
+    },
+    {
+      "id": "EDGE_05",
+      "category": "boundary",
+      "question": "없는 과목 코드 ABC9999를 들었다고 넣으면 어떻게 처리해?",
+      "fixture": "unknown_course_code",
+      "expected": {
+        "must_use_runtime_path": true,
+        "must_have_execution_trace": true,
+        "must_not_use_evaluation_reference": true,
+        "expected_intent": "ENTITY_RESOLUTION",
+        "expected_decision": "NEEDS_INFORMATION",
+        "must_not_invent_course": true
+      },
+      "notes": ""
+    },
+    {
+      "id": "EDGE_06",
+      "category": "boundary",
+      "question": "과목명이 비어 있는 이수기록 하나가 있어. 그걸 졸업학점에 넣어도 돼?",
+      "fixture": "malformed_completion_record",
+      "expected": {
+        "must_use_runtime_path": true,
+        "must_have_execution_trace": true,
+        "must_not_use_evaluation_reference": true,
+        "expected_intent": "CREDIT_AUDIT",
+        "expected_decision": "NEEDS_INFORMATION"
+      },
+      "notes": ""
+    },
+    {
+      "id": "EDGE_07",
+      "category": "boundary",
+      "question": "같은 학생 정보를 순서만 바꿔서 넣어도 결과가 똑같아야 해. 확인해줘.",
+      "fixture": "same_state_different_order",
+      "expected": {
+        "must_use_runtime_path": true,
+        "must_have_execution_trace": true,
+        "must_not_use_evaluation_reference": true,
+        "expected_intent": "CONSISTENCY_CHECK",
+        "must_be_order_invariant": true
+      },
+      "notes": ""
+    },
+    {
+      "id": "EDGE_08",
+      "category": "boundary",
+      "question": "같은 질문을 두 번 하면 판정 결과와 근거가 같아?",
+      "fixture": "core_partial",
+      "expected": {
+        "must_use_runtime_path": true,
+        "must_have_execution_trace": true,
+        "must_not_use_evaluation_reference": true,
+        "expected_intent": "CONSISTENCY_CHECK",
+        "must_be_deterministic": true
+      },
+      "notes": ""
+    },
+    {
+      "id": "SIM_01",
+      "category": "simulation",
+      "question": "고급자료구조를 추가로 들으면 내 전공요건이 어떻게 달라져?",
+      "fixture": "core_partial",
+      "expected": {
+        "must_use_runtime_path": true,
+        "must_have_execution_trace": true,
+        "must_not_use_evaluation_reference": true,
+        "expected_intent": "SIMULATE_ADD_COURSE",
+        "must_preserve_original_student_state": true,
+        "allowed_if_entity_missing": "NEEDS_INFORMATION"
+      },
+      "notes": ""
+    },
+    {
+      "id": "SIM_02",
+      "category": "simulation",
+      "question": "전공필수 하나를 더 이수했다고 가정하면 부족한 요건이 줄어들어?",
+      "fixture": "required_missing_one",
+      "expected": {
+        "must_use_runtime_path": true,
+        "must_have_execution_trace": true,
+        "must_not_use_evaluation_reference": true,
+        "expected_intent": "SIMULATE_ADD_REQUIRED",
+        "must_preserve_original_student_state": true
+      },
+      "notes": ""
+    },
+    {
+      "id": "SIM_03",
+      "category": "simulation",
+      "question": "이 과목을 들었다고 가정한 결과랑 실제 내 이수내역을 구분해서 보여줘.",
+      "fixture": "core_partial",
+      "expected": {
+        "must_use_runtime_path": true,
+        "must_have_execution_trace": true,
+        "must_not_use_evaluation_reference": true,
+        "expected_intent": "SIMULATION_COMPARE",
+        "must_separate_actual_and_hypothetical": true
+      },
+      "notes": ""
+    },
+    {
+      "id": "SIM_04",
+      "category": "simulation",
+      "question": "과목 두 개를 추가로 들으면 졸업 가능 여부가 바뀌는지 계산해줘.",
+      "fixture": "two_course_simulation",
+      "expected": {
+        "must_use_runtime_path": true,
+        "must_have_execution_trace": true,
+        "must_not_use_evaluation_reference": true,
+        "expected_intent": "SIMULATE_MULTI_COURSE",
+        "must_preserve_original_student_state": true
+      },
+      "notes": ""
+    },
+    {
+      "id": "SIM_05",
+      "category": "simulation",
+      "question": "없는 과목을 추가로 들었다고 가정하면 계산해도 돼?",
+      "fixture": "unknown_course_code",
+      "expected": {
+        "must_use_runtime_path": true,
+        "must_have_execution_trace": true,
+        "must_not_use_evaluation_reference": true,
+        "expected_intent": "SIMULATE_ADD_COURSE",
+        "expected_decision": "NEEDS_INFORMATION",
+        "must_not_invent_course": true
+      },
+      "notes": ""
+    },
+    {
+      "id": "SIM_06",
+      "category": "simulation",
+      "question": "0학점으로 등록된 필수 항목을 추가했다고 가정하면 학점 말고 요건 상태만 바뀌는지 보여줘.",
+      "fixture": "zero_credit_required_simulation",
+      "expected": {
+        "must_use_runtime_path": true,
+        "must_have_execution_trace": true,
+        "must_not_use_evaluation_reference": true,
+        "expected_intent": "SIMULATE_REQUIREMENT_CHANGE",
+        "must_not_change_credit_sum_if_zero": true
+      },
+      "notes": ""
+    },
+    {
+      "id": "SIM_07",
+      "category": "simulation",
+      "question": "가정 시뮬레이션을 두 번 해도 실제 성적표 데이터는 그대로지?",
+      "fixture": "core_partial",
+      "expected": {
+        "must_use_runtime_path": true,
+        "must_have_execution_trace": true,
+        "must_not_use_evaluation_reference": true,
+        "expected_intent": "SIMULATION_INTEGRITY",
+        "must_preserve_original_student_state": true
+      },
+      "notes": ""
+    },
+    {
+      "id": "SIM_08",
+      "category": "simulation",
+      "question": "이 과목을 추가하면 전공필수랑 총학점 중 뭐가 바뀌는지 각각 알려줘.",
+      "fixture": "required_missing_one",
+      "expected": {
+        "must_use_runtime_path": true,
+        "must_have_execution_trace": true,
+        "must_not_use_evaluation_reference": true,
+        "expected_intent": "SIMULATE_REQUIREMENT_DELTA",
+        "must_report_delta_by_requirement": true
+      },
+      "notes": ""
+    },
+    {
+      "id": "NLP_01",
+      "category": "natural_language",
+      "question": "컴공 전필 뭐 남음?",
+      "fixture": "core_partial",
+      "expected": {
+        "must_use_runtime_path": true,
+        "must_have_execution_trace": true,
+        "must_not_use_evaluation_reference": true,
+        "expected_intent": "MISSING_REQUIRED_COURSES"
+      },
+      "notes": ""
+    },
+    {
+      "id": "NLP_02",
+      "category": "natural_language",
+      "question": "나 졸업됨?",
+      "fixture": "core_complete",
+      "expected": {
+        "must_use_runtime_path": true,
+        "must_have_execution_trace": true,
+        "must_not_use_evaluation_reference": true,
+        "expected_intent": "GRADUATION_CHECK",
+        "expected_decision": "SATISFIED"
+      },
+      "notes": ""
+    },
+    {
+      "id": "NLP_03",
+      "category": "natural_language",
+      "question": "졸업될까?",
+      "fixture": "core_partial",
+      "expected": {
+        "must_use_runtime_path": true,
+        "must_have_execution_trace": true,
+        "must_not_use_evaluation_reference": true,
+        "expected_intent": "GRADUATION_CHECK"
+      },
+      "notes": ""
+    },
+    {
+      "id": "NLP_04",
+      "category": "natural_language",
+      "question": "전공 점수 몇점채움?",
+      "fixture": "core_partial",
+      "expected": {
+        "must_use_runtime_path": true,
+        "must_have_execution_trace": true,
+        "must_not_use_evaluation_reference": true,
+        "expected_intent": "CALCULATE_MAJOR_CREDITS"
+      },
+      "notes": "‘점수’를 성적점수로 오해하지 않고 문맥상 전공 인정학점으로 해석 가능한지 확인."
+    },
+    {
+      "id": "NLP_05",
+      "category": "natural_language",
+      "question": "전공필쑤 안들은거 알려줘",
+      "fixture": "core_partial",
+      "expected": {
+        "must_use_runtime_path": true,
+        "must_have_execution_trace": true,
+        "must_not_use_evaluation_reference": true,
+        "expected_intent": "MISSING_REQUIRED_COURSES"
+      },
+      "notes": ""
+    },
+    {
+      "id": "NLP_06",
+      "category": "natural_language",
+      "question": "컴 퓨터 공학 과 전필 몇학점 필요해?",
+      "fixture": "no_student",
+      "expected": {
+        "must_use_runtime_path": true,
+        "must_have_execution_trace": true,
+        "must_not_use_evaluation_reference": true,
+        "expected_intent": "REQUIREMENT_LOOKUP",
+        "must_have_evidence": true
+      },
+      "notes": ""
+    },
+    {
+      "id": "NLP_07",
+      "category": "natural_language",
+      "question": "고자구 들으면 뭐 달라짐?",
+      "fixture": "core_partial",
+      "expected": {
+        "must_use_runtime_path": true,
+        "must_have_execution_trace": true,
+        "must_not_use_evaluation_reference": true,
+        "expected_intent": "SIMULATE_ADD_COURSE",
+        "allowed_ambiguity": true,
+        "must_not_force_alias_if_unverified": true
+      },
+      "notes": ""
+    },
+    {
+      "id": "NLP_08",
+      "category": "natural_language",
+      "question": "전필 하나 더 들으면?",
+      "fixture": "required_missing_one",
+      "expected": {
+        "must_use_runtime_path": true,
+        "must_have_execution_trace": true,
+        "must_not_use_evaluation_reference": true,
+        "expected_intent": "SIMULATE_ADD_REQUIRED",
+        "requires_conversation_context": true
+      },
+      "notes": ""
+    },
+    {
+      "id": "CTX_01",
+      "category": "context",
+      "question": "아까 말한 그 과목은 몇 학점이야?",
+      "fixture": "conversation_course_selected",
+      "expected": {
+        "must_use_runtime_path": true,
+        "must_have_execution_trace": true,
+        "must_not_use_evaluation_reference": true,
+        "expected_intent": "COURSE_LOOKUP",
+        "requires_conversation_context": true
+      },
+      "notes": ""
+    },
+    {
+      "id": "CTX_02",
+      "category": "context",
+      "question": "그럼 그거 들으면 졸업 가능해져?",
+      "fixture": "conversation_course_selected_core_partial",
+      "expected": {
+        "must_use_runtime_path": true,
+        "must_have_execution_trace": true,
+        "must_not_use_evaluation_reference": true,
+        "expected_intent": "SIMULATE_ADD_COURSE",
+        "requires_conversation_context": true
+      },
+      "notes": ""
+    },
+    {
+      "id": "CTX_03",
+      "category": "compound",
+      "question": "내 전공학점, 남은 전필, 졸업 가능 여부를 한 번에 알려줘.",
+      "fixture": "core_partial",
+      "expected": {
+        "must_use_runtime_path": true,
+        "must_have_execution_trace": true,
+        "must_not_use_evaluation_reference": true,
+        "expected_intent": "MULTI_REQUIREMENT_AUDIT",
+        "must_answer_all_subquestions": true
+      },
+      "notes": ""
+    },
+    {
+      "id": "CTX_04",
+      "category": "compound",
+      "question": "총학점은 충분한데 전필이 하나 비었고 성적표 한 학기도 누락됐어. 지금 확정 가능해?",
+      "fixture": "missing_info_and_unsatisfied",
+      "expected": {
+        "must_use_runtime_path": true,
+        "must_have_execution_trace": true,
+        "must_not_use_evaluation_reference": true,
+        "expected_intent": "GRADUATION_CHECK",
+        "must_report_both_unsatisfied_and_needs_information": true
+      },
+      "notes": ""
+    },
+    {
+      "id": "CTX_05",
+      "category": "compound",
+      "question": "내가 지금 부족한 조건이랑, 과목 하나 추가했을 때 없어지는 부족조건을 같이 보여줘.",
+      "fixture": "required_missing_one",
+      "expected": {
+        "must_use_runtime_path": true,
+        "must_have_execution_trace": true,
+        "must_not_use_evaluation_reference": true,
+        "expected_intent": "CURRENT_AND_SIMULATED_GAP",
+        "must_separate_actual_and_hypothetical": true
+      },
+      "notes": ""
+    },
+    {
+      "id": "SCOPE_01",
+      "category": "unsupported_scope",
+      "question": "나는 2024 교육과정 적용자인데 지금 졸업 가능해?",
+      "fixture": "old_curriculum_student",
+      "expected": {
+        "must_use_runtime_path": true,
+        "must_have_execution_trace": true,
+        "must_not_use_evaluation_reference": true,
+        "expected_scope": "UNSUPPORTED_OR_BLOCKED",
+        "must_not_force_2026_rules": true
+      },
+      "notes": ""
+    },
+    {
+      "id": "SCOPE_02",
+      "category": "unsupported_scope",
+      "question": "복수전공까지 포함해서 졸업 여부 판단해줘.",
+      "fixture": "double_major_student",
+      "expected": {
+        "must_use_runtime_path": true,
+        "must_have_execution_trace": true,
+        "must_not_use_evaluation_reference": true,
+        "expected_scope": "UNSUPPORTED_OR_BLOCKED",
+        "must_not_overclaim": true
+      },
+      "notes": ""
+    },
+    {
+      "id": "EVID_01",
+      "category": "explainability",
+      "question": "왜 내가 졸업 가능하다고 나온 건지 사용한 규칙이랑 근거를 보여줘.",
+      "fixture": "core_complete",
+      "expected": {
+        "must_use_runtime_path": true,
+        "must_have_execution_trace": true,
+        "must_not_use_evaluation_reference": true,
+        "expected_intent": "EXPLAIN_DECISION",
+        "must_have_evidence": true
+      },
+      "notes": ""
+    },
+    {
+      "id": "EVID_02",
+      "category": "explainability",
+      "question": "이 전공필수 판정이 PDF 어디에서 나온 건지 알려줘.",
+      "fixture": "core_partial",
+      "expected": {
+        "must_use_runtime_path": true,
+        "must_have_execution_trace": true,
+        "must_not_use_evaluation_reference": true,
+        "expected_intent": "SOURCE_LOOKUP",
+        "must_have_pdf_source": true
+      },
+      "notes": ""
+    },
+    {
+      "id": "EVID_03",
+      "category": "explainability",
+      "question": "답변 만들 때 실제로 어떤 관계와 규칙을 사용했는지 보여줘. 없는 경로는 만들지 마.",
+      "fixture": "core_partial",
+      "expected": {
+        "must_use_runtime_path": true,
+        "must_have_execution_trace": true,
+        "must_not_use_evaluation_reference": true,
+        "expected_intent": "EXPLAIN_TRACE",
+        "must_not_invent_traversal": true
+      },
+      "notes": ""
+    }
+  ]
+}

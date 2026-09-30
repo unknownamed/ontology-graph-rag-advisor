@@ -1,0 +1,4236 @@
+{
+  "source_sha256": "0d800318dc367a89518f9be6be8f559092474bf00b3573e14bd37b6c44b54471",
+  "extraction_status": "UNVERIFIED_EXCEPT_EXPLICIT_CONFLICTS",
+  "rows": [
+    {
+      "course_id": "GEA8001",
+      "name": "대학생활의설계(CDP-C)",
+      "catalog_credits": 1,
+      "classification": "기초교양",
+      "area": "미래설계",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 34,
+        "printed_page": 26,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8810",
+      "name": "인공지능시대의파이썬프로그래밍",
+      "catalog_credits": 3,
+      "classification": "기초교양",
+      "area": "AI융합기초",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 34,
+        "printed_page": 26,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8811",
+      "name": "인문사회계열을위한인공지능입문",
+      "catalog_credits": 3,
+      "classification": "기초교양",
+      "area": "AI융합기초",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 34,
+        "printed_page": 26,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8812",
+      "name": "자연공학계열을위한인공지능입문",
+      "catalog_credits": 3,
+      "classification": "기초교양",
+      "area": "AI융합기초",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 34,
+        "printed_page": 26,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8813",
+      "name": "인공지능데이터활용기초",
+      "catalog_credits": 3,
+      "classification": "기초교양",
+      "area": "AI융합기초",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 34,
+        "printed_page": 26,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8814",
+      "name": "인공지능과디지털사회",
+      "catalog_credits": 3,
+      "classification": "기초교양",
+      "area": "AI융합기초",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 34,
+        "printed_page": 26,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8510",
+      "name": "인문학글쓰기",
+      "catalog_credits": 3,
+      "classification": "기초교양",
+      "area": "열린사고와표현",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 34,
+        "printed_page": 26,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8511",
+      "name": "사회과학글쓰기",
+      "catalog_credits": 3,
+      "classification": "기초교양",
+      "area": "열린사고와표현",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 34,
+        "printed_page": 26,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8512",
+      "name": "과학기술글쓰기",
+      "catalog_credits": 3,
+      "classification": "기초교양",
+      "area": "열린사고와표현",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 34,
+        "printed_page": 26,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8656",
+      "name": "계열통합글쓰기(외국인)",
+      "catalog_credits": 3,
+      "classification": "기초교양",
+      "area": "열린사고와표현",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 34,
+        "printed_page": 26,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8704",
+      "name": "대학영어Ⅰ",
+      "catalog_credits": 2,
+      "classification": "기초교양",
+      "area": "글로벌의사소통",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 34,
+        "printed_page": 26,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8705",
+      "name": "대학영어Ⅱ",
+      "catalog_credits": 2,
+      "classification": "기초교양",
+      "area": "글로벌의사소통",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 34,
+        "printed_page": 26,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8658",
+      "name": "디지털협력기반문제중심학습(DC-PBL)",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "디지털커뮤니케이션",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 34,
+        "printed_page": 26,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8659",
+      "name": "디지털시대의글로벌리더십Ⅰ-AdventureDesign",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "디지털커뮤니케이션",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 34,
+        "printed_page": 26,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8655",
+      "name": "디지털시대의글로벌리더십Ⅱ-AdventureDesign",
+      "catalog_credits": 2,
+      "classification": "균형교양",
+      "area": "디지털커뮤니케이션",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 34,
+        "printed_page": 26,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8801",
+      "name": "AI융합아카데미",
+      "catalog_credits": 2,
+      "classification": "균형교양",
+      "area": "디지털커뮤니케이션",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 34,
+        "printed_page": 26,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8622",
+      "name": "디지털시대의실용글쓰기",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "디지털커뮤니케이션",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 34,
+        "printed_page": 26,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8623",
+      "name": "디지털휴머니즘",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "디지털커뮤니케이션",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 35,
+        "printed_page": 27,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8660",
+      "name": "디지털시대의미디어와개인",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "디지털커뮤니케이션",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 35,
+        "printed_page": 27,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8652",
+      "name": "미디어중독과디지털리터러시",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "디지털커뮤니케이션",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 35,
+        "printed_page": 27,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8624",
+      "name": "디지털4.0시대의글로벌사이버이슈",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "디지털커뮤니케이션",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 35,
+        "printed_page": 27,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8671",
+      "name": "인공지능의진화와인간의미래",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "디지털커뮤니케이션",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 35,
+        "printed_page": 27,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8672",
+      "name": "디지털혁신과일상의공간환경디자인",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "디지털커뮤니케이션",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 35,
+        "printed_page": 27,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8653",
+      "name": "디자인과디지털기술그리고미래상상",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "디지털커뮤니케이션",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 35,
+        "printed_page": 27,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8633",
+      "name": "디지털시대의e-헬스리터러시",
+      "catalog_credits": 2,
+      "classification": "균형교양",
+      "area": "디지털커뮤니케이션",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 35,
+        "printed_page": 27,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8631",
+      "name": "재미있는인공지능이야기",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "디지털커뮤니케이션",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 35,
+        "printed_page": 27,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA7543",
+      "name": "데이터과학과인공지능입문코딩",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "디지털커뮤니케이션",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 35,
+        "printed_page": 27,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA7565",
+      "name": "컴퓨터시스템입문",
+      "catalog_credits": 2,
+      "classification": "균형교양",
+      "area": "디지털커뮤니케이션",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 35,
+        "printed_page": 27,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA7261",
+      "name": "컴퓨터프로그래밍",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "디지털커뮤니케이션",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 35,
+        "printed_page": 27,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8673",
+      "name": "메이커문화와창업",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "디지털커뮤니케이션",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 35,
+        "printed_page": 27,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8806",
+      "name": "패션과테크놀로지",
+      "catalog_credits": 2,
+      "classification": "균형교양",
+      "area": "디지털커뮤니케이션",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 35,
+        "printed_page": 27,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA7564",
+      "name": "디지털사회의이해",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "디지털커뮤니케이션",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 35,
+        "printed_page": 27,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8627",
+      "name": "컴퓨터활용디자인",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "디지털커뮤니케이션",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 35,
+        "printed_page": 27,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8694",
+      "name": "AI+디지털리터러시",
+      "catalog_credits": 2,
+      "classification": "균형교양",
+      "area": "디지털커뮤니케이션",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 35,
+        "printed_page": 27,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8802",
+      "name": "인간지능과인공지능",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "디지털커뮤니케이션",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 35,
+        "printed_page": 27,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8835",
+      "name": "인공지능과TED강의로배우는글로벌커뮤니케이션",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "디지털커뮤니케이션",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 35,
+        "printed_page": 27,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8833",
+      "name": "기계학습기초",
+      "catalog_credits": 2,
+      "classification": "균형교양",
+      "area": "디지털커뮤니케이션",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 35,
+        "printed_page": 27,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8834",
+      "name": "생성형AI기초",
+      "catalog_credits": 1,
+      "classification": "균형교양",
+      "area": "디지털커뮤니케이션",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 35,
+        "printed_page": 27,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8838",
+      "name": "AI글로벌마케팅응용",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "디지털커뮤니케이션",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 35,
+        "printed_page": 27,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8703",
+      "name": "우리시대의윤리",
+      "catalog_credits": 2,
+      "classification": "균형교양",
+      "area": "인문예술",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 35,
+        "printed_page": 27,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA7559",
+      "name": "언어,매체그리고커뮤니케이션",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "인문예술",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 35,
+        "printed_page": 27,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8666",
+      "name": "한국SF문학의이해",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "인문예술",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 36,
+        "printed_page": 28,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8585",
+      "name": "문학과인간",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "인문예술",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 36,
+        "printed_page": 28,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8586",
+      "name": "한국영화인문학의이해",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "인문예술",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 36,
+        "printed_page": 28,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8663",
+      "name": "고전문학에서찾은사랑",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "인문예술",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 36,
+        "printed_page": 28,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8664",
+      "name": "뉴미디어시대의국어맞춤법",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "인문예술",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 36,
+        "printed_page": 28,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8665",
+      "name": "키워드로읽는현대문학",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "인문예술",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 36,
+        "printed_page": 28,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8667",
+      "name": "글로컬문화비교",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "인문예술",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 36,
+        "printed_page": 28,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA5045",
+      "name": "유럽문화이야기",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "인문예술",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 36,
+        "printed_page": 28,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA7500",
+      "name": "세계와한국",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "인문예술",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 36,
+        "printed_page": 28,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA6021",
+      "name": "대중문화기호읽기",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "인문예술",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 36,
+        "printed_page": 28,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA5027",
+      "name": "유럽문학기행",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "인문예술",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 36,
+        "printed_page": 28,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA5046",
+      "name": "영상을통해본일본문화",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "인문예술",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 36,
+        "printed_page": 28,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA2005",
+      "name": "서양문화사",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "인문예술",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 36,
+        "printed_page": 28,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA7322",
+      "name": "한국의문화유산",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "인문예술",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 36,
+        "printed_page": 28,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA7323",
+      "name": "한국사의이해",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "인문예술",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 36,
+        "printed_page": 28,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA7324",
+      "name": "민중으로본한국역사",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "인문예술",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 36,
+        "printed_page": 28,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8513",
+      "name": "한국의역사와기억",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "인문예술",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 36,
+        "printed_page": 28,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8638",
+      "name": "콘텐츠로보는서양예술문화사",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "인문예술",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 36,
+        "printed_page": 28,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8637",
+      "name": "동아시아역사와문화",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "인문예술",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 36,
+        "printed_page": 28,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8651",
+      "name": "전염병의세계사",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "인문예술",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 36,
+        "printed_page": 28,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA2013",
+      "name": "인생론",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "인문예술",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 36,
+        "printed_page": 28,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA2014",
+      "name": "성과사랑의철학",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "인문예술",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 36,
+        "printed_page": 28,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8548",
+      "name": "영상을통해본동아시아문명과철학",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "인문예술",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 36,
+        "printed_page": 28,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8706",
+      "name": "철학의문제와이론들",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "인문예술",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 36,
+        "printed_page": 28,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8707",
+      "name": "지구화시대의종교",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "인문예술",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 36,
+        "printed_page": 28,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8708",
+      "name": "지구촌시대의성공과행복의철학",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "인문예술",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 37,
+        "printed_page": 29,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA6009",
+      "name": "테니스",
+      "catalog_credits": 1,
+      "classification": "균형교양",
+      "area": "인문예술",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 37,
+        "printed_page": 29,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA7284",
+      "name": "탁구",
+      "catalog_credits": 1,
+      "classification": "균형교양",
+      "area": "인문예술",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 37,
+        "printed_page": 29,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA7285",
+      "name": "스키",
+      "catalog_credits": 1,
+      "classification": "균형교양",
+      "area": "인문예술",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 37,
+        "printed_page": 29,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8537",
+      "name": "풋살",
+      "catalog_credits": 1,
+      "classification": "균형교양",
+      "area": "인문예술",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 37,
+        "printed_page": 29,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8578",
+      "name": "배드민턴",
+      "catalog_credits": 1,
+      "classification": "균형교양",
+      "area": "인문예술",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 37,
+        "printed_page": 29,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8579",
+      "name": "요가",
+      "catalog_credits": 1,
+      "classification": "균형교양",
+      "area": "인문예술",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 37,
+        "printed_page": 29,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8804",
+      "name": "호신술",
+      "catalog_credits": 1,
+      "classification": "균형교양",
+      "area": "인문예술",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 37,
+        "printed_page": 29,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8643",
+      "name": "축구",
+      "catalog_credits": 1,
+      "classification": "균형교양",
+      "area": "인문예술",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 37,
+        "printed_page": 29,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8645",
+      "name": "배구",
+      "catalog_credits": 1,
+      "classification": "균형교양",
+      "area": "인문예술",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 37,
+        "printed_page": 29,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8647",
+      "name": "해양스포츠",
+      "catalog_credits": 1,
+      "classification": "균형교양",
+      "area": "인문예술",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 37,
+        "printed_page": 29,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8580",
+      "name": "필라테스",
+      "catalog_credits": 1,
+      "classification": "균형교양",
+      "area": "인문예술",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 37,
+        "printed_page": 29,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8581",
+      "name": "웨이트트레이닝",
+      "catalog_credits": 1,
+      "classification": "균형교양",
+      "area": "인문예술",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 37,
+        "printed_page": 29,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8644",
+      "name": "농구",
+      "catalog_credits": 1,
+      "classification": "균형교양",
+      "area": "인문예술",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 37,
+        "printed_page": 29,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8646",
+      "name": "뉴스포츠",
+      "catalog_credits": 1,
+      "classification": "균형교양",
+      "area": "인문예술",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 37,
+        "printed_page": 29,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8669",
+      "name": "야구",
+      "catalog_credits": 1,
+      "classification": "균형교양",
+      "area": "인문예술",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 37,
+        "printed_page": 29,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8630",
+      "name": "운동재활과다이어트",
+      "catalog_credits": 2,
+      "classification": "균형교양",
+      "area": "인문예술",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 37,
+        "printed_page": 29,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8635",
+      "name": "골프",
+      "catalog_credits": 1,
+      "classification": "균형교양",
+      "area": "인문예술",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 37,
+        "printed_page": 29,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA6005",
+      "name": "음악의이해및감상",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "인문예술",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 37,
+        "printed_page": 29,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA7548",
+      "name": "융합창작스튜디오",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "인문예술",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 37,
+        "printed_page": 29,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA6006",
+      "name": "미술의이해및감상",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "인문예술",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 37,
+        "printed_page": 29,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA7553",
+      "name": "한지조형예술",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "인문예술",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 37,
+        "printed_page": 29,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA6007",
+      "name": "디자인의이해",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "인문예술",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 37,
+        "printed_page": 29,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8641",
+      "name": "옷으로보는한국사회와문화",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "인문예술",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 37,
+        "printed_page": 29,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8649",
+      "name": "운동과웰니스",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "인문예술",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 38,
+        "printed_page": 30,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA7503",
+      "name": "통합창원시도시인문학의이해",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "인문예술",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 38,
+        "printed_page": 30,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA7505",
+      "name": "도시속의문화예술과디자인",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "인문예술",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 38,
+        "printed_page": 30,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8691",
+      "name": "인간의삶과성장",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "인문예술",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 38,
+        "printed_page": 30,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8820",
+      "name": "현대한국의삶과가치Ⅰ",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "인문예술",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 38,
+        "printed_page": 30,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8832",
+      "name": "현대한국의삶과가치Ⅱ",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "인문예술",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 38,
+        "printed_page": 30,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8675",
+      "name": "교류분석:AI시대내마음의열쇠찾기",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "인문예술",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 38,
+        "printed_page": 30,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8002",
+      "name": "도전과창조",
+      "catalog_credits": 2,
+      "classification": "균형교양",
+      "area": "사회와문화",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 38,
+        "printed_page": 30,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8702",
+      "name": "현대사회와인간",
+      "catalog_credits": 2,
+      "classification": "균형교양",
+      "area": "사회와문화",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 38,
+        "printed_page": 30,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8692",
+      "name": "현대사회와마음건강",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "사회와문화",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 38,
+        "printed_page": 30,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8693",
+      "name": "관계의심리학",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "사회와문화",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 38,
+        "printed_page": 30,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8807",
+      "name": "다정한사회다정한삶",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "사회와문화",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 38,
+        "printed_page": 30,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8819",
+      "name": "현대한국생활의이해Ⅰ",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "사회와문화",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 38,
+        "printed_page": 30,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8831",
+      "name": "현대한국생활의이해Ⅱ",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "사회와문화",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 38,
+        "printed_page": 30,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8007",
+      "name": "미래설계법",
+      "catalog_credits": 2,
+      "classification": "균형교양",
+      "area": "사회와문화",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 38,
+        "printed_page": 30,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8008",
+      "name": "취업핵심역량개발",
+      "catalog_credits": 2,
+      "classification": "균형교양",
+      "area": "사회와문화",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 38,
+        "printed_page": 30,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8709",
+      "name": "융복합시대의미학,예술과사상",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "사회와문화",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 38,
+        "printed_page": 30,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8710",
+      "name": "SF영화로배우는철학과미래사회:새로운삶의양식",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "사회와문화",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 38,
+        "printed_page": 30,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA7540",
+      "name": "프랑스문화산책",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "사회와문화",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 38,
+        "printed_page": 30,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA3022",
+      "name": "인간과교육",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "사회와문화",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 38,
+        "printed_page": 30,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA3003",
+      "name": "범죄와인권",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "사회와문화",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 38,
+        "printed_page": 30,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA3001",
+      "name": "법학개론",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "사회와문화",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 38,
+        "printed_page": 30,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA3074",
+      "name": "이주민보호와법",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "사회와문화",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 38,
+        "printed_page": 30,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8616",
+      "name": "영화속법이야기",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "사회와문화",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 38,
+        "printed_page": 30,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA7560",
+      "name": "너와나의인권",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "사회와문화",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 38,
+        "printed_page": 30,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA7562",
+      "name": "민주시민과헌법",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "사회와문화",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 39,
+        "printed_page": 31,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA3013",
+      "name": "지방자치의이해",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "사회와문화",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 39,
+        "printed_page": 31,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA3069",
+      "name": "행정학의이해",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "사회와문화",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 39,
+        "printed_page": 31,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8589",
+      "name": "미래사회와행정",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "사회와문화",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 39,
+        "printed_page": 31,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA7551",
+      "name": "저출산·고령사회와노인장기요양보장론",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "사회와문화",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 39,
+        "printed_page": 31,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA3070",
+      "name": "현대민주주의이해",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "사회와문화",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 39,
+        "printed_page": 31,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA3071",
+      "name": "정치학의이해",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "사회와문화",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 39,
+        "printed_page": 31,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA7506",
+      "name": "재미있게이해하는글로벌핫이슈",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "사회와문화",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 39,
+        "printed_page": 31,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA3009",
+      "name": "국제관계의이해",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "사회와문화",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 39,
+        "printed_page": 31,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8588",
+      "name": "한반도의평화와통일",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "사회와문화",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 39,
+        "printed_page": 31,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA7552",
+      "name": "미래사회의이해",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "사회와문화",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 39,
+        "printed_page": 31,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8808",
+      "name": "씨네프로머시:영화로배우는글로벌공공외교",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "사회와문화",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 39,
+        "printed_page": 31,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8837",
+      "name": "노동의과거와현재이해",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "사회와문화",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 39,
+        "printed_page": 31,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA2008",
+      "name": "중국의어제와오늘",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "사회와문화",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 39,
+        "printed_page": 31,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA3012",
+      "name": "중국학개론",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "사회와문화",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 39,
+        "printed_page": 31,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8674",
+      "name": "언어와사유",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "사회와문화",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 39,
+        "printed_page": 31,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA3015",
+      "name": "사회학에의초대",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "사회와문화",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 39,
+        "printed_page": 31,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA3019",
+      "name": "문화와사회",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "사회와문화",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 39,
+        "printed_page": 31,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8557",
+      "name": "젠더이슈로보는사회",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "사회와문화",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 39,
+        "printed_page": 31,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA7563",
+      "name": "한국사회의패러다임전환",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "사회와문화",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 39,
+        "printed_page": 31,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8634",
+      "name": "아시아공동체와문화다양성의이해",
+      "catalog_credits": 2,
+      "classification": "균형교양",
+      "area": "사회와문화",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 39,
+        "printed_page": 31,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA7532",
+      "name": "현대사회와커뮤니케이션",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "사회와문화",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 39,
+        "printed_page": 31,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA3025",
+      "name": "노인과사회",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "사회와문화",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 39,
+        "printed_page": 31,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8514",
+      "name": "결혼과가족",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "사회와문화",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 39,
+        "printed_page": 31,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8662",
+      "name": "인간관계와의사소통",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "사회와문화",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 40,
+        "printed_page": 32,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA7542",
+      "name": "가족으로의특별한여행",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "사회와문화",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 40,
+        "printed_page": 32,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA7541",
+      "name": "포스트모던시대청년의삶과미래설계",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "사회와문화",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 40,
+        "printed_page": 32,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8590",
+      "name": "경제학의이해",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "사회와문화",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 40,
+        "printed_page": 32,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8591",
+      "name": "회계의이해",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "사회와문화",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 40,
+        "printed_page": 32,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8603",
+      "name": "경제학원론",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "사회와문화",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 40,
+        "printed_page": 32,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8593",
+      "name": "보험과위험관리",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "사회와문화",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 40,
+        "printed_page": 32,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8594",
+      "name": "현대경영의이해",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "사회와문화",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 40,
+        "printed_page": 32,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA3048",
+      "name": "현대생활과보험",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "사회와문화",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 40,
+        "printed_page": 32,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA7558",
+      "name": "무역의이해",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "사회와문화",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 40,
+        "printed_page": 32,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA3032",
+      "name": "소비와현대생활",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "사회와문화",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 40,
+        "printed_page": 32,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA3033",
+      "name": "증권투자의기초",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "사회와문화",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 40,
+        "printed_page": 32,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA3045",
+      "name": "경영경제학",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "사회와문화",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 40,
+        "printed_page": 32,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA3043",
+      "name": "현대사회와회계",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "사회와문화",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 40,
+        "printed_page": 32,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA3052",
+      "name": "생활세금의이해",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "사회와문화",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 40,
+        "printed_page": 32,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA7537",
+      "name": "지역문화기획",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "사회와문화",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 40,
+        "printed_page": 32,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8519",
+      "name": "창업아이디어발굴",
+      "catalog_credits": 2,
+      "classification": "균형교양",
+      "area": "사회와문화",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 40,
+        "printed_page": 32,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8518",
+      "name": "기업가정신",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "사회와문화",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 40,
+        "printed_page": 32,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8559",
+      "name": "사회적경제와기술창업의이해",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "사회와문화",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 40,
+        "printed_page": 32,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8573",
+      "name": "융합글로벌리더십",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "사회와문화",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 40,
+        "printed_page": 32,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8830",
+      "name": "한국사회의문화이해",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "사회와문화",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 40,
+        "printed_page": 32,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8826",
+      "name": "한국사회와생활문화Ⅰ",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "사회와문화",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 40,
+        "printed_page": 32,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8827",
+      "name": "한국사회와생활문화Ⅱ",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "사회와문화",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 40,
+        "printed_page": 32,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8828",
+      "name": "글로벌리더십과문화이해Ⅰ",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "사회와문화",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 40,
+        "printed_page": 32,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8829",
+      "name": "글로벌리더십과문화이해Ⅱ",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "사회와문화",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 40,
+        "printed_page": 32,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8836",
+      "name": "NH와함께하는협동조합론",
+      "catalog_credits": 2,
+      "classification": "균형교양",
+      "area": "사회와문화",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 40,
+        "printed_page": 32,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA7033",
+      "name": "컴퓨터언어",
+      "catalog_credits": 2,
+      "classification": "균형교양",
+      "area": "자연·과학·기술의이해",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 41,
+        "printed_page": 33,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA7308",
+      "name": "통계학및연습1",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "자연·과학·기술의이해",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 41,
+        "printed_page": 33,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA7309",
+      "name": "통계학및연습2",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "자연·과학·기술의이해",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 41,
+        "printed_page": 33,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA7003",
+      "name": "통계학",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "자연·과학·기술의이해",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 41,
+        "printed_page": 33,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA7265",
+      "name": "패션과현대생활",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "자연·과학·기술의이해",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 41,
+        "printed_page": 33,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8629",
+      "name": "지속가능성과패션",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "자연·과학·기술의이해",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 41,
+        "printed_page": 33,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA7283",
+      "name": "영양과건강",
+      "catalog_credits": 2,
+      "classification": "균형교양",
+      "area": "자연·과학·기술의이해",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 41,
+        "printed_page": 33,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8596",
+      "name": "통계적사고",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "자연·과학·기술의이해",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 41,
+        "printed_page": 33,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8597",
+      "name": "인공지능을위한기초수학",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "자연·과학·기술의이해",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 41,
+        "printed_page": 33,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8661",
+      "name": "창의적공학설계(어드벤처디자인)",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "자연·과학·기술의이해",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 41,
+        "printed_page": 33,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA7260",
+      "name": "컴퓨터개론",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "자연·과학·기술의이해",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 41,
+        "printed_page": 33,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8516",
+      "name": "소프트웨어기초코딩",
+      "catalog_credits": 2,
+      "classification": "균형교양",
+      "area": "자연·과학·기술의이해",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 41,
+        "printed_page": 33,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8562",
+      "name": "프로그래밍입문",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "자연·과학·기술의이해",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 41,
+        "printed_page": 33,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8563",
+      "name": "컴퓨터언어응용",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "자연·과학·기술의이해",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 41,
+        "printed_page": 33,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8564",
+      "name": "공업수학1",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "자연·과학·기술의이해",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 41,
+        "printed_page": 33,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8565",
+      "name": "공업수학2",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "자연·과학·기술의이해",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 41,
+        "printed_page": 33,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA7301",
+      "name": "공업수학",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "자연·과학·기술의이해",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 41,
+        "printed_page": 33,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA7300",
+      "name": "응용수학",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "자연·과학·기술의이해",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 41,
+        "printed_page": 33,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8639",
+      "name": "대학미적분학1",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "자연·과학·기술의이해",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 41,
+        "printed_page": 33,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8640",
+      "name": "대학미적분학2",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "자연·과학·기술의이해",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 41,
+        "printed_page": 33,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8536",
+      "name": "대학기초수학",
+      "catalog_credits": 2,
+      "classification": "균형교양",
+      "area": "자연·과학·기술의이해",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 41,
+        "printed_page": 33,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA7004",
+      "name": "일반물리학",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "자연·과학·기술의이해",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 41,
+        "printed_page": 33,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA7005",
+      "name": "물리학1",
+      "catalog_credits": 2,
+      "classification": "균형교양",
+      "area": "자연·과학·기술의이해",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 41,
+        "printed_page": 33,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA7006",
+      "name": "물리학실험1",
+      "catalog_credits": 1,
+      "classification": "균형교양",
+      "area": "자연·과학·기술의이해",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 41,
+        "printed_page": 33,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA7007",
+      "name": "물리학2",
+      "catalog_credits": 2,
+      "classification": "균형교양",
+      "area": "자연·과학·기술의이해",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 41,
+        "printed_page": 33,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA7008",
+      "name": "물리학실험2",
+      "catalog_credits": 1,
+      "classification": "균형교양",
+      "area": "자연·과학·기술의이해",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 41,
+        "printed_page": 33,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA7019",
+      "name": "지구과학",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "자연·과학·기술의이해",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 42,
+        "printed_page": 34,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8617",
+      "name": "수식없는물리로보는세상",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "자연·과학·기술의이해",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 42,
+        "printed_page": 34,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "CONFLICTED"
+    },
+    {
+      "course_id": "GEA8609",
+      "name": "일반화학실험1",
+      "catalog_credits": 1,
+      "classification": "균형교양",
+      "area": "자연·과학·기술의이해",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 42,
+        "printed_page": 34,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8612",
+      "name": "일반화학실험2",
+      "catalog_credits": 1,
+      "classification": "균형교양",
+      "area": "자연·과학·기술의이해",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 42,
+        "printed_page": 34,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA4006",
+      "name": "생명의이해",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "자연·과학·기술의이해",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 42,
+        "printed_page": 34,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA4020",
+      "name": "환경생태학의이해",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "자연·과학·기술의이해",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 42,
+        "printed_page": 34,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8628",
+      "name": "생명현상의화학적이해",
+      "catalog_credits": 2,
+      "classification": "균형교양",
+      "area": "자연·과학·기술의이해",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 42,
+        "printed_page": 34,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA4009",
+      "name": "인체와질병",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "자연·과학·기술의이해",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 42,
+        "printed_page": 34,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA7528",
+      "name": "자연과학과노벨상수상자들",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "자연·과학·기술의이해",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 42,
+        "printed_page": 34,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8601",
+      "name": "힘의전달과이해",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "자연·과학·기술의이해",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 42,
+        "printed_page": 34,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8605",
+      "name": "컴퓨터활용과학통계학",
+      "catalog_credits": 2,
+      "classification": "균형교양",
+      "area": "자연·과학·기술의이해",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 42,
+        "printed_page": 34,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8598",
+      "name": "생활속의화학소재",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "자연·과학·기술의이해",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 42,
+        "printed_page": 34,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8600",
+      "name": "문명과수학",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "자연·과학·기술의이해",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 42,
+        "printed_page": 34,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8670",
+      "name": "일반화학",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "자연·과학·기술의이해",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 42,
+        "printed_page": 34,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8803",
+      "name": "과학기술사",
+      "catalog_credits": 3,
+      "classification": "균형교양",
+      "area": "자연·과학·기술의이해",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 42,
+        "printed_page": 34,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8701",
+      "name": "생활속의수학",
+      "catalog_credits": 2,
+      "classification": "균형교양",
+      "area": "자연·과학·기술의이해",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 42,
+        "printed_page": 34,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8543",
+      "name": "기초스페인어",
+      "catalog_credits": 2,
+      "classification": "확대교양",
+      "area": "언어의세계",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 42,
+        "printed_page": 34,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8544",
+      "name": "기초베트남어",
+      "catalog_credits": 2,
+      "classification": "확대교양",
+      "area": "언어의세계",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 42,
+        "printed_page": 34,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8560",
+      "name": "기초러시아어",
+      "catalog_credits": 2,
+      "classification": "확대교양",
+      "area": "언어의세계",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 42,
+        "printed_page": 34,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8561",
+      "name": "기초아랍어",
+      "catalog_credits": 2,
+      "classification": "확대교양",
+      "area": "언어의세계",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 42,
+        "printed_page": 34,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8583",
+      "name": "한자의미와지혜",
+      "catalog_credits": 3,
+      "classification": "확대교양",
+      "area": "언어의세계",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 42,
+        "printed_page": 34,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8528",
+      "name": "초급영어읽기",
+      "catalog_credits": 3,
+      "classification": "확대교양",
+      "area": "언어의세계",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 42,
+        "printed_page": 34,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8531",
+      "name": "시사영어연습",
+      "catalog_credits": 3,
+      "classification": "확대교양",
+      "area": "언어의세계",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 42,
+        "printed_page": 34,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8534",
+      "name": "독일어첫걸음",
+      "catalog_credits": 3,
+      "classification": "확대교양",
+      "area": "언어의세계",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 42,
+        "printed_page": 34,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA5049",
+      "name": "현지독일어",
+      "catalog_credits": 3,
+      "classification": "확대교양",
+      "area": "언어의세계",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 42,
+        "printed_page": 34,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA5051",
+      "name": "기초프랑스어",
+      "catalog_credits": 3,
+      "classification": "확대교양",
+      "area": "언어의세계",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 43,
+        "printed_page": 35,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA7334",
+      "name": "현지프랑스언어·문화",
+      "catalog_credits": 3,
+      "classification": "확대교양",
+      "area": "언어의세계",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 43,
+        "printed_page": 35,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA7516",
+      "name": "생활일본어2",
+      "catalog_credits": 3,
+      "classification": "확대교양",
+      "area": "언어의세계",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 43,
+        "printed_page": 35,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA7515",
+      "name": "생활일본어1",
+      "catalog_credits": 3,
+      "classification": "확대교양",
+      "area": "언어의세계",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 43,
+        "printed_page": 35,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8535",
+      "name": "중국어기초회화",
+      "catalog_credits": 3,
+      "classification": "확대교양",
+      "area": "언어의세계",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 43,
+        "printed_page": 35,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA7567",
+      "name": "한국어문법1(초급)",
+      "catalog_credits": 3,
+      "classification": "확대교양",
+      "area": "언어의세계",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 43,
+        "printed_page": 35,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA7568",
+      "name": "한국어글쓰기1(중급)",
+      "catalog_credits": 3,
+      "classification": "확대교양",
+      "area": "언어의세계",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 43,
+        "printed_page": 35,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA7569",
+      "name": "한국어문법2(초급)",
+      "catalog_credits": 3,
+      "classification": "확대교양",
+      "area": "언어의세계",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 43,
+        "printed_page": 35,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA7570",
+      "name": "한국어글쓰기2(중급)",
+      "catalog_credits": 3,
+      "classification": "확대교양",
+      "area": "언어의세계",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 43,
+        "printed_page": 35,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA7571",
+      "name": "한국어말하기1(중급)",
+      "catalog_credits": 3,
+      "classification": "확대교양",
+      "area": "언어의세계",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 43,
+        "printed_page": 35,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA7572",
+      "name": "한국어말하기2(중급)",
+      "catalog_credits": 3,
+      "classification": "확대교양",
+      "area": "언어의세계",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 43,
+        "printed_page": 35,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA7573",
+      "name": "한국어글쓰기(고급)",
+      "catalog_credits": 3,
+      "classification": "확대교양",
+      "area": "언어의세계",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 43,
+        "printed_page": 35,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA7574",
+      "name": "한국어말하기(고급)",
+      "catalog_credits": 3,
+      "classification": "확대교양",
+      "area": "언어의세계",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 43,
+        "printed_page": 35,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8524",
+      "name": "한국어회화1(초급)",
+      "catalog_credits": 3,
+      "classification": "확대교양",
+      "area": "언어의세계",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 43,
+        "printed_page": 35,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8678",
+      "name": "초급한국어",
+      "catalog_credits": 1,
+      "classification": "확대교양",
+      "area": "언어의세계",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 43,
+        "printed_page": 35,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8821",
+      "name": "한국어기초말하기와문법Ⅰ",
+      "catalog_credits": 3,
+      "classification": "확대교양",
+      "area": "언어의세계",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 43,
+        "printed_page": 35,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8822",
+      "name": "한국어기초말하기와문법Ⅱ",
+      "catalog_credits": 3,
+      "classification": "확대교양",
+      "area": "언어의세계",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 43,
+        "printed_page": 35,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8823",
+      "name": "한국어듣기와읽기Ⅰ",
+      "catalog_credits": 3,
+      "classification": "확대교양",
+      "area": "언어의세계",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 43,
+        "printed_page": 35,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8824",
+      "name": "한국어듣기와읽기Ⅱ",
+      "catalog_credits": 3,
+      "classification": "확대교양",
+      "area": "언어의세계",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 43,
+        "printed_page": 35,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8825",
+      "name": "한국어작문실습",
+      "catalog_credits": 3,
+      "classification": "확대교양",
+      "area": "언어의세계",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 43,
+        "printed_page": 35,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8636",
+      "name": "신입생역량디딤돌",
+      "catalog_credits": 1,
+      "classification": "확대교양",
+      "area": "소양교육",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 43,
+        "printed_page": 35,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA5053",
+      "name": "심화글쓰기",
+      "catalog_credits": 2,
+      "classification": "확대교양",
+      "area": "소양교육",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 43,
+        "printed_page": 35,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA5054",
+      "name": "화법과토론",
+      "catalog_credits": 2,
+      "classification": "확대교양",
+      "area": "소양교육",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 43,
+        "printed_page": 35,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA5050",
+      "name": "여행으로배우는프랑스",
+      "catalog_credits": 3,
+      "classification": "확대교양",
+      "area": "소양교육",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 43,
+        "printed_page": 35,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA7331",
+      "name": "명저읽기",
+      "catalog_credits": 3,
+      "classification": "확대교양",
+      "area": "소양교육",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 43,
+        "printed_page": 35,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8533",
+      "name": "독일여행스케치",
+      "catalog_credits": 3,
+      "classification": "확대교양",
+      "area": "소양교육",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 44,
+        "printed_page": 36,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA7518",
+      "name": "한국경제의이해",
+      "catalog_credits": 3,
+      "classification": "확대교양",
+      "area": "소양교육",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 44,
+        "printed_page": 36,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA3042",
+      "name": "국제통상과세계문화",
+      "catalog_credits": 3,
+      "classification": "확대교양",
+      "area": "소양교육",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 44,
+        "printed_page": 36,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA3044",
+      "name": "현대생활과세금",
+      "catalog_credits": 3,
+      "classification": "확대교양",
+      "area": "소양교육",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 44,
+        "printed_page": 36,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA3066",
+      "name": "경영학의이해",
+      "catalog_credits": 3,
+      "classification": "확대교양",
+      "area": "소양교육",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 44,
+        "printed_page": 36,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA7555",
+      "name": "진정한기업가정신과혁신챌린지",
+      "catalog_credits": 3,
+      "classification": "확대교양",
+      "area": "소양교육",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 44,
+        "printed_page": 36,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8570",
+      "name": "캘리그라피감성융합",
+      "catalog_credits": 3,
+      "classification": "확대교양",
+      "area": "소양교육",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 44,
+        "printed_page": 36,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8556",
+      "name": "케이팝댄스",
+      "catalog_credits": 1,
+      "classification": "확대교양",
+      "area": "소양교육",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 44,
+        "printed_page": 36,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8541",
+      "name": "현대생활과정보",
+      "catalog_credits": 3,
+      "classification": "확대교양",
+      "area": "소양교육",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 44,
+        "printed_page": 36,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA7290",
+      "name": "공간의이해",
+      "catalog_credits": 3,
+      "classification": "확대교양",
+      "area": "소양교육",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 44,
+        "printed_page": 36,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA7289",
+      "name": "도시와문화",
+      "catalog_credits": 3,
+      "classification": "확대교양",
+      "area": "소양교육",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 44,
+        "printed_page": 36,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8602",
+      "name": "공학과기술경영",
+      "catalog_credits": 3,
+      "classification": "확대교양",
+      "area": "소양교육",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 44,
+        "printed_page": 36,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA7526",
+      "name": "생활속의재난",
+      "catalog_credits": 3,
+      "classification": "확대교양",
+      "area": "소양교육",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 44,
+        "printed_page": 36,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA1005",
+      "name": "문서작성및발표기법",
+      "catalog_credits": 3,
+      "classification": "확대교양",
+      "area": "소양교육",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 44,
+        "printed_page": 36,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA7536",
+      "name": "과학기술과인문예술의융합",
+      "catalog_credits": 3,
+      "classification": "확대교양",
+      "area": "소양교육",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 44,
+        "printed_page": 36,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8522",
+      "name": "과학기술과사회",
+      "catalog_credits": 3,
+      "classification": "확대교양",
+      "area": "소양교육",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 44,
+        "printed_page": 36,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8542",
+      "name": "가루야놀자",
+      "catalog_credits": 3,
+      "classification": "확대교양",
+      "area": "소양교육",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 44,
+        "printed_page": 36,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA7521",
+      "name": "사회봉사",
+      "catalog_credits": 2,
+      "classification": "확대교양",
+      "area": "소양교육",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 44,
+        "printed_page": 36,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA5052",
+      "name": "해외봉사",
+      "catalog_credits": 1,
+      "classification": "확대교양",
+      "area": "소양교육",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 44,
+        "printed_page": 36,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA3049",
+      "name": "취업과진로",
+      "catalog_credits": 2,
+      "classification": "확대교양",
+      "area": "소양교육",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 44,
+        "printed_page": 36,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8679",
+      "name": "국제관계와문화융합실습",
+      "catalog_credits": 3,
+      "classification": "확대교양",
+      "area": "소양교육",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 44,
+        "printed_page": 36,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8520",
+      "name": "창업디자인",
+      "catalog_credits": 3,
+      "classification": "확대교양",
+      "area": "소양교육",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 44,
+        "printed_page": 36,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA7546",
+      "name": "스타트업챌린지",
+      "catalog_credits": 3,
+      "classification": "확대교양",
+      "area": "소양교육",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 44,
+        "printed_page": 36,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8668",
+      "name": "현대노동법의이해",
+      "catalog_credits": 3,
+      "classification": "확대교양",
+      "area": "소양교육",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 45,
+        "printed_page": 37,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8687",
+      "name": "사림아너스디딤돌",
+      "catalog_credits": 1,
+      "classification": "확대교양",
+      "area": "소양교육",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 45,
+        "printed_page": 37,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8686",
+      "name": "전공탐구생활",
+      "catalog_credits": 3,
+      "classification": "확대교양",
+      "area": "소양교육",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 45,
+        "printed_page": 37,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8690",
+      "name": "전공오딧세이",
+      "catalog_credits": 1,
+      "classification": "확대교양",
+      "area": "소양교육",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 45,
+        "printed_page": 37,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8617",
+      "name": "융합프로젝트Ⅰ",
+      "catalog_credits": 3,
+      "classification": "확대교양",
+      "area": "소양교육",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 45,
+        "printed_page": 37,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "CONFLICTED"
+    },
+    {
+      "course_id": "GEA8818",
+      "name": "융합프로젝트Ⅱ",
+      "catalog_credits": 1,
+      "classification": "확대교양",
+      "area": "소양교육",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 45,
+        "printed_page": 37,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8689",
+      "name": "탐방실습",
+      "catalog_credits": 1,
+      "classification": "확대교양",
+      "area": "소양교육",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 45,
+        "printed_page": 37,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8682",
+      "name": "인문학탐색",
+      "catalog_credits": 2,
+      "classification": "확대교양",
+      "area": "소양교육",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 45,
+        "printed_page": 37,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8683",
+      "name": "사회계열전공탐색",
+      "catalog_credits": 3,
+      "classification": "확대교양",
+      "area": "소양교육",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 45,
+        "printed_page": 37,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8684",
+      "name": "경영계열전공탐색",
+      "catalog_credits": 3,
+      "classification": "확대교양",
+      "area": "소양교육",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 45,
+        "printed_page": 37,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8815",
+      "name": "공학계열전공탐색Ⅰ",
+      "catalog_credits": 2,
+      "classification": "확대교양",
+      "area": "소양교육",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 45,
+        "printed_page": 37,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8816",
+      "name": "공학계열전공탐색Ⅱ",
+      "catalog_credits": 2,
+      "classification": "확대교양",
+      "area": "소양교육",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 45,
+        "printed_page": 37,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8805",
+      "name": "우주항공현장실무융합세미나",
+      "catalog_credits": 3,
+      "classification": "확대교양",
+      "area": "소양교육",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 45,
+        "printed_page": 37,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8695",
+      "name": "GAST이학전공탐색Ⅰ",
+      "catalog_credits": 3,
+      "classification": "확대교양",
+      "area": "소양교육",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 45,
+        "printed_page": 37,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8696",
+      "name": "GAST이학전공탐색Ⅱ",
+      "catalog_credits": 3,
+      "classification": "확대교양",
+      "area": "소양교육",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 45,
+        "printed_page": 37,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8697",
+      "name": "GAST공학전공탐색Ⅰ",
+      "catalog_credits": 3,
+      "classification": "확대교양",
+      "area": "소양교육",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 45,
+        "printed_page": 37,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8698",
+      "name": "GAST공학전공탐색Ⅱ",
+      "catalog_credits": 3,
+      "classification": "확대교양",
+      "area": "소양교육",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 45,
+        "printed_page": 37,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    },
+    {
+      "course_id": "GEA8800",
+      "name": "자기주도융합탐구",
+      "catalog_credits": 1,
+      "classification": "확대교양",
+      "area": "소양교육",
+      "source": {
+        "document_id": "CURRICULUM-2026",
+        "pdf_page": 45,
+        "printed_page": 37,
+        "section": "02장 2-2 교양 교과목",
+        "table": "T-GE-2026-COURSES"
+      },
+      "verification_status": "UNVERIFIED"
+    }
+  ]
+}

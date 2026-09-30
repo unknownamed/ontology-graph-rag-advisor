@@ -1,0 +1,416 @@
+"""Server-owned Korean rendering of locked decision values."""
+from __future__ import annotations
+
+AREA_LABELS = {"GRADUATION_TOTAL": "졸업 총학점", "GENERAL_TOTAL": "교양", "GENERAL_BASIC": "기초교양",
+               "GENERAL_BALANCED": "균형교양", "GENERAL_EXPANDED": "확대교양", "MAJOR_REQUIRED": "전공필수", "MAJOR_ELECTIVE": "최소전공 전공선택",
+               "MAJOR_ADVANCED": "심화전공", "MAJOR_TOTAL": "전공 합계", "FREE_CHOICE": "자유선택 잔여학점"}
+BALANCED_LABELS = {"DIGITAL_COMMUNICATION": "디지털커뮤니케이션", "HUMANITIES_ARTS": "인문예술",
+                   "SOCIETY_CULTURE": "사회와문화", "SCIENCE_TECHNOLOGY": "자연과학기술의이해"}
+
+
+def _rule_name(payload: dict, result: dict) -> str:
+    rule = next((r for r in payload["evidence"]["rules"] if r["rule_id"] == result["rule_id"]), None)
+    if not rule:
+        return result["rule_id"]
+    kind = rule["rule_type"]
+    if kind == "MIN_CREDITS":
+        label = AREA_LABELS.get(rule["area"], rule["area"]) + " 최소학점"
+        if result["missing_amount"] is not None and result["missing_amount"] > 0:
+            label += f"({result['missing_amount']}학점 부족)"
+        return label
+    if kind == "REQUIRED_COURSES":
+        return "전공필수 지정 과목"
+    if kind == "ALL_AREAS":
+        return "균형교양 영역별 이수"
+    if kind == "CREDIT_CAP":
+        return "교양 졸업 산입 상한"
+    if kind == "REQUIRED_EVIDENCE":
+        return {"thesis_passed": "졸업논문 합격 증빙", "thesis_final_semester_enrollment": "최종학기 졸업논문 신청 증빙",
+                "graduation_certification_passed": "졸업인증 증빙"}.get(rule["evidence_key"], result["rule_id"])
+    if kind in {"ANY_COURSE", "ANY_COURSE_OR_EXEMPTION"}:
+        return {"R-GE-2026-FUTURE-DESIGN": "미래설계 교양", "R-GE-2026-AI-FOUNDATION": "AI 기초 교양",
+                "R-GE-2026-WRITING": "글쓰기 교양", "R-GE-2026-ENGLISH": "영어 교양 또는 면제"}.get(result["rule_id"], result["rule_id"])
+    return result["rule_id"]
+
+
+def _needs_name(item: str) -> str:
+    direct = {"COMPLETE_STUDENT_TRANSCRIPT": "전체 이수내역", "OFFICIAL_EQUIVALENCE_REVIEW": "공식 동일·대체 과목 검토",
+              "VERIFIED_STUDENT_CATEGORY_AND_EXCEPTIONS": "학생 적용 대상과 예외", "VERIFIED_2026_CREDIT_AND_CATALOG_APPLICABILITY": "적용 교육과정",
+              "COMPLETE_VERIFIED_SINGLE_MAJOR_RULE_COVERAGE": "단일전공 규칙 적재 범위",
+              "VERIFIED_APPLICABILITY_EVIDENCE": "적용 교육과정 확인 증빙",
+              "COMPLETE_VERIFIED_TRANSCRIPT_EVIDENCE": "전체 이수내역 확인 증빙",
+              "ACADEMIC_EVENT_APPLICABILITY_REVIEW": "재입학·전과 등 학적변동 적용 검토",
+              "SECOND_PROGRAM_RULE_COVERAGE": "제2전공 적용 규칙과 학생 이수정보"}
+    if item in direct:
+        return direct[item]
+    if item.startswith("STUDENT_EVIDENCE:"):
+        return "학생 이수 증빙 " + item.split(":", 1)[1]
+    if item.startswith("RULE_NOT_LOADED:"):
+        return "필수 판정 규칙 적재 " + item.split(":", 1)[1]
+    if item.startswith("CATALOG_CLASSIFICATION:") or item.startswith("CATALOG_VERIFICATION:"):
+        return "과목 분류·원문 확인 " + item.split(":", 1)[1]
+    if item.startswith("UNRESOLVED_COMPLETION_RECORD:"):
+        _, attempt_id, field = item.split(":", 2)
+        return f"이수기록 {attempt_id}의 {field} 식별 정보"
+    if item == "SIMULATION_TARGET_COURSE_IDS_REQUIRED":
+        return "추가로 이수할 과목코드"
+    if item == "PRIOR_COURSE_REFERENCE_REQUIRED":
+        return "앞선 대화에서 지칭한 과목"
+    if item == "VERIFIED_SIMULATION_COURSE_REQUIRED":
+        return "가정할 과목의 검증된 교육과정 편성 정보"
+    return item
+
+
+def _missing_course_text(payload: dict) -> str:
+    codes = payload["decision"].get("missing_courses")
+    if not codes:
+        return ""
+    names = {entry["course_id"]: entry["name"] for entry in payload["evidence"]["facts"]
+             if entry.get("course_id") and entry.get("verification_status") == "VERIFIED"}
+    listed = [f"{names[code]}({code})" if code in names else code for code in codes]
+    return " 남은 전공필수: " + ", ".join(listed) + "."
+
+
+def build_remaining_presentation(payload: dict) -> dict | None:
+    """Group an executed plan for display without changing its decision or candidate status."""
+    decision = payload["decision"]
+    summary = decision.get("remaining_requirements")
+    if summary is None:
+        return None
+    results = {r["rule_id"]: r for r in decision["requirement_results"]}
+    names = {fact["course_id"]: fact["name"] for fact in payload["evidence"]["facts"]
+             if fact.get("course_id") and fact.get("verification_status") == "VERIFIED"}
+    required = [{"course_id": code, "course_name": names.get(code)}
+                for code in (summary["missing_required_courses"] or [])]
+    groups = []
+    for area, prefix in (("MAJOR", "MAJOR_"), ("GENERAL", "GENERAL_")):
+        if not any(c["course_classification"].startswith(prefix) for c in decision["candidate_courses"]):
+            continue
+        options = [c for c in decision["candidate_courses"]
+                   if c["candidate_status"] == "ELIGIBLE_OPTION"
+                   and c["course_classification"].startswith(prefix)]
+        rule_ids = sorted({rid for c in options for rid in c["satisfies_requirement_ids"]})
+        rule_groups = []
+        for rid in rule_ids:
+            ids = sorted(c["course_id"] for c in options if rid in c["satisfies_requirement_ids"])
+            result = results[rid]
+            rule_groups.append({"rule_id": rid, "label": _rule_name(payload, result),
+                                "missing_amount": result["missing_amount"],
+                                "candidate_count": len(ids), "course_ids": ids})
+        groups.append({"area": area, "candidate_count": len(options),
+                       "requirement_groups": rule_groups})
+    return {"satisfied_count": len(summary["satisfied_requirements"]),
+            "unsatisfied_count": len(summary["unsatisfied_requirements"]),
+            "needs_information_count": len(summary["needs_information"]),
+            "required_courses": required,
+            "required_courses_status": summary["progress"].get("MAJOR_REQUIRED_COURSES", {}).get("status"),
+            "other_required": [{"rule_id": rid, "label": _rule_name(payload, results[rid]),
+                                "status": results[rid]["status"]}
+                               for rid in summary["other_required_requirements"]],
+            "candidate_groups": groups,
+            "missing_credits_by_category": summary["missing_credits_by_category"],
+            "needs_information": [_rule_name(payload, results[rid]) for rid in summary["needs_information"]]
+                                 + [_needs_name(item) for item in summary["student_information_needed"]]}
+
+
+def _render_policy(payload: dict) -> str:
+    result = payload["decision"].get("lookup_result")
+    if not result:
+        return "확인된 2026 컴퓨터공학과 정책 사실을 찾지 못했습니다. 적용 범위를 확인해 주세요."
+    if "ALL_REQUIREMENTS" in result["topics"]:
+        listed = []
+        for rule in result["rules"]:
+            label = _rule_name(payload, {"rule_id": rule["rule_id"], "missing_amount": None})
+            pages = sorted({payload["evidence"]["source_locators"][ref]["pdf_page_start"]
+                            for ref in rule["source_refs"] if ref in payload["evidence"]["source_locators"]})
+            scope = ",".join(rule.get("program_types", ["SINGLE", "MINOR", "DOUBLE"]))
+            listed.append(f"{label} [{rule['rule_id']}; {rule['rule_type']}; {scope}; VERIFIED; PDF {','.join(map(str, pages))}쪽]")
+        return f"2026 컴퓨터공학과 적용 범위에서 확인된 졸업 판정 요건 {len(listed)}건: " + "; ".join(listed) + "."
+    parts: list[str] = []
+    if "APPLICABILITY" in result["topics"] and result.get("entry_year") is not None:
+        year = result["entry_year"]
+        if year == 2026:
+            parts.append("2026학년도 일반 신입생에게는 원칙적으로 2026 교육과정의 졸업학점·영역별 학점 기준이 적용됩니다")
+        else:
+            parts.append(f"{year}학년도 입학생의 졸업학점·영역별 학점 기준은 원칙적으로 해당 입학연도 교육과정에 따릅니다")
+    for rule in result["rules"]:
+        kind = rule["rule_type"]
+        if kind == "MIN_CREDITS":
+            parts.append(f"{AREA_LABELS.get(rule['area'], rule['area'])}: 최소 {rule['required_value']}학점")
+        elif kind == "CREDIT_CAP":
+            parts.append(f"{AREA_LABELS.get(rule['area'], rule['area'])}의 졸업학점 산입 상한은 {rule['required_value']}학점입니다")
+        elif kind == "ALL_AREAS":
+            names = ", ".join(BALANCED_LABELS.get(area, area) for area in rule["areas"])
+            parts.append(f"균형교양은 {names}의 각 영역에서 1과목 이상 이수해야 합니다")
+        elif kind == "REQUIRED_COURSES":
+            found = {course["course_id"]: course for course in result["courses"]}
+            names = [f"{found[code]['name']}({code}, {found[code]['catalog_credits']}학점)" if code in found else code
+                     for code in rule["course_ids"]]
+            parts.append("전공필수는 " + ", ".join(names) + "입니다")
+        elif kind == "REQUIRED_EVIDENCE":
+            labels = {"thesis_passed": "졸업논문 합격", "thesis_final_semester_enrollment": "최종학기 졸업논문 수강신청",
+                      "graduation_certification_passed": "졸업인증 충족"}
+            parts.append(labels.get(rule["evidence_key"], rule["evidence_key"]) + " 증빙이 필요합니다")
+    for fact in result["policy_facts"]:
+        predicate, value = fact["predicate"], fact["value"]
+        if predicate == "DEFAULT_CREDIT_POLICY_BASIS":
+            parts.append("졸업학점과 영역별 학점은 원칙적으로 입학 당시 교육과정을 적용하며, 원문에 적힌 예외는 별도 확인합니다")
+        elif predicate == "COURSE_TABLE_BASIS":
+            parts.append("이수교과목은 개편된 교육과정을 적용하며, 재입학·전과에는 별도 적용 조건이 있습니다")
+        elif predicate == "COUNTS_AS_RESIDUAL":
+            parts.append("원문에 정한 자유선택과목의 이수학점은 졸업 잔여학점으로 인정됩니다")
+        elif predicate == "SAME_COURSE_REPEAT":
+            parts.append("공식 지정된 동일과목의 중복 이수는 재수강으로 보아 선이수 성적을 삭제합니다")
+        elif predicate == "REPLACEMENT_COURSE":
+            parts.append("대체과목은 공식 지정과 수강신청 당시의 학생 선택에 따라 처리합니다. 개별 지정 목록은 아직 확인되지 않았습니다")
+        elif predicate == "RECOMMENDED_NOT_REQUIRED":
+            listed = ", ".join(f"{course['name']}({course['course_id']})" for course in value["courses"])
+            parts.append(f"학과 권장 교양은 {listed}이며 이 권장 자체가 필수 이수 지정은 아닙니다")
+        elif predicate == "YEAR_SCOPED_TRANSITION_EXISTS":
+            year = result.get("entry_year")
+            band = next((b for b in value["retroactive_credit_bands"] if year is not None and b["first_year"] <= year <= b["last_year"]), None)
+            if band:
+                parts.append(f"학과 경과조치 표에는 {year} 적용연도에 교양 {band['general_total']}·전필 {band['major_required']}·전선 {band['major_elective']}학점이 소급 적용된다고 별도로 적혀 있습니다")
+                if 2002 <= year <= 2007:
+                    parts.append("2012년 2월 이후 졸업대상자는 2008 교육과정을 적용하는 단서도 있습니다")
+            else:
+                parts.append("컴퓨터공학과의 과거 교육과정 적용자에게 연도별 경과조치가 있으며, 개별 학생의 적용연도 확인이 필요합니다")
+        elif predicate == "ANNUAL_SINGLE_MAJOR_CREDIT_ROW":
+            wanted = set(result["topics"])
+            labels = (("GRADUATION_CREDITS", "graduation_total", "졸업 총학점"),
+                      ("GENERAL_CREDITS", "general_total", "교양 합계"),
+                      ("MAJOR_CREDITS", "major_required", "전공필수"),
+                      ("MAJOR_CREDITS", "major_elective", "전공선택"),
+                      ("MAJOR_CREDITS", "major_advanced", "심화전공"),
+                      ("MAJOR_CREDITS", "major_total", "전공 합계"))
+            details = [f"{label} {value[key]}학점" for topic, key, label in labels if topic in wanted and key in value]
+            parts.append(f"{fact['entry_year']}학년도 단일전공 연도별 표: " + ", ".join(details)
+                         + "; 재입학·전과·경과조치 등 개별 적용 조건은 별도 확인이 필요합니다")
+        elif predicate == "DOUBLE_MAJOR_SCOPE":
+            parts.append("복수전공은 주전공과 제2전공의 최소전공학점·전공필수를 각각 이수하고, 주전공 졸업논문을 통과해야 합니다. 제2전공 논문은 면제됩니다")
+            parts.append("동일 과목의 전공 간 중복 인정 상한은 2025학년도 이후 선발자 9학점, 이전 선발자 21학점이며 졸업 총학점에는 이중 산입하지 않습니다")
+        elif predicate == "MINOR_SCOPE":
+            parts.append("부전공은 주전공의 최소전공·심화전공과 부전공 21학점 이상, 지정된 부전공 필수과목을 확인해야 합니다")
+            parts.append("동일 과목의 중복 인정은 9학점까지이며 졸업 총학점에는 이중 산입하지 않습니다")
+    pages = sorted({payload["evidence"]["source_locators"][ref]["pdf_page_start"]
+                    for item in [*result["rules"], *result["policy_facts"]] for ref in item["source_refs"]
+                    if ref in payload["evidence"]["source_locators"]})
+    scope = {"SINGLE": "단일전공", "DOUBLE": "복수전공", "MINOR": "부전공"}.get(result["program_type"], result["program_type"])
+    if payload["decision"]["needs_information"]:
+        year = result.get("entry_year")
+        parts.append(f"{year}학년도 입학생에게 적용되는 수치 기준은 확인된 표와 학생별 적용 조건을 함께 검토해야 하며 2026 수치로 확정하지 않습니다")
+    year = result.get("entry_year")
+    heading = (f"컴퓨터공학과 {year}학년도 입학생 적용 원칙: " if year is not None and year != 2026
+               else f"2026 컴퓨터공학과 {scope} 기준: ")
+    return heading + ". ".join(parts) + (f". 근거: 교육과정 PDF {', '.join(map(str, pages))}쪽." if pages else ".")
+
+
+def _render_locked(payload: dict) -> str:
+    decision = payload["decision"]
+    intent = decision["intent"]
+    if intent == "POLICY_LOOKUP":
+        return _render_policy(payload)
+    if intent == "CATALOG_AGGREGATE":
+        result = decision["lookup_result"]
+        pages = sorted({entry["source"]["pdf_page"] for entry in payload["evidence"]["facts"]
+                        if entry.get("entry_id")})
+        label = "편성 과목 수" if result["operation"] == "COUNT" else "편성 과목 학점 합계"
+        unit = "개" if result["operation"] == "COUNT" else "학점"
+        return (f"2026 컴퓨터공학과 전공 {label}는 {result['value']}{unit}입니다. "
+                "이는 교육과정 편성표의 합계이며 학생의 이수학점이나 졸업 최소 전공학점이 아닙니다. "
+                f"근거: 교육과정 PDF {', '.join(map(str, pages))}쪽.")
+    if intent == "CONSISTENCY_CHECK":
+        result = decision["lookup_result"]
+        kind = {"INPUT_ORDER": "학생 이수기록 순서 변경", "REPEAT": "동일 입력 반복 실행",
+                "SIMULATION_IMMUTABILITY": "가상 이수 반복 실행"}[result["operation"]]
+        if result["consistent"] and decision["decision_status"] == "SATISFIED":
+            probe = f" 검증 예시 과목: {result['probe_course_id']}." if result["probe_course_id"] else ""
+            return (f"{kind} 검증에서 판정·수치·근거·실행 기록이 일치했습니다. "
+                    f"실제 StudentState는 변경되지 않았습니다.{probe} "
+                    f"비교한 결정 ID: {result['first_decision_id']}, {result['second_decision_id']}.")
+        return f"{kind} 검증을 확정하려면 비교 대상 과목 또는 입력 정보를 더 확인해야 합니다."
+    if intent == "ENTITY_CHECK":
+        result = decision["lookup_result"]
+        if result["verified_catalog_entry"]:
+            return f"{result['course_id']}는 확인된 2026 교육과정 편성 과목입니다. 학생별 인정은 이수 증빙과 적용 조건을 별도로 검증합니다."
+        return (f"{result['course_id']}는 확인된 2026 교육과정 편성표에서 찾지 못했습니다. "
+                "해당 이수기록을 자동으로 학점에 산입하지 않았습니다. 공식 과목 식별·인정 자료가 필요합니다.")
+    if intent == "TRACE_EXPLAIN":
+        result = decision["lookup_result"]
+        relations = result["relationship_ids"]
+        rules = result["rule_ids"]
+        return (f"이번 질문에서 실제 반환·사용한 관계 {len(relations)}건"
+                + (f"({', '.join(relations[:5])})" if relations else "")
+                + f", 실행한 규칙 검증 {len(rules)}건"
+                + (f"({', '.join(rules[:5])})" if rules else "")
+                + "을 실행 기록에서 확인했습니다. 전체 관계·계산 이벤트와 PDF 위치는 근거 펼쳐보기에 있습니다. "
+                  "데이터베이스 내부의 물리적 방문 순서는 주장하지 않습니다.")
+    if intent == "COURSE_LOOKUP":
+        if decision.get("lookup_status") == "FOUND":
+            entry = decision["lookup_result"]
+            label = {"MAJOR_REQUIRED": "전공필수", "MAJOR_ELECTIVE": "전공선택",
+                     "GENERAL_BASIC": "기초교양", "GENERAL_BALANCED": "균형교양",
+                     "GENERAL_EXPANDED": "확대교양"}.get(entry["classification"], entry["classification"])
+            scope = {"FOREIGN_ONLY": "유학생 전용 편성 과목이므로 학생별 인정은 적용 대상 확인이 필요합니다.",
+                     "NON_ENGINEERING_ONLY": "컴퓨터공학과 대상 편성 과목이 아니므로 컴퓨터공학과 학생의 인정학점으로 자동 산입하지 않습니다."}.get(entry["eligible_scope"], "")
+            return (f"{entry['name']}({entry['course_id']})의 2026 교육과정 분류는 {label}, "
+                    f"학점은 {entry['catalog_credits']}학점입니다. {scope + ' ' if scope else ''}"
+                    f"근거: 교육과정 PDF {entry['source']['pdf_page']}쪽.")
+        if decision.get("lookup_status") == "NOT_FOUND":
+            return "확인된 2026 교육과정 편성표에서 해당 과목을 찾지 못했습니다. 과목코드와 적용 교육과정을 확인해 주세요."
+        return "과목 분류를 확정하려면 원문 또는 적용 교육과정 정보를 추가로 확인해야 합니다."
+    amount = decision.get("credited_amount")
+    if amount is None:
+        return "적용 교육과정이 확인되지 않아 학점과 요건을 계산할 수 없습니다."
+    if amount["total"] is None:
+        credit_text = f"현재 확인된 졸업 산입 학점의 하한은 {amount['confirmed_minimum']}학점입니다. 이수내역이나 규칙 정보가 부족해 정확한 합계는 확인이 필요합니다."
+    else:
+        credit_text = f"확인된 졸업 산입 학점은 {amount['total']}학점입니다."
+    if intent == "REMAINING_PLAN":
+        summary = decision["remaining_requirements"]
+        candidates = decision["candidate_courses"]
+        view = payload.get("remaining_presentation") or build_remaining_presentation(payload)
+        progress = summary["progress"]
+        def progress_line(key: str, label: str) -> str:
+            item = progress.get(key)
+            if not item:
+                return ""
+            qualifier = "이상 확인" if item["is_lower_bound"] else "인정"
+            return f"{label} {item['current'] if item['current'] is not None else '미확인'}/{item['required']}({qualifier})"
+        progress_text = ", ".join(part for part in (
+            progress_line("GRADUATION_TOTAL", "총학점"), progress_line("MAJOR_TOTAL", "전공학점"),
+            progress_line("MAJOR_REQUIRED_COURSES", "전공필수 과목"), progress_line("GENERAL_TOTAL", "교양학점")) if part)
+        required_text = ", ".join(f"{c['course_name'] or c['course_id']}({c['course_id']})"
+                                  if c["course_name"] else c["course_id"]
+                                  for c in view["required_courses"]) or "없음"
+        other_text = ", ".join(item["label"] + ("(확인 필요)" if item["status"] == "NEEDS_INFORMATION" else "")
+                               for item in view["other_required"]) or "없음"
+        if view["required_courses_status"] == "NEEDS_INFORMATION":
+            required_text = "이수기록 확인 전에는 미이수 과목을 확정할 수 없음"
+            required_count = "확인 필요"
+        else:
+            required_count = f"{len(view['required_courses'])}과목"
+        shortages = view["missing_credits_by_category"]
+        main_shortages = ", ".join(
+            f"{label} {shortages.get(area) if shortages.get(area) is not None else '확인 필요'}"
+            + ("학점" if shortages.get(area) is not None else "")
+            for area, label in (("GRADUATION_TOTAL", "졸업 총"), ("MAJOR_TOTAL", "전공"),
+                                ("GENERAL_TOTAL", "교양")) if area in shortages)
+        other_shortages = sum(value is not None and value > 0 for area, value in shortages.items()
+                              if area not in {"GRADUATION_TOTAL", "MAJOR_TOTAL", "GENERAL_TOTAL"})
+        if other_shortages:
+            main_shortages += f"; 세부 영역 {other_shortages}건은 펼쳐보기"
+        if not main_shortages:
+            main_shortages = "계산 가능한 부족 학점 없음"
+        option_lines = []
+        for group in view["candidate_groups"]:
+            label = "전공" if group["area"] == "MAJOR" else "교양"
+            rules = group["requirement_groups"]
+            if not group["candidate_count"]:
+                option_lines.append(f"{label}: 현재 조회 범위에 선택 후보 없음")
+                continue
+            descriptions = [f"{item['label']} {item['candidate_count']}개" for item in rules[:4]]
+            if len(rules) > 4:
+                descriptions.append(f"그 밖의 요건 {len(rules)-4}건")
+            option_lines.append(f"{label}: 후보 {group['candidate_count']}개 · " + ", ".join(descriptions))
+        requested = next((c for c in candidates if c["course_id"] == decision.get("requested_course_id")), None)
+        reason_text = ""
+        if requested:
+            if requested["candidate_status"] == "REQUIRED":
+                reason = "미이수 지정 필수과목"
+            elif requested["candidate_status"] == "ELIGIBLE_OPTION":
+                reason = "확인된 미충족 요건을 채울 수 있는 선택 후보"
+            elif requested["candidate_status"] == "ALREADY_COMPLETED":
+                reason = "이미 확정 이수한 과목"
+            else:
+                reason = "현재 확인된 미충족 요건과 연결되지 않는 과목"
+            reason_text = (f" 질문한 {requested['course_name']}({requested['course_id']})은 {reason}입니다. "
+                           f"연결 요건: {', '.join(requested['satisfies_requirement_ids']) or '없음'}. "
+                           f"근거: 교육과정 PDF {requested['provenance']['source']['pdf_page']}쪽.")
+        unknown = list(dict.fromkeys(view["needs_information"]))
+        unknown_text = ", ".join(unknown[:3]) if unknown else "요건 판정에 필요한 추가 정보 없음"
+        if len(unknown) > 3:
+            unknown_text += f" 외 {len(unknown)-3}건"
+        return "\n\n".join((
+            f"현재 상태: {progress_text}. 요건 충족 {view['satisfied_count']}건, 미충족 {view['unsatisfied_count']}건, 확인 필요 {view['needs_information_count']}건.",
+            f"반드시 이수: 미이수 전공필수 {required_count}: {required_text}. 그 밖의 필수 조건: {other_text}.",
+            f"부족 학점: {main_shortages}.",
+            "남은 요건별 선택 후보(졸업요건상 후보, 우선순위 아님): " + " / ".join(option_lines) + ". 한 과목이 여러 요건에 포함될 수 있습니다. 전체 목록과 연결 규칙은 펼쳐보기.",
+            f"추가 확인: {unknown_text}. 다음 학기 개설·선수과목·시간표 충돌은 확인되지 않았습니다."
+        )) + reason_text
+    if intent == "WHAT_IF":
+        scenario = payload.get("scenario_decision")
+        if not scenario or not scenario.get("credited_amount"):
+            unmet = [_rule_name(payload, r) for r in decision["requirement_results"] if r["status"] == "UNSATISFIED"]
+            known = f" 현재 확인된 미충족 요건: {', '.join(unmet[:5])}." if unmet else ""
+            candidates = decision.get("simulation_candidates", [])
+            candidate_text = f" 확인 가능한 후보 과목코드: {', '.join(candidates)}." if candidates else ""
+            needs = ", ".join(_needs_name(n) for n in decision["needs_information"][-3:])
+            return credit_text + known + candidate_text + f" 가상 결과는 아직 계산하지 않았습니다. 추가 확인: {needs}. 실제 이수내역은 변경되지 않았습니다."
+        projected = scenario["credited_amount"]
+        before = {r["rule_id"]: r for r in decision["requirement_results"]}
+        labels = {"SATISFIED": "충족", "UNSATISFIED": "미충족", "NEEDS_INFORMATION": "확인 필요",
+                  "NOT_APPLICABLE": "해당 없음"}
+        changes = [f"{_rule_name(payload, r)} {labels[before[r['rule_id']]['status']]}→{labels[r['status']]}"
+                   for r in scenario["requirement_results"]
+                   if r["rule_id"] in before and before[r["rule_id"]]["status"] != r["status"]]
+        change_text = f" 가정 후 요건 변화: {', '.join(changes)}." if changes else ""
+        delta = payload.get("scenario_delta") or {}
+        major_change = (f" 전공 인정학점 변화는 {delta['major_credit_change']:+d}학점입니다."
+                        if delta.get("major_credit_change") is not None else " 전공 인정학점 변화는 추가 확인이 필요합니다.")
+        completed_required = delta.get("completed_required_course_ids")
+        required_change = (f" 가정 이수로 미이수 지정 필수에서 제외되는 과목: {', '.join(completed_required)}."
+                           if completed_required else "")
+        preview_labels = {"ELIGIBLE_PDF": "해당 PDF 기준 졸업 가능", "NOT_ELIGIBLE_PDF": "졸업 요건 미충족",
+                          "UNKNOWN": "졸업 가능 여부 확인 필요"}
+        before_preview = delta.get("graduation_preview_before")
+        after_preview = delta.get("graduation_preview_after")
+        graduation_change = (f" 동일 RuleSet의 졸업판정 미리보기: {preview_labels[before_preview]}→{preview_labels[after_preview]}."
+                             if before_preview in preview_labels and after_preview in preview_labels else "")
+        if amount["total"] is not None and projected["total"] is not None:
+            return credit_text + f" 제안한 과목을 성공적으로 이수한다는 가정에서는 {projected['total']}학점으로 계산됩니다." + major_change + required_change + change_text + graduation_change + " 실제 이수내역은 변경되지 않았습니다."
+        return credit_text + f" 추가 이수 가정에서 확인된 하한은 {projected['confirmed_minimum']}학점입니다." + major_change + required_change + change_text + graduation_change + " 실제 이수내역은 변경되지 않았으며 정확한 증가는 확인이 필요합니다."
+    if intent == "GRADUATION_STATUS":
+        outcome = decision["graduation_outcome"]
+        heading = {"ELIGIBLE_PDF": "해당 PDF 기준 졸업 가능", "NOT_ELIGIBLE_PDF": "해당 PDF 기준 졸업 요건 미충족",
+                   "UNKNOWN": "졸업 가능 여부 확인 필요"}[outcome]
+        major = amount["by_area"].get("MAJOR_TOTAL")
+        major_text = (f" 전공 인정학점은 {major}학점입니다." if amount["status"] == "COMPLETE"
+                      else f" 현재 확인된 전공 인정학점 하한은 {major}학점입니다.") if major is not None else ""
+        if outcome == "NOT_ELIGIBLE_PDF":
+            unmet = [_rule_name(payload, r) for r in decision["requirement_results"] if r["status"] == "UNSATISFIED"]
+            needs = decision["needs_information"]
+            pending = f" 추가 확인 항목: {', '.join(_needs_name(n) for n in needs[:5])}." if needs else ""
+            return f"{heading}. {credit_text}" + major_text + f" 확인된 미충족 요건: {', '.join(unmet[:5])}." + _missing_course_text(payload) + pending
+        if outcome == "UNKNOWN":
+            return f"{heading}. {credit_text}" + major_text + f" 추가 확인 항목: {', '.join(_needs_name(n) for n in decision['needs_information'][:5])}."
+        return f"{heading}. {credit_text}" + major_text + " 적용된 요건과 공식 증빙은 근거 펼쳐보기에서 확인할 수 있습니다."
+    if intent == "REQUIREMENT_GAPS":
+        unmet = [_rule_name(payload, r) for r in decision["requirement_results"] if r["status"] == "UNSATISFIED"]
+        unknown = [_rule_name(payload, r) for r in decision["requirement_results"] if r["status"] == "NEEDS_INFORMATION"]
+        satisfied = [_rule_name(payload, r) for r in decision["requirement_results"] if r["status"] == "SATISFIED"]
+        return (credit_text + f" 충족 요건: {', '.join(satisfied) or '없음'}."
+                + f" 확인된 미충족 요건: {', '.join(unmet[:5]) or '없음'}."
+                + _missing_course_text(payload) + f" 정보 부족 요건: {', '.join(unknown[:5]) or '없음'}.")
+    if intent == "CREDIT_SUMMARY" and decision.get("requested_area") in {"MAJOR_TOTAL", "GENERAL_TOTAL"}:
+        area = decision["requested_area"]
+        label = AREA_LABELS[area]
+        observed = amount["by_area"][area]
+        if amount["status"] == "COMPLETE":
+            return f"확인된 {label} 인정학점은 {observed}학점입니다. " + credit_text
+        pending = ", ".join(_needs_name(n) for n in decision["needs_information"][:4])
+        return (f"현재 확인된 {label} 인정학점의 하한은 {observed}학점입니다. "
+                f"추가 확인: {pending or '전체 이수내역'}. 확인되지 않은 이수기록은 산입하지 않았습니다.")
+    pending = ", ".join(_needs_name(n) for n in decision["needs_information"][:4])
+    return credit_text + (f" 추가 확인: {pending}. 확인되지 않은 이수기록은 산입하지 않았습니다." if pending else "")
+
+
+def render_answer(payload: dict) -> str:
+    """Only prevalidated wording choices can surround server-owned facts."""
+    base = _render_locked(payload)
+    style = payload.get("answer_style", "DIRECT")
+    if style == "DIRECT":
+        return base
+    if style == "CONVERSATIONAL":
+        return "확인 결과, " + base
+    raise ValueError("Unsupported answer style")

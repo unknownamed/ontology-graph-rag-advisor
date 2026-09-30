@@ -1,0 +1,419 @@
+{
+  "fixture_notice": "SYNTHETIC INPUT ONLY; not a real student record or official approval",
+  "student_state": {
+    "student_state_id": "SYNTHETIC-COMPLETE",
+    "student_id": "SYNTHETIC",
+    "admission_year": 2026,
+    "department_id": "DEPT-COMPUTER-ENGINEERING",
+    "credit_policy_year": 2026,
+    "catalog_year": 2026,
+    "applicability_status": "VERIFIED",
+    "program_type": "SINGLE",
+    "student_category": "DOMESTIC_REGULAR",
+    "academic_events": [],
+    "student_category_evidence_id": "SYNTHETIC-STUDENT-CATEGORY",
+    "applicability_evidence_id": "SYNTHETIC-APPLICABILITY",
+    "completion_coverage_evidence_id": "SYNTHETIC-TRANSCRIPT-COVERAGE",
+    "completion_coverage": "COMPLETE",
+    "equivalence_review_status": "VERIFIED",
+    "equivalence_review_evidence_id": "SYNTHETIC-EQUIV-REVIEW",
+    "official_outcomes": {
+      "thesis_passed": {
+        "value": true,
+        "verification_status": "VERIFIED",
+        "evidence_id": "SYNTHETIC-thesis_passed"
+      },
+      "thesis_final_semester_enrollment": {
+        "value": true,
+        "verification_status": "VERIFIED",
+        "evidence_id": "SYNTHETIC-thesis_final_semester_enrollment"
+      },
+      "graduation_certification_passed": {
+        "value": true,
+        "verification_status": "VERIFIED",
+        "evidence_id": "SYNTHETIC-graduation_certification_passed"
+      }
+    },
+    "course_attempts": [
+      {
+        "attempt_id": "A-0",
+        "course_id": "CDA0143",
+        "completion_status": "COMPLETED",
+        "verification_status": "VERIFIED",
+        "evidence_id": "E-0",
+        "earned_credits": null
+      },
+      {
+        "attempt_id": "A-1",
+        "course_id": "CDA0016",
+        "completion_status": "COMPLETED",
+        "verification_status": "VERIFIED",
+        "evidence_id": "E-1",
+        "earned_credits": null
+      },
+      {
+        "attempt_id": "A-2",
+        "course_id": "CDA0027",
+        "completion_status": "COMPLETED",
+        "verification_status": "VERIFIED",
+        "evidence_id": "E-2",
+        "earned_credits": null
+      },
+      {
+        "attempt_id": "A-3",
+        "course_id": "CDA0028",
+        "completion_status": "COMPLETED",
+        "verification_status": "VERIFIED",
+        "evidence_id": "E-3",
+        "earned_credits": null
+      },
+      {
+        "attempt_id": "A-4",
+        "course_id": "CDA0065",
+        "completion_status": "COMPLETED",
+        "verification_status": "VERIFIED",
+        "evidence_id": "E-4",
+        "earned_credits": null
+      },
+      {
+        "attempt_id": "A-5",
+        "course_id": "CDA0017",
+        "completion_status": "COMPLETED",
+        "verification_status": "VERIFIED",
+        "evidence_id": "E-5",
+        "earned_credits": null
+      },
+      {
+        "attempt_id": "A-6",
+        "course_id": "CDA0023",
+        "completion_status": "COMPLETED",
+        "verification_status": "VERIFIED",
+        "evidence_id": "E-6",
+        "earned_credits": null
+      },
+      {
+        "attempt_id": "A-7",
+        "course_id": "CDA0034",
+        "completion_status": "COMPLETED",
+        "verification_status": "VERIFIED",
+        "evidence_id": "E-7",
+        "earned_credits": null
+      },
+      {
+        "attempt_id": "A-8",
+        "course_id": "CDA0088",
+        "completion_status": "COMPLETED",
+        "verification_status": "VERIFIED",
+        "evidence_id": "E-8",
+        "earned_credits": null
+      },
+      {
+        "attempt_id": "A-9",
+        "course_id": "CDA0163",
+        "completion_status": "COMPLETED",
+        "verification_status": "VERIFIED",
+        "evidence_id": "E-9",
+        "earned_credits": null
+      },
+      {
+        "attempt_id": "A-10",
+        "course_id": "CDA0174",
+        "completion_status": "COMPLETED",
+        "verification_status": "VERIFIED",
+        "evidence_id": "E-10",
+        "earned_credits": null
+      },
+      {
+        "attempt_id": "A-11",
+        "course_id": "CDA0157",
+        "completion_status": "COMPLETED",
+        "verification_status": "VERIFIED",
+        "evidence_id": "E-11",
+        "earned_credits": null
+      },
+      {
+        "attempt_id": "A-12",
+        "course_id": "CDA0170",
+        "completion_status": "COMPLETED",
+        "verification_status": "VERIFIED",
+        "evidence_id": "E-12",
+        "earned_credits": null
+      },
+      {
+        "attempt_id": "A-13",
+        "course_id": "CDA0008",
+        "completion_status": "COMPLETED",
+        "verification_status": "VERIFIED",
+        "evidence_id": "E-13",
+        "earned_credits": null
+      },
+      {
+        "attempt_id": "A-14",
+        "course_id": "CDA0010",
+        "completion_status": "COMPLETED",
+        "verification_status": "VERIFIED",
+        "evidence_id": "E-14",
+        "earned_credits": null
+      },
+      {
+        "attempt_id": "A-15",
+        "course_id": "CDA0014",
+        "completion_status": "COMPLETED",
+        "verification_status": "VERIFIED",
+        "evidence_id": "E-15",
+        "earned_credits": null
+      },
+      {
+        "attempt_id": "A-16",
+        "course_id": "CDA0006",
+        "completion_status": "COMPLETED",
+        "verification_status": "VERIFIED",
+        "evidence_id": "E-16",
+        "earned_credits": null
+      },
+      {
+        "attempt_id": "A-17",
+        "course_id": "CDA0013",
+        "completion_status": "COMPLETED",
+        "verification_status": "VERIFIED",
+        "evidence_id": "E-17",
+        "earned_credits": null
+      },
+      {
+        "attempt_id": "A-18",
+        "course_id": "CDA0125",
+        "completion_status": "COMPLETED",
+        "verification_status": "VERIFIED",
+        "evidence_id": "E-18",
+        "earned_credits": null
+      },
+      {
+        "attempt_id": "A-19",
+        "course_id": "CDA0176",
+        "completion_status": "COMPLETED",
+        "verification_status": "VERIFIED",
+        "evidence_id": "E-19",
+        "earned_credits": null
+      },
+      {
+        "attempt_id": "A-20",
+        "course_id": "CDA0155",
+        "completion_status": "COMPLETED",
+        "verification_status": "VERIFIED",
+        "evidence_id": "E-20",
+        "earned_credits": null
+      },
+      {
+        "attempt_id": "A-21",
+        "course_id": "CDA0156",
+        "completion_status": "COMPLETED",
+        "verification_status": "VERIFIED",
+        "evidence_id": "E-21",
+        "earned_credits": null
+      },
+      {
+        "attempt_id": "A-22",
+        "course_id": "CDA0164",
+        "completion_status": "COMPLETED",
+        "verification_status": "VERIFIED",
+        "evidence_id": "E-22",
+        "earned_credits": null
+      },
+      {
+        "attempt_id": "A-23",
+        "course_id": "CDA0165",
+        "completion_status": "COMPLETED",
+        "verification_status": "VERIFIED",
+        "evidence_id": "E-23",
+        "earned_credits": null
+      },
+      {
+        "attempt_id": "A-24",
+        "course_id": "CDA0139",
+        "completion_status": "COMPLETED",
+        "verification_status": "VERIFIED",
+        "evidence_id": "E-24",
+        "earned_credits": null
+      },
+      {
+        "attempt_id": "A-25",
+        "course_id": "CDA0154",
+        "completion_status": "COMPLETED",
+        "verification_status": "VERIFIED",
+        "evidence_id": "E-25",
+        "earned_credits": null
+      },
+      {
+        "attempt_id": "A-26",
+        "course_id": "CDA0169",
+        "completion_status": "COMPLETED",
+        "verification_status": "VERIFIED",
+        "evidence_id": "E-26",
+        "earned_credits": null
+      },
+      {
+        "attempt_id": "A-27",
+        "course_id": "CDA0030",
+        "completion_status": "COMPLETED",
+        "verification_status": "VERIFIED",
+        "evidence_id": "E-27",
+        "earned_credits": null
+      },
+      {
+        "attempt_id": "A-28",
+        "course_id": "CDA0031",
+        "completion_status": "COMPLETED",
+        "verification_status": "VERIFIED",
+        "evidence_id": "E-28",
+        "earned_credits": null
+      },
+      {
+        "attempt_id": "A-29",
+        "course_id": "CDA0119",
+        "completion_status": "COMPLETED",
+        "verification_status": "VERIFIED",
+        "evidence_id": "E-29",
+        "earned_credits": null
+      },
+      {
+        "attempt_id": "A-30",
+        "course_id": "CDA0177",
+        "completion_status": "COMPLETED",
+        "verification_status": "VERIFIED",
+        "evidence_id": "E-30",
+        "earned_credits": null
+      },
+      {
+        "attempt_id": "A-31",
+        "course_id": "CDA0150",
+        "completion_status": "COMPLETED",
+        "verification_status": "VERIFIED",
+        "evidence_id": "E-31",
+        "earned_credits": null
+      },
+      {
+        "attempt_id": "A-32",
+        "course_id": "CDA0153",
+        "completion_status": "COMPLETED",
+        "verification_status": "VERIFIED",
+        "evidence_id": "E-32",
+        "earned_credits": null
+      },
+      {
+        "attempt_id": "A-33",
+        "course_id": "CDA0166",
+        "completion_status": "COMPLETED",
+        "verification_status": "VERIFIED",
+        "evidence_id": "E-33",
+        "earned_credits": null
+      },
+      {
+        "attempt_id": "A-34",
+        "course_id": "GEA8001",
+        "completion_status": "COMPLETED",
+        "verification_status": "VERIFIED",
+        "evidence_id": "E-34",
+        "earned_credits": null
+      },
+      {
+        "attempt_id": "A-35",
+        "course_id": "GEA8812",
+        "completion_status": "COMPLETED",
+        "verification_status": "VERIFIED",
+        "evidence_id": "E-35",
+        "earned_credits": null
+      },
+      {
+        "attempt_id": "A-36",
+        "course_id": "GEA8512",
+        "completion_status": "COMPLETED",
+        "verification_status": "VERIFIED",
+        "evidence_id": "E-36",
+        "earned_credits": null
+      },
+      {
+        "attempt_id": "A-37",
+        "course_id": "GEA8704",
+        "completion_status": "COMPLETED",
+        "verification_status": "VERIFIED",
+        "evidence_id": "E-37",
+        "earned_credits": null
+      },
+      {
+        "attempt_id": "A-38",
+        "course_id": "GEA8658",
+        "completion_status": "COMPLETED",
+        "verification_status": "VERIFIED",
+        "evidence_id": "E-38",
+        "earned_credits": null
+      },
+      {
+        "attempt_id": "A-39",
+        "course_id": "GEA8666",
+        "completion_status": "COMPLETED",
+        "verification_status": "VERIFIED",
+        "evidence_id": "E-39",
+        "earned_credits": null
+      },
+      {
+        "attempt_id": "A-40",
+        "course_id": "GEA7562",
+        "completion_status": "COMPLETED",
+        "verification_status": "VERIFIED",
+        "evidence_id": "E-40",
+        "earned_credits": null
+      },
+      {
+        "attempt_id": "A-41",
+        "course_id": "GEA7308",
+        "completion_status": "COMPLETED",
+        "verification_status": "VERIFIED",
+        "evidence_id": "E-41",
+        "earned_credits": null
+      },
+      {
+        "attempt_id": "A-42",
+        "course_id": "GEA8623",
+        "completion_status": "COMPLETED",
+        "verification_status": "VERIFIED",
+        "evidence_id": "E-42",
+        "earned_credits": null
+      },
+      {
+        "attempt_id": "A-43",
+        "course_id": "GEA8585",
+        "completion_status": "COMPLETED",
+        "verification_status": "VERIFIED",
+        "evidence_id": "E-43",
+        "earned_credits": null
+      },
+      {
+        "attempt_id": "A-44",
+        "course_id": "GEA3070",
+        "completion_status": "COMPLETED",
+        "verification_status": "VERIFIED",
+        "evidence_id": "E-44",
+        "earned_credits": null
+      },
+      {
+        "attempt_id": "A-45",
+        "course_id": "GEA7003",
+        "completion_status": "COMPLETED",
+        "verification_status": "VERIFIED",
+        "evidence_id": "E-45",
+        "earned_credits": null
+      },
+      {
+        "attempt_id": "A-46",
+        "course_id": "GEA7006",
+        "completion_status": "COMPLETED",
+        "verification_status": "VERIFIED",
+        "evidence_id": "E-46",
+        "earned_credits": null
+      }
+    ]
+  },
+  "structured_query": {
+    "intent": "GRADUATION_STATUS"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "schema_version": "1",
+  "purpose": "Evaluation-only metadata; never loaded by runtime catalog or RuleSet store",
+  "documents": [
+    {
+      "document_id": "EVAL-CURRICULUM-RULE-APPROVAL",
+      "title": "교육과정 규칙 검증 승인 요청서",
+      "source_file": "evaluation/reference/교육과정 규칙 검증 승인 요청서.pdf",
+      "source_hash": null,
+      "verification_status": "MISSING",
+      "authority_status": "EVALUATION_ONLY",
+      "ingestion_status": "EXCLUDED"
+    }
+  ]
+}

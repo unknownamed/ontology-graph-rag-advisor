@@ -1,0 +1,16 @@
+{
+  "student_state": {
+    "student_state_id": "SYNTHETIC-NATURAL-DEMO",
+    "student_id": "SYNTHETIC",
+    "admission_year": 2026,
+    "department_id": "DEPT-COMPUTER-ENGINEERING",
+    "credit_policy_year": 2026,
+    "catalog_year": 2026,
+    "applicability_status": "VERIFIED",
+    "program_type": "SINGLE",
+    "completion_coverage": "PARTIAL",
+    "course_attempts": []
+  },
+  "utterance": "고자구 몇 학점이야?",
+  "use_local_llm": true
+}

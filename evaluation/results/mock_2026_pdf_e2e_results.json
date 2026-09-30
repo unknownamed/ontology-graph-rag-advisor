@@ -1,0 +1,167 @@
+{
+  "notice": "테스트용 모의 성적표 / 실제 학생 자료 아님",
+  "results": [
+    {
+      "fixture_id": "mock_2026_complete",
+      "course_count": 43,
+      "printed_credits": 131,
+      "extracted_pages": 2,
+      "candidate_count": 43,
+      "resolved_count": 43,
+      "expected_outcome": "ELIGIBLE_PDF",
+      "actual_outcome": "ELIGIBLE_PDF",
+      "confirmed_credits": 131,
+      "major_credits": 96,
+      "missing_amount": {},
+      "missing_courses": {},
+      "requirement_status_counts": {
+        "SATISFIED": 18,
+        "NOT_APPLICABLE": 1
+      },
+      "decision_id": "DEC-f2781df9fc005076",
+      "execution_id": "EX-73b7204f3158a94b",
+      "trace_events": 109,
+      "graph_relationships": 148,
+      "pdf_source_locator_count": 8,
+      "pass": true,
+      "upload_only_outcome": "UNKNOWN",
+      "llm_consistency": true,
+      "llm_interpretation_status": "VALIDATED_SUGGESTION",
+      "llm_expression_status": "VERIFIED_STYLE"
+    },
+    {
+      "fixture_id": "mock_2026_partial",
+      "course_count": 28,
+      "printed_credits": 74,
+      "extracted_pages": 1,
+      "candidate_count": 28,
+      "resolved_count": 28,
+      "expected_outcome": "NOT_ELIGIBLE_PDF",
+      "actual_outcome": "NOT_ELIGIBLE_PDF",
+      "confirmed_credits": 74,
+      "major_credits": 39,
+      "missing_amount": {
+        "R-CE-2026-ADVANCED-CREDITS": 33,
+        "R-CE-2026-MAJOR-ELECTIVE-CREDITS": 3,
+        "R-CE-2026-MAJOR-REQUIRED-CREDITS": 3,
+        "R-CE-2026-MAJOR-TOTAL-CREDITS": 39,
+        "R-GRAD-2026-TOTAL-CREDITS": 56
+      },
+      "missing_courses": {
+        "R-CE-2026-REQUIRED-COURSES": [
+          "CDA0143"
+        ]
+      },
+      "requirement_status_counts": {
+        "UNSATISFIED": 6,
+        "NOT_APPLICABLE": 1,
+        "SATISFIED": 12
+      },
+      "decision_id": "DEC-f8a1425010c03f32",
+      "execution_id": "EX-d154dfed2a73396c",
+      "trace_events": 80,
+      "graph_relationships": 106,
+      "pdf_source_locator_count": 8,
+      "pass": true,
+      "upload_only_outcome": "UNKNOWN",
+      "llm_consistency": true,
+      "llm_interpretation_status": "VALIDATED_SUGGESTION",
+      "llm_expression_status": "VERIFIED_STYLE"
+    },
+    {
+      "fixture_id": "mock_2026_boundary",
+      "course_count": 42,
+      "printed_credits": 131,
+      "extracted_pages": 2,
+      "candidate_count": 42,
+      "resolved_count": 42,
+      "expected_outcome": "NOT_ELIGIBLE_PDF",
+      "actual_outcome": "NOT_ELIGIBLE_PDF",
+      "confirmed_credits": 131,
+      "major_credits": 96,
+      "missing_amount": {},
+      "missing_courses": {
+        "R-CE-2026-REQUIRED-COURSES": [
+          "CDA0034"
+        ]
+      },
+      "requirement_status_counts": {
+        "SATISFIED": 17,
+        "NOT_APPLICABLE": 1,
+        "UNSATISFIED": 1
+      },
+      "decision_id": "DEC-bdc27bed8dac7d74",
+      "execution_id": "EX-00101508cc3a9f9d",
+      "trace_events": 108,
+      "graph_relationships": 148,
+      "pdf_source_locator_count": 8,
+      "pass": true,
+      "upload_only_outcome": "UNKNOWN",
+      "llm_consistency": true,
+      "llm_interpretation_status": "VALIDATED_SUGGESTION",
+      "llm_expression_status": "VERIFIED_STYLE",
+      "simulation": {
+        "added_course_id": "CDA0034",
+        "delta": {
+          "status": "CALCULATED",
+          "changed_requirements": [
+            {
+              "rule_id": "R-CE-2026-REQUIRED-COURSES",
+              "before": "UNSATISFIED",
+              "after": "SATISFIED"
+            }
+          ],
+          "missing_required_before": [
+            "CDA0034"
+          ],
+          "missing_required_after": [],
+          "completed_required_course_ids": [
+            "CDA0034"
+          ],
+          "actual_total": 131,
+          "simulated_total": 131,
+          "total_credit_change": 0,
+          "actual_major": 96,
+          "simulated_major": 96,
+          "major_credit_change": 0,
+          "graduation_preview_before": "NOT_ELIGIBLE_PDF",
+          "graduation_preview_after": "ELIGIBLE_PDF"
+        },
+        "actual_status": "UNSATISFIED",
+        "scenario_status": "SATISFIED",
+        "actual_graduation_outcome": "NOT_ELIGIBLE_PDF",
+        "scenario_graduation_outcome": "ELIGIBLE_PDF",
+        "source_course_classification": "MAJOR_REQUIRED"
+      }
+    },
+    {
+      "fixture_id": "mock_2026_missing_info",
+      "course_count": 43,
+      "printed_credits": 131,
+      "extracted_pages": 2,
+      "candidate_count": 43,
+      "resolved_count": 42,
+      "expected_outcome": "UNKNOWN",
+      "actual_outcome": "UNKNOWN",
+      "confirmed_credits": null,
+      "major_credits": 96,
+      "missing_amount": {},
+      "missing_courses": {},
+      "requirement_status_counts": {
+        "SATISFIED": 16,
+        "NOT_APPLICABLE": 1,
+        "NEEDS_INFORMATION": 2
+      },
+      "decision_id": "DEC-60574099e3d5d3c2",
+      "execution_id": "EX-b743d9885f4acbba",
+      "trace_events": 108,
+      "graph_relationships": 145,
+      "pdf_source_locator_count": 8,
+      "pass": true,
+      "upload_only_outcome": "UNKNOWN",
+      "llm_consistency": true,
+      "llm_interpretation_status": "VALIDATED_SUGGESTION",
+      "llm_expression_status": "VERIFIED_STYLE"
+    }
+  ]
+}

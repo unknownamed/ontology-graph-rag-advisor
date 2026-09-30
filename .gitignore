@@ -1,0 +1,42 @@
+# Evaluation references stay local and must not enter runtime or commits.
+evaluation/reference/*
+!evaluation/reference/.gitkeep
+
+# Development logs are generated locally.
+logs/*
+!logs/.gitkeep
+
+# Rebuildable local runtime artifacts and student uploads.
+data/processed/*.sqlite
+**/__pycache__/
+*.pyc
+uploads/
+data/raw/authority_staging/
+.deps/
+.ocrdeps/
+.ocrmodels/
+desktop.ini
+
+# Local credentials, private uploads, generated data and model weights.
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+uploads/private/
+data/private/
+logs/private/
+models/
+*.gguf
+*.safetensors
+node_modules/
+dist/
+build/
+.cache/
+*.sqlite
+*.db
+
+# Evaluation-only approval material and reports about real uploads stay local.
+evaluation/results/approval_review.md
+evaluation/results/score_approval.py
+evaluation/results/student_upload_normalization_2026-09-29.md

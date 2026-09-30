@@ -1,0 +1,2345 @@
+{
+  "schema_version": "1.1",
+  "source": {
+    "path": "docs/curriculum/2026년도 교육과정.pdf",
+    "sha256": "0d800318dc367a89518f9be6be8f559092474bf00b3573e14bd37b6c44b54471",
+    "pdf_page_count": 615,
+    "title_as_printed": "2026학년도 교육과정",
+    "basis": "Only this curriculum PDF; no evaluation reference read"
+  },
+  "page_numbering": {
+    "pdf_page": "1-based physical PDF page",
+    "printed_page": "Page number printed in main body",
+    "observed_main_body_offset": 8,
+    "note": "Main-body ranges convert printed page + 8; division pages and preliminary pages are indexed separately."
+  },
+  "method": {
+    "toc_pdf_pages": [
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "inspected_pdf_pages": [
+      3,
+      4,
+      5,
+      6,
+      7,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      31,
+      32,
+      33,
+      34,
+      50,
+      51,
+      77,
+      78,
+      79,
+      80,
+      81,
+      82,
+      259,
+      260,
+      261,
+      262,
+      263,
+      264,
+      475,
+      476,
+      477,
+      478,
+      479,
+      480,
+      481,
+      482,
+      483,
+      484,
+      547,
+      548,
+      549,
+      550,
+      551,
+      552,
+      565,
+      566,
+      567,
+      568,
+      569,
+      570,
+      571,
+      572,
+      573,
+      574,
+      575,
+      576,
+      577,
+      578,
+      579,
+      591,
+      593,
+      596,
+      597,
+      602,
+      603,
+      604,
+      605,
+      606,
+      607,
+      608,
+      610,
+      611,
+      612,
+      613,
+      614,
+      615
+    ],
+    "range_basis": "Chapter and program ranges derived from table-of-contents boundaries; content verified only on inspected pages",
+    "detail_coverage": "University-wide core rules and computer-engineering 2026 catalog/credits/transition rows verified; other departments not exhaustively extracted."
+  },
+  "chapters": [
+    {
+      "id": "CH-01",
+      "title": "교육과정 개요",
+      "toc_pdf_page": 3,
+      "printed_page_start": 3,
+      "printed_page_end": 22,
+      "pdf_page_start": 11,
+      "pdf_page_end": 30
+    },
+    {
+      "id": "CH-02",
+      "title": "교양 교육과정",
+      "toc_pdf_page": 3,
+      "printed_page_start": 23,
+      "printed_page_end": 41,
+      "pdf_page_start": 31,
+      "pdf_page_end": 49
+    },
+    {
+      "id": "CH-03",
+      "title": "자율전공학부",
+      "toc_pdf_page": 3,
+      "printed_page_start": 42,
+      "printed_page_end": 68,
+      "pdf_page_start": 50,
+      "pdf_page_end": 76
+    },
+    {
+      "id": "CH-04",
+      "title": "전공 교육과정",
+      "toc_pdf_page": 4,
+      "printed_page_start": 69,
+      "printed_page_end": 466,
+      "pdf_page_start": 77,
+      "pdf_page_end": 474
+    },
+    {
+      "id": "CH-05",
+      "title": "다전공 및 모듈형 교육과정",
+      "toc_pdf_page": 6,
+      "printed_page_start": 467,
+      "printed_page_end": 530,
+      "pdf_page_start": 475,
+      "pdf_page_end": 538
+    },
+    {
+      "id": "CH-06",
+      "title": "선택 이수 과정",
+      "toc_pdf_page": 6,
+      "printed_page_start": 531,
+      "printed_page_end": 538,
+      "pdf_page_start": 539,
+      "pdf_page_end": 546
+    },
+    {
+      "id": "CH-07",
+      "title": "교직 과정",
+      "toc_pdf_page": 7,
+      "printed_page_start": 539,
+      "printed_page_end": 556,
+      "pdf_page_start": 547,
+      "pdf_page_end": 564
+    },
+    {
+      "id": "CH-08",
+      "title": "졸업",
+      "toc_pdf_page": 7,
+      "printed_page_start": 557,
+      "printed_page_end": 607,
+      "pdf_page_start": 565,
+      "pdf_page_end": 615
+    }
+  ],
+  "subsections": [
+    {
+      "id": "C01-APPLY",
+      "title": "교육과정 구성 및 적용",
+      "toc_pdf_page": 3,
+      "printed_page_start": 5,
+      "printed_page_end": 5,
+      "pdf_page_start": 13,
+      "pdf_page_end": 13
+    },
+    {
+      "id": "C01-EQUIV",
+      "title": "동일과목 및 대체과목 이수",
+      "toc_pdf_page": 3,
+      "printed_page_start": 6,
+      "printed_page_end": 6,
+      "pdf_page_start": 14,
+      "pdf_page_end": 14
+    },
+    {
+      "id": "C01-TRANS",
+      "title": "편입생·전과생·재입학생 이수",
+      "toc_pdf_page": 3,
+      "printed_page_start": 8,
+      "printed_page_end": 9,
+      "pdf_page_start": 16,
+      "pdf_page_end": 17
+    },
+    {
+      "id": "C01-2026",
+      "title": "2026학년도 교육과정 적용자 이수 학점표",
+      "toc_pdf_page": 3,
+      "printed_page_start": 10,
+      "printed_page_end": 19,
+      "pdf_page_start": 18,
+      "pdf_page_end": 27
+    },
+    {
+      "id": "C02-CREDITS",
+      "title": "교양 이수학점 및 교과목 현황",
+      "toc_pdf_page": 3,
+      "printed_page_start": 25,
+      "printed_page_end": 37,
+      "pdf_page_start": 33,
+      "pdf_page_end": 45
+    },
+    {
+      "id": "C05-DOUBLE",
+      "title": "복수전공",
+      "toc_pdf_page": 6,
+      "printed_page_start": 468,
+      "printed_page_end": 468,
+      "pdf_page_start": 476,
+      "pdf_page_end": 476
+    },
+    {
+      "id": "C05-MINOR",
+      "title": "부전공",
+      "toc_pdf_page": 6,
+      "printed_page_start": 469,
+      "printed_page_end": 469,
+      "pdf_page_start": 477,
+      "pdf_page_end": 477
+    },
+    {
+      "id": "C05-LINKED",
+      "title": "연계전공",
+      "toc_pdf_page": 6,
+      "printed_page_start": 470,
+      "printed_page_end": 472,
+      "pdf_page_start": 478,
+      "pdf_page_end": 480
+    },
+    {
+      "id": "C05-CONVERGENCE",
+      "title": "융합전공",
+      "toc_pdf_page": 6,
+      "printed_page_start": 473,
+      "printed_page_end": 481,
+      "pdf_page_start": 481,
+      "pdf_page_end": 489
+    },
+    {
+      "id": "C05-INTEGRATED",
+      "title": "통합학부 융합전공·융합부전공",
+      "toc_pdf_page": 6,
+      "printed_page_start": 482,
+      "printed_page_end": 486,
+      "pdf_page_start": 490,
+      "pdf_page_end": 494
+    },
+    {
+      "id": "C05-USG",
+      "title": "USG공유대학 융합전공",
+      "toc_pdf_page": 6,
+      "printed_page_start": 487,
+      "printed_page_end": 498,
+      "pdf_page_start": 495,
+      "pdf_page_end": 506
+    },
+    {
+      "id": "C05-MODULE",
+      "title": "모듈형 교육과정",
+      "toc_pdf_page": 6,
+      "printed_page_start": 499,
+      "printed_page_end": 530,
+      "pdf_page_start": 507,
+      "pdf_page_end": 538
+    },
+    {
+      "id": "C07-TEACHING",
+      "title": "교직 과정",
+      "toc_pdf_page": 7,
+      "printed_page_start": 539,
+      "printed_page_end": 556,
+      "pdf_page_start": 547,
+      "pdf_page_end": 564
+    },
+    {
+      "id": "C08-THESIS",
+      "title": "졸업 요건·졸업 논문",
+      "toc_pdf_page": 7,
+      "printed_page_start": 557,
+      "printed_page_end": 561,
+      "pdf_page_start": 565,
+      "pdf_page_end": 569
+    },
+    {
+      "id": "C08-CERT",
+      "title": "졸업인증제",
+      "toc_pdf_page": 7,
+      "printed_page_start": 561,
+      "printed_page_end": 567,
+      "pdf_page_start": 569,
+      "pdf_page_end": 575
+    },
+    {
+      "id": "C08-TRANS",
+      "title": "교육과정 적용자 경과조치",
+      "toc_pdf_page": 7,
+      "printed_page_start": 567,
+      "printed_page_end": 567,
+      "pdf_page_start": 575,
+      "pdf_page_end": 575
+    },
+    {
+      "id": "C08-2026",
+      "title": "2026학년도 입학자 졸업이수학점",
+      "toc_pdf_page": 7,
+      "printed_page_start": 568,
+      "printed_page_end": 569,
+      "pdf_page_start": 576,
+      "pdf_page_end": 577
+    },
+    {
+      "id": "C08-2006-2019",
+      "title": "2006~2019학년도 연도별 졸업이수학점",
+      "toc_pdf_page": 7,
+      "printed_page_start": 570,
+      "printed_page_end": 588,
+      "pdf_page_start": 578,
+      "pdf_page_end": 596
+    },
+    {
+      "id": "C08-2020-2024",
+      "title": "2020~2024학년도 연도별 졸업이수학점",
+      "toc_pdf_page": 7,
+      "printed_page_start": 589,
+      "printed_page_end": 595,
+      "pdf_page_start": 597,
+      "pdf_page_end": 603
+    },
+    {
+      "id": "C08-2025",
+      "title": "2025학년도 이후 연도별 졸업이수학점",
+      "toc_pdf_page": 7,
+      "printed_page_start": 596,
+      "printed_page_end": 598,
+      "pdf_page_start": 604,
+      "pdf_page_end": 606
+    },
+    {
+      "id": "C08-DOUBLE-YEAR",
+      "title": "연도별 복수전공자 최소전공학점",
+      "toc_pdf_page": 7,
+      "printed_page_start": 599,
+      "printed_page_end": 607,
+      "pdf_page_start": 607,
+      "pdf_page_end": 615
+    }
+  ],
+  "program_groups": [
+    {
+      "title": "인문대학",
+      "toc_pdf_page": 4,
+      "printed_page_start": 69,
+      "printed_page_end": 112,
+      "pdf_page_start": 77,
+      "pdf_page_end": 120
+    },
+    {
+      "title": "사회과학대학",
+      "toc_pdf_page": 4,
+      "printed_page_start": 113,
+      "printed_page_end": 154,
+      "pdf_page_start": 121,
+      "pdf_page_end": 162
+    },
+    {
+      "title": "경영대학",
+      "toc_pdf_page": 4,
+      "printed_page_start": 155,
+      "printed_page_end": 182,
+      "pdf_page_start": 163,
+      "pdf_page_end": 190
+    },
+    {
+      "title": "자연과학대학",
+      "toc_pdf_page": 4,
+      "printed_page_start": 183,
+      "printed_page_end": 210,
+      "pdf_page_start": 191,
+      "pdf_page_end": 218
+    },
+    {
+      "title": "공과대학",
+      "toc_pdf_page": 4,
+      "printed_page_start": 211,
+      "printed_page_end": 282,
+      "pdf_page_start": 219,
+      "pdf_page_end": 290
+    },
+    {
+      "title": "예술대학",
+      "toc_pdf_page": 5,
+      "printed_page_start": 283,
+      "printed_page_end": 310,
+      "pdf_page_start": 291,
+      "pdf_page_end": 318
+    },
+    {
+      "title": "글로컬첨단과학기술대학",
+      "toc_pdf_page": 5,
+      "printed_page_start": 311,
+      "printed_page_end": 346,
+      "pdf_page_start": 319,
+      "pdf_page_end": 354
+    },
+    {
+      "title": "GAST-인공지능대학",
+      "toc_pdf_page": 5,
+      "printed_page_start": 347,
+      "printed_page_end": 378,
+      "pdf_page_start": 355,
+      "pdf_page_end": 386
+    },
+    {
+      "title": "GAST-기계공학대학",
+      "toc_pdf_page": 5,
+      "printed_page_start": 379,
+      "printed_page_end": 404,
+      "pdf_page_start": 387,
+      "pdf_page_end": 412
+    },
+    {
+      "title": "본부 학과",
+      "toc_pdf_page": 6,
+      "printed_page_start": 405,
+      "printed_page_end": 420,
+      "pdf_page_start": 413,
+      "pdf_page_end": 428
+    },
+    {
+      "title": "존속학과 전공 교과목 편성",
+      "toc_pdf_page": 6,
+      "printed_page_start": 421,
+      "printed_page_end": 466,
+      "pdf_page_start": 429,
+      "pdf_page_end": 474
+    }
+  ],
+  "programs": [
+    {
+      "name": "국어국문학과",
+      "group": "인문대학",
+      "toc_pdf_page": 4,
+      "printed_page_start": 70,
+      "printed_page_end": 73,
+      "pdf_page_start": 78,
+      "pdf_page_end": 81,
+      "index_basis": "table_of_contents_only"
+    },
+    {
+      "name": "영어영문학과",
+      "group": "인문대학",
+      "toc_pdf_page": 4,
+      "printed_page_start": 74,
+      "printed_page_end": 77,
+      "pdf_page_start": 82,
+      "pdf_page_end": 85,
+      "index_basis": "table_of_contents_only"
+    },
+    {
+      "name": "독어독문학과",
+      "group": "인문대학",
+      "toc_pdf_page": 4,
+      "printed_page_start": 78,
+      "printed_page_end": 82,
+      "pdf_page_start": 86,
+      "pdf_page_end": 90,
+      "index_basis": "table_of_contents_only"
+    },
+    {
+      "name": "불어불문학과",
+      "group": "인문대학",
+      "toc_pdf_page": 4,
+      "printed_page_start": 83,
+      "printed_page_end": 87,
+      "pdf_page_start": 91,
+      "pdf_page_end": 95,
+      "index_basis": "table_of_contents_only"
+    },
+    {
+      "name": "일어일문학과",
+      "group": "인문대학",
+      "toc_pdf_page": 4,
+      "printed_page_start": 88,
+      "printed_page_end": 91,
+      "pdf_page_start": 96,
+      "pdf_page_end": 99,
+      "index_basis": "table_of_contents_only"
+    },
+    {
+      "name": "사학과",
+      "group": "인문대학",
+      "toc_pdf_page": 4,
+      "printed_page_start": 92,
+      "printed_page_end": 96,
+      "pdf_page_start": 100,
+      "pdf_page_end": 104,
+      "index_basis": "table_of_contents_only"
+    },
+    {
+      "name": "철학과",
+      "group": "인문대학",
+      "toc_pdf_page": 4,
+      "printed_page_start": 97,
+      "printed_page_end": 101,
+      "pdf_page_start": 105,
+      "pdf_page_end": 109,
+      "index_basis": "table_of_contents_only"
+    },
+    {
+      "name": "특수교육과",
+      "group": "인문대학",
+      "toc_pdf_page": 4,
+      "printed_page_start": 102,
+      "printed_page_end": 107,
+      "pdf_page_start": 110,
+      "pdf_page_end": 115,
+      "index_basis": "table_of_contents_only"
+    },
+    {
+      "name": "유아교육과",
+      "group": "인문대학",
+      "toc_pdf_page": 4,
+      "printed_page_start": 108,
+      "printed_page_end": 112,
+      "pdf_page_start": 116,
+      "pdf_page_end": 120,
+      "index_basis": "table_of_contents_only"
+    },
+    {
+      "name": "법학과",
+      "group": "사회과학대학",
+      "toc_pdf_page": 4,
+      "printed_page_start": 114,
+      "printed_page_end": 118,
+      "pdf_page_start": 122,
+      "pdf_page_end": 126,
+      "index_basis": "table_of_contents_only"
+    },
+    {
+      "name": "행정학과(주/야)",
+      "group": "사회과학대학",
+      "toc_pdf_page": 4,
+      "printed_page_start": 119,
+      "printed_page_end": 125,
+      "pdf_page_start": 127,
+      "pdf_page_end": 133,
+      "index_basis": "table_of_contents_only"
+    },
+    {
+      "name": "국제관계학과",
+      "group": "사회과학대학",
+      "toc_pdf_page": 4,
+      "printed_page_start": 126,
+      "printed_page_end": 130,
+      "pdf_page_start": 134,
+      "pdf_page_end": 138,
+      "index_basis": "table_of_contents_only"
+    },
+    {
+      "name": "중국학과",
+      "group": "사회과학대학",
+      "toc_pdf_page": 4,
+      "printed_page_start": 131,
+      "printed_page_end": 135,
+      "pdf_page_start": 139,
+      "pdf_page_end": 143,
+      "index_basis": "table_of_contents_only"
+    },
+    {
+      "name": "사회학과",
+      "group": "사회과학대학",
+      "toc_pdf_page": 4,
+      "printed_page_start": 136,
+      "printed_page_end": 140,
+      "pdf_page_start": 144,
+      "pdf_page_end": 148,
+      "index_basis": "table_of_contents_only"
+    },
+    {
+      "name": "미디어커뮤니케이션학과",
+      "group": "사회과학대학",
+      "toc_pdf_page": 4,
+      "printed_page_start": 141,
+      "printed_page_end": 147,
+      "pdf_page_start": 149,
+      "pdf_page_end": 155,
+      "index_basis": "table_of_contents_only"
+    },
+    {
+      "name": "사회복지학과",
+      "group": "사회과학대학",
+      "toc_pdf_page": 4,
+      "printed_page_start": 148,
+      "printed_page_end": 154,
+      "pdf_page_start": 156,
+      "pdf_page_end": 162,
+      "index_basis": "table_of_contents_only"
+    },
+    {
+      "name": "글로벌비즈니스학부",
+      "group": "경영대학",
+      "toc_pdf_page": 4,
+      "printed_page_start": 156,
+      "printed_page_end": 163,
+      "pdf_page_start": 164,
+      "pdf_page_end": 171,
+      "index_basis": "table_of_contents_only"
+    },
+    {
+      "name": "국제무역학과(주간)",
+      "group": "경영대학",
+      "toc_pdf_page": 4,
+      "printed_page_start": 164,
+      "printed_page_end": 168,
+      "pdf_page_start": 172,
+      "pdf_page_end": 176,
+      "index_basis": "table_of_contents_only"
+    },
+    {
+      "name": "경영학과",
+      "group": "경영대학",
+      "toc_pdf_page": 4,
+      "printed_page_start": 169,
+      "printed_page_end": 173,
+      "pdf_page_start": 177,
+      "pdf_page_end": 181,
+      "index_basis": "table_of_contents_only"
+    },
+    {
+      "name": "회계학과",
+      "group": "경영대학",
+      "toc_pdf_page": 4,
+      "printed_page_start": 174,
+      "printed_page_end": 178,
+      "pdf_page_start": 182,
+      "pdf_page_end": 186,
+      "index_basis": "table_of_contents_only"
+    },
+    {
+      "name": "세무학과",
+      "group": "경영대학",
+      "toc_pdf_page": 4,
+      "printed_page_start": 179,
+      "printed_page_end": 182,
+      "pdf_page_start": 187,
+      "pdf_page_end": 190,
+      "index_basis": "table_of_contents_only"
+    },
+    {
+      "name": "통계학과",
+      "group": "자연과학대학",
+      "toc_pdf_page": 4,
+      "printed_page_start": 184,
+      "printed_page_end": 188,
+      "pdf_page_start": 192,
+      "pdf_page_end": 196,
+      "index_basis": "table_of_contents_only"
+    },
+    {
+      "name": "의류학과",
+      "group": "자연과학대학",
+      "toc_pdf_page": 4,
+      "printed_page_start": 189,
+      "printed_page_end": 193,
+      "pdf_page_start": 197,
+      "pdf_page_end": 201,
+      "index_basis": "table_of_contents_only"
+    },
+    {
+      "name": "식품영양학과",
+      "group": "자연과학대학",
+      "toc_pdf_page": 4,
+      "printed_page_start": 194,
+      "printed_page_end": 199,
+      "pdf_page_start": 202,
+      "pdf_page_end": 207,
+      "index_basis": "table_of_contents_only"
+    },
+    {
+      "name": "체육학과",
+      "group": "자연과학대학",
+      "toc_pdf_page": 4,
+      "printed_page_start": 200,
+      "printed_page_end": 204,
+      "pdf_page_start": 208,
+      "pdf_page_end": 212,
+      "index_basis": "table_of_contents_only"
+    },
+    {
+      "name": "간호학과",
+      "group": "자연과학대학",
+      "toc_pdf_page": 4,
+      "printed_page_start": 205,
+      "printed_page_end": 210,
+      "pdf_page_start": 213,
+      "pdf_page_end": 218,
+      "index_basis": "table_of_contents_only"
+    },
+    {
+      "name": "산업시스템공학과",
+      "group": "공과대학",
+      "toc_pdf_page": 4,
+      "printed_page_start": 212,
+      "printed_page_end": 218,
+      "pdf_page_start": 220,
+      "pdf_page_end": 226,
+      "index_basis": "table_of_contents_only"
+    },
+    {
+      "name": "스마트오션모빌리티공학과",
+      "group": "공과대학",
+      "toc_pdf_page": 4,
+      "printed_page_start": 219,
+      "printed_page_end": 225,
+      "pdf_page_start": 227,
+      "pdf_page_end": 233,
+      "index_basis": "table_of_contents_only"
+    },
+    {
+      "name": "스마트그린공학부 환경에너지공학전공",
+      "group": "공과대학",
+      "toc_pdf_page": 5,
+      "printed_page_start": 226,
+      "printed_page_end": 231,
+      "pdf_page_start": 234,
+      "pdf_page_end": 239,
+      "index_basis": "table_of_contents_only"
+    },
+    {
+      "name": "스마트그린공학부 건설시스템공학전공",
+      "group": "공과대학",
+      "toc_pdf_page": 5,
+      "printed_page_start": 232,
+      "printed_page_end": 239,
+      "pdf_page_start": 240,
+      "pdf_page_end": 247,
+      "index_basis": "table_of_contents_only"
+    },
+    {
+      "name": "건축학부 건축공학전공(4년제)",
+      "group": "공과대학",
+      "toc_pdf_page": 5,
+      "printed_page_start": 240,
+      "printed_page_end": 245,
+      "pdf_page_start": 248,
+      "pdf_page_end": 253,
+      "index_basis": "table_of_contents_only"
+    },
+    {
+      "name": "건축학부 건축학전공(5년제)",
+      "group": "공과대학",
+      "toc_pdf_page": 5,
+      "printed_page_start": 246,
+      "printed_page_end": 250,
+      "pdf_page_start": 254,
+      "pdf_page_end": 258,
+      "index_basis": "table_of_contents_only"
+    },
+    {
+      "name": "컴퓨터공학과",
+      "group": "공과대학",
+      "toc_pdf_page": 5,
+      "printed_page_start": 251,
+      "printed_page_end": 256,
+      "pdf_page_start": 259,
+      "pdf_page_end": 264,
+      "index_basis": "toc_and_body_verified",
+      "detail_ref": "docs/design/computer_engineering_scope.md",
+      "verified_pdf_pages": [
+        259,
+        260,
+        261,
+        262,
+        263,
+        264
+      ]
+    },
+    {
+      "name": "정보통신공학과",
+      "group": "공과대학",
+      "toc_pdf_page": 5,
+      "printed_page_start": 257,
+      "printed_page_end": 261,
+      "pdf_page_start": 265,
+      "pdf_page_end": 269,
+      "index_basis": "table_of_contents_only"
+    },
+    {
+      "name": "전자공학과",
+      "group": "공과대학",
+      "toc_pdf_page": 5,
+      "printed_page_start": 262,
+      "printed_page_end": 267,
+      "pdf_page_start": 270,
+      "pdf_page_end": 275,
+      "index_basis": "table_of_contents_only"
+    },
+    {
+      "name": "재료금속공학과",
+      "group": "공과대학",
+      "toc_pdf_page": 5,
+      "printed_page_start": 268,
+      "printed_page_end": 272,
+      "pdf_page_start": 276,
+      "pdf_page_end": 280,
+      "index_basis": "table_of_contents_only"
+    },
+    {
+      "name": "첨단소재융합공학과",
+      "group": "공과대학",
+      "toc_pdf_page": 5,
+      "printed_page_start": 273,
+      "printed_page_end": 277,
+      "pdf_page_start": 281,
+      "pdf_page_end": 285,
+      "index_basis": "table_of_contents_only"
+    },
+    {
+      "name": "메카융합공학과(야)",
+      "group": "공과대학",
+      "toc_pdf_page": 5,
+      "printed_page_start": 278,
+      "printed_page_end": 282,
+      "pdf_page_start": 286,
+      "pdf_page_end": 290,
+      "index_basis": "table_of_contents_only"
+    },
+    {
+      "name": "음악과",
+      "group": "예술대학",
+      "toc_pdf_page": 5,
+      "printed_page_start": 284,
+      "printed_page_end": 290,
+      "pdf_page_start": 292,
+      "pdf_page_end": 298,
+      "index_basis": "table_of_contents_only"
+    },
+    {
+      "name": "미술학과",
+      "group": "예술대학",
+      "toc_pdf_page": 5,
+      "printed_page_start": 291,
+      "printed_page_end": 297,
+      "pdf_page_start": 299,
+      "pdf_page_end": 305,
+      "index_basis": "table_of_contents_only"
+    },
+    {
+      "name": "산업디자인학과",
+      "group": "예술대학",
+      "toc_pdf_page": 5,
+      "printed_page_start": 298,
+      "printed_page_end": 304,
+      "pdf_page_start": 306,
+      "pdf_page_end": 312,
+      "index_basis": "table_of_contents_only"
+    },
+    {
+      "name": "무용학과",
+      "group": "예술대학",
+      "toc_pdf_page": 5,
+      "printed_page_start": 305,
+      "printed_page_end": 310,
+      "pdf_page_start": 313,
+      "pdf_page_end": 318,
+      "index_basis": "table_of_contents_only"
+    },
+    {
+      "name": "기초과학부 수리과학전공",
+      "group": "글로컬첨단과학기술대학",
+      "toc_pdf_page": 5,
+      "printed_page_start": 312,
+      "printed_page_end": 316,
+      "pdf_page_start": 320,
+      "pdf_page_end": 324,
+      "index_basis": "table_of_contents_only"
+    },
+    {
+      "name": "기초과학부 반도체물리학전공",
+      "group": "글로컬첨단과학기술대학",
+      "toc_pdf_page": 5,
+      "printed_page_start": 317,
+      "printed_page_end": 321,
+      "pdf_page_start": 325,
+      "pdf_page_end": 329,
+      "index_basis": "table_of_contents_only"
+    },
+    {
+      "name": "기초과학부 에너지화학전공",
+      "group": "글로컬첨단과학기술대학",
+      "toc_pdf_page": 5,
+      "printed_page_start": 322,
+      "printed_page_end": 325,
+      "pdf_page_start": 330,
+      "pdf_page_end": 333,
+      "index_basis": "table_of_contents_only"
+    },
+    {
+      "name": "첨단바이오학부 미생물생명공학전공",
+      "group": "글로컬첨단과학기술대학",
+      "toc_pdf_page": 5,
+      "printed_page_start": 326,
+      "printed_page_end": 330,
+      "pdf_page_start": 334,
+      "pdf_page_end": 338,
+      "index_basis": "table_of_contents_only"
+    },
+    {
+      "name": "첨단바이오학부 생명보건학전공",
+      "group": "글로컬첨단과학기술대학",
+      "toc_pdf_page": 5,
+      "printed_page_start": 331,
+      "printed_page_end": 335,
+      "pdf_page_start": 339,
+      "pdf_page_end": 343,
+      "index_basis": "table_of_contents_only"
+    },
+    {
+      "name": "메타융합콘텐츠학부 메타융합콘텐츠전공",
+      "group": "글로컬첨단과학기술대학",
+      "toc_pdf_page": 5,
+      "printed_page_start": 336,
+      "printed_page_end": 341,
+      "pdf_page_start": 344,
+      "pdf_page_end": 349,
+      "index_basis": "table_of_contents_only"
+    },
+    {
+      "name": "기술경영공학과",
+      "group": "글로컬첨단과학기술대학",
+      "toc_pdf_page": 5,
+      "printed_page_start": 342,
+      "printed_page_end": 346,
+      "pdf_page_start": 350,
+      "pdf_page_end": 354,
+      "index_basis": "table_of_contents_only"
+    },
+    {
+      "name": "지능로봇융합공학과",
+      "group": "GAST-인공지능대학",
+      "toc_pdf_page": 5,
+      "printed_page_start": 348,
+      "printed_page_end": 353,
+      "pdf_page_start": 356,
+      "pdf_page_end": 361,
+      "index_basis": "table_of_contents_only"
+    },
+    {
+      "name": "AI전기공학과",
+      "group": "GAST-인공지능대학",
+      "toc_pdf_page": 5,
+      "printed_page_start": 354,
+      "printed_page_end": 360,
+      "pdf_page_start": 362,
+      "pdf_page_end": 368,
+      "index_basis": "table_of_contents_only"
+    },
+    {
+      "name": "인공지능공학과",
+      "group": "GAST-인공지능대학",
+      "toc_pdf_page": 5,
+      "printed_page_start": 361,
+      "printed_page_end": 366,
+      "pdf_page_start": 369,
+      "pdf_page_end": 374,
+      "index_basis": "table_of_contents_only"
+    },
+    {
+      "name": "인공지능화학공학과",
+      "group": "GAST-인공지능대학",
+      "toc_pdf_page": 5,
+      "printed_page_start": 367,
+      "printed_page_end": 373,
+      "pdf_page_start": 375,
+      "pdf_page_end": 381,
+      "index_basis": "table_of_contents_only"
+    },
+    {
+      "name": "AI생명과학과",
+      "group": "GAST-인공지능대학",
+      "toc_pdf_page": 5,
+      "printed_page_start": 374,
+      "printed_page_end": 378,
+      "pdf_page_start": 382,
+      "pdf_page_end": 386,
+      "index_basis": "table_of_contents_only"
+    },
+    {
+      "name": "기계공학부 스마트제조융합전공",
+      "group": "GAST-기계공학대학",
+      "toc_pdf_page": 5,
+      "printed_page_start": 380,
+      "printed_page_end": 386,
+      "pdf_page_start": 388,
+      "pdf_page_end": 394,
+      "index_basis": "table_of_contents_only"
+    },
+    {
+      "name": "우주항공공학부",
+      "group": "GAST-기계공학대학",
+      "toc_pdf_page": 5,
+      "printed_page_start": 387,
+      "printed_page_end": 391,
+      "pdf_page_start": 395,
+      "pdf_page_end": 399,
+      "index_basis": "table_of_contents_only"
+    },
+    {
+      "name": "에너지기계공학과",
+      "group": "GAST-기계공학대학",
+      "toc_pdf_page": 5,
+      "printed_page_start": 392,
+      "printed_page_end": 397,
+      "pdf_page_start": 400,
+      "pdf_page_end": 405,
+      "index_basis": "table_of_contents_only"
+    },
+    {
+      "name": "모빌리티기계공학과",
+      "group": "GAST-기계공학대학",
+      "toc_pdf_page": 5,
+      "printed_page_start": 398,
+      "printed_page_end": 404,
+      "pdf_page_start": 406,
+      "pdf_page_end": 412,
+      "index_basis": "table_of_contents_only"
+    },
+    {
+      "name": "자산경영빅데이터학과",
+      "group": "본부 학과",
+      "toc_pdf_page": 6,
+      "printed_page_start": 406,
+      "printed_page_end": 410,
+      "pdf_page_start": 414,
+      "pdf_page_end": 418,
+      "index_basis": "table_of_contents_only"
+    },
+    {
+      "name": "빅데이터창업비즈니스학과",
+      "group": "본부 학과",
+      "toc_pdf_page": 6,
+      "printed_page_start": 411,
+      "printed_page_end": 415,
+      "pdf_page_start": 419,
+      "pdf_page_end": 423,
+      "index_basis": "table_of_contents_only"
+    },
+    {
+      "name": "에너지융합공학과(계약학과)",
+      "group": "본부 학과",
+      "toc_pdf_page": 6,
+      "printed_page_start": 416,
+      "printed_page_end": 420,
+      "pdf_page_start": 424,
+      "pdf_page_end": 428,
+      "index_basis": "table_of_contents_only"
+    },
+    {
+      "name": "스마트헬스케어학과",
+      "group": "존속학과 전공 교과목 편성",
+      "toc_pdf_page": 6,
+      "printed_page_start": 423,
+      "printed_page_end": 426,
+      "pdf_page_start": 431,
+      "pdf_page_end": 434,
+      "index_basis": "table_of_contents_only"
+    },
+    {
+      "name": "신소재공학부",
+      "group": "존속학과 전공 교과목 편성",
+      "toc_pdf_page": 6,
+      "printed_page_start": 427,
+      "printed_page_end": 431,
+      "pdf_page_start": 435,
+      "pdf_page_end": 439,
+      "index_basis": "table_of_contents_only"
+    },
+    {
+      "name": "수학과",
+      "group": "존속학과 전공 교과목 편성",
+      "toc_pdf_page": 6,
+      "printed_page_start": 432,
+      "printed_page_end": 435,
+      "pdf_page_start": 440,
+      "pdf_page_end": 443,
+      "index_basis": "table_of_contents_only"
+    },
+    {
+      "name": "반도체물리학과",
+      "group": "존속학과 전공 교과목 편성",
+      "toc_pdf_page": 6,
+      "printed_page_start": 436,
+      "printed_page_end": 439,
+      "pdf_page_start": 444,
+      "pdf_page_end": 447,
+      "index_basis": "table_of_contents_only"
+    },
+    {
+      "name": "생물학화학융합학부",
+      "group": "존속학과 전공 교과목 편성",
+      "toc_pdf_page": 6,
+      "printed_page_start": 440,
+      "printed_page_end": 444,
+      "pdf_page_start": 448,
+      "pdf_page_end": 452,
+      "index_basis": "table_of_contents_only"
+    },
+    {
+      "name": "생명보건학부",
+      "group": "존속학과 전공 교과목 편성",
+      "toc_pdf_page": 6,
+      "printed_page_start": 445,
+      "printed_page_end": 449,
+      "pdf_page_start": 453,
+      "pdf_page_end": 457,
+      "index_basis": "table_of_contents_only"
+    },
+    {
+      "name": "기계공학부 기계공학전공",
+      "group": "존속학과 전공 교과목 편성",
+      "toc_pdf_page": 6,
+      "printed_page_start": 450,
+      "printed_page_end": 455,
+      "pdf_page_start": 458,
+      "pdf_page_end": 463,
+      "index_basis": "table_of_contents_only"
+    },
+    {
+      "name": "문화테크노학과",
+      "group": "존속학과 전공 교과목 편성",
+      "toc_pdf_page": 6,
+      "printed_page_start": 456,
+      "printed_page_end": 459,
+      "pdf_page_start": 464,
+      "pdf_page_end": 467,
+      "index_basis": "table_of_contents_only"
+    },
+    {
+      "name": "신산업융합경영학과(야)",
+      "group": "존속학과 전공 교과목 편성",
+      "toc_pdf_page": 6,
+      "printed_page_start": 460,
+      "printed_page_end": 466,
+      "pdf_page_start": 468,
+      "pdf_page_end": 474,
+      "index_basis": "table_of_contents_only"
+    }
+  ],
+  "rule_groups": [
+    {
+      "id": "RG-01",
+      "name": "학과/전공별 교육과정",
+      "source_section_ids": [
+        "CH-03",
+        "CH-04"
+      ],
+      "inventory_ids": [
+        "CI-009",
+        "CI-010",
+        "CI-023",
+        "CI-011",
+        "CI-027",
+        "CI-028",
+        "CI-031",
+        "CI-034"
+      ],
+      "coverage": "university_core_and_computer_engineering_focus_partial_elsewhere",
+      "source_table_ids": [
+        "T-SELFMAJOR",
+        "T-MAJOR"
+      ],
+      "computer_engineering_scope_ref": "docs/design/computer_engineering_scope.md"
+    },
+    {
+      "id": "RG-02",
+      "name": "졸업학점 및 영역별 최소 학점",
+      "source_section_ids": [
+        "C01-2026",
+        "C02-CREDITS",
+        "C08-2026",
+        "C08-2006-2019",
+        "C08-2020-2024",
+        "C08-2025"
+      ],
+      "inventory_ids": [
+        "CI-004",
+        "CI-005",
+        "CI-008",
+        "CI-021",
+        "CI-027",
+        "CI-031",
+        "CI-033"
+      ],
+      "coverage": "university_core_and_computer_engineering_focus_partial_elsewhere",
+      "source_table_ids": [
+        "T-2026-COMPLETION",
+        "T-GENERAL-ED",
+        "T-2026-GRAD",
+        "T-YEAR-GRAD"
+      ],
+      "computer_engineering_scope_ref": "docs/design/computer_engineering_scope.md"
+    },
+    {
+      "id": "RG-03",
+      "name": "교양 관련 규칙",
+      "source_section_ids": [
+        "C02-CREDITS"
+      ],
+      "inventory_ids": [
+        "CI-005",
+        "CI-006",
+        "CI-007",
+        "CI-008",
+        "CI-009",
+        "CI-027",
+        "CI-031",
+        "CI-034"
+      ],
+      "coverage": "university_core_and_computer_engineering_focus_partial_elsewhere",
+      "source_table_ids": [
+        "T-GENERAL-ED",
+        "T-GENERAL-ED-COURSES"
+      ],
+      "computer_engineering_scope_ref": "docs/design/computer_engineering_scope.md"
+    },
+    {
+      "id": "RG-04",
+      "name": "전공필수/전공선택 관련 규칙",
+      "source_section_ids": [
+        "C01-2026",
+        "CH-04",
+        "C05-DOUBLE",
+        "C05-MINOR"
+      ],
+      "inventory_ids": [
+        "CI-010",
+        "CI-011",
+        "CI-014",
+        "CI-015",
+        "CI-027",
+        "CI-028",
+        "CI-029",
+        "CI-033"
+      ],
+      "coverage": "university_core_and_computer_engineering_focus_partial_elsewhere",
+      "source_table_ids": [
+        "T-2026-COMPLETION",
+        "T-MAJOR",
+        "T-2026-GRAD"
+      ],
+      "computer_engineering_scope_ref": "docs/design/computer_engineering_scope.md"
+    },
+    {
+      "id": "RG-05",
+      "name": "필수 이수 교과목",
+      "source_section_ids": [
+        "C02-CREDITS",
+        "CH-04",
+        "CH-05"
+      ],
+      "inventory_ids": [
+        "CI-006",
+        "CI-011",
+        "CI-029",
+        "CI-030"
+      ],
+      "coverage": "university_core_and_computer_engineering_focus_partial_elsewhere",
+      "source_table_ids": [
+        "T-GENERAL-ED",
+        "T-GENERAL-ED-COURSES",
+        "T-MAJOR",
+        "T-MULTI-PROGRAM"
+      ],
+      "computer_engineering_scope_ref": "docs/design/computer_engineering_scope.md"
+    },
+    {
+      "id": "RG-06",
+      "name": "입학연도/교육과정 적용 기준",
+      "source_section_ids": [
+        "C01-APPLY",
+        "C01-TRANS",
+        "C08-TRANS",
+        "C08-2006-2019",
+        "C08-2020-2024",
+        "C08-2025"
+      ],
+      "inventory_ids": [
+        "CI-001",
+        "CI-002",
+        "CI-021",
+        "CI-027",
+        "CI-031",
+        "CI-033"
+      ],
+      "coverage": "university_core_and_computer_engineering_focus_partial_elsewhere",
+      "source_table_ids": [
+        "T-2026-COMPLETION",
+        "T-2026-GRAD",
+        "T-YEAR-GRAD",
+        "T-YEAR-DOUBLE"
+      ],
+      "computer_engineering_scope_ref": "docs/design/computer_engineering_scope.md"
+    },
+    {
+      "id": "RG-07",
+      "name": "대체·동일·면제·인정·중복",
+      "source_section_ids": [
+        "C01-EQUIV",
+        "C02-CREDITS",
+        "C05-DOUBLE",
+        "C05-MINOR",
+        "C05-LINKED",
+        "C05-CONVERGENCE"
+      ],
+      "inventory_ids": [
+        "CI-003",
+        "CI-007",
+        "CI-013",
+        "CI-031",
+        "CI-032"
+      ],
+      "coverage": "university_core_and_computer_engineering_focus_partial_elsewhere",
+      "source_table_ids": [
+        "T-GENERAL-ED",
+        "T-MULTI-PROGRAM"
+      ],
+      "computer_engineering_scope_ref": "docs/design/computer_engineering_scope.md"
+    },
+    {
+      "id": "RG-08",
+      "name": "복수전공·부전공·연계전공 등",
+      "source_section_ids": [
+        "C05-DOUBLE",
+        "C05-MINOR",
+        "C05-LINKED",
+        "C05-CONVERGENCE",
+        "C05-INTEGRATED",
+        "C05-USG",
+        "C08-DOUBLE-YEAR"
+      ],
+      "inventory_ids": [
+        "CI-013",
+        "CI-014",
+        "CI-015",
+        "CI-016",
+        "CI-022",
+        "CI-030",
+        "CI-033"
+      ],
+      "coverage": "university_core_and_computer_engineering_focus_partial_elsewhere",
+      "source_table_ids": [
+        "T-MULTI-PROGRAM",
+        "T-YEAR-DOUBLE"
+      ],
+      "computer_engineering_scope_ref": "docs/design/computer_engineering_scope.md"
+    },
+    {
+      "id": "RG-09",
+      "name": "졸업요건 별도 조건",
+      "source_section_ids": [
+        "C08-THESIS",
+        "C08-CERT"
+      ],
+      "inventory_ids": [
+        "CI-017",
+        "CI-018",
+        "CI-019",
+        "CI-020",
+        "CI-025",
+        "CI-032"
+      ],
+      "coverage": "university_core_and_computer_engineering_focus_partial_elsewhere",
+      "source_table_ids": [
+        "T-THESIS",
+        "T-CERT"
+      ],
+      "computer_engineering_scope_ref": "docs/design/computer_engineering_scope.md"
+    },
+    {
+      "id": "RG-10",
+      "name": "표 각주·예외·단서·적용 대상",
+      "source_section_ids": [
+        "C01-2026",
+        "C02-CREDITS",
+        "C05-DOUBLE",
+        "C05-CONVERGENCE",
+        "C08-2026"
+      ],
+      "inventory_ids": [
+        "CI-004",
+        "CI-005",
+        "CI-013",
+        "CI-021",
+        "CI-030",
+        "CI-031",
+        "CI-032"
+      ],
+      "coverage": "university_core_and_computer_engineering_focus_partial_elsewhere",
+      "source_table_ids": [
+        "T-2026-COMPLETION",
+        "T-GENERAL-ED",
+        "T-MAJOR",
+        "T-THESIS",
+        "T-CERT",
+        "T-2026-GRAD"
+      ],
+      "computer_engineering_scope_ref": "docs/design/computer_engineering_scope.md"
+    },
+    {
+      "id": "RG-11",
+      "name": "과목코드·과목명·학점·이수구분",
+      "source_section_ids": [
+        "C02-CREDITS",
+        "CH-04",
+        "CH-05"
+      ],
+      "inventory_ids": [
+        "CI-006",
+        "CI-011",
+        "CI-026",
+        "CI-028",
+        "CI-029"
+      ],
+      "coverage": "university_core_and_computer_engineering_focus_partial_elsewhere",
+      "source_table_ids": [
+        "T-GENERAL-ED-COURSES",
+        "T-MAJOR",
+        "T-MULTI-PROGRAM"
+      ],
+      "computer_engineering_scope_ref": "docs/design/computer_engineering_scope.md"
+    },
+    {
+      "id": "RG-12",
+      "name": "학생 졸업 판정 관련 기타 규칙",
+      "source_section_ids": [
+        "C01-TRANS",
+        "CH-03",
+        "C07-TEACHING",
+        "C08-CERT"
+      ],
+      "inventory_ids": [
+        "CI-002",
+        "CI-020",
+        "CI-023",
+        "CI-024",
+        "CI-031",
+        "CI-032"
+      ],
+      "coverage": "university_core_and_computer_engineering_focus_partial_elsewhere",
+      "source_table_ids": [
+        "T-SELFMAJOR",
+        "T-TEACHING",
+        "T-CERT"
+      ],
+      "computer_engineering_scope_ref": "docs/design/computer_engineering_scope.md"
+    }
+  ],
+  "tables": [
+    {
+      "id": "T-2026-COMPLETION",
+      "title": "2026학년도 교육과정 적용자 이수 학점표",
+      "printed_page_start": 10,
+      "printed_page_end": 19,
+      "pdf_page_start": 18,
+      "pdf_page_end": 27,
+      "status": "location_indexed_values_not_fully_normalized",
+      "note": "Table heading, rows and the two notes on printed page 10 belong together."
+    },
+    {
+      "id": "T-GENERAL-ED",
+      "title": "교양 이수학점·필수 영역 표",
+      "printed_page_start": 25,
+      "printed_page_end": 25,
+      "pdf_page_start": 33,
+      "pdf_page_end": 33,
+      "status": "location_indexed_values_not_fully_normalized",
+      "note": "Keep * and ** footnotes with the 34-credit total and each applicable row."
+    },
+    {
+      "id": "T-GENERAL-ED-COURSES",
+      "title": "교양 교과목 및 학과별 수강제한 표",
+      "printed_page_start": 26,
+      "printed_page_end": 37,
+      "pdf_page_start": 34,
+      "pdf_page_end": 45,
+      "status": "location_indexed_values_not_fully_normalized",
+      "note": "Restriction table and course catalog need separate row-level checks."
+    },
+    {
+      "id": "T-SELFMAJOR",
+      "title": "자율전공학부 학과 배정·교과목 표 모음",
+      "printed_page_start": 42,
+      "printed_page_end": 68,
+      "pdf_page_start": 50,
+      "pdf_page_end": 76,
+      "status": "location_indexed_values_not_fully_normalized",
+      "note": "Only the 사림아너스학부 rule sample was inspected."
+    },
+    {
+      "id": "T-MAJOR",
+      "title": "학과·전공별 학점구조표·전공 교과목 편성표 모음",
+      "printed_page_start": 69,
+      "printed_page_end": 466,
+      "pdf_page_start": 77,
+      "pdf_page_end": 474,
+      "status": "location_indexed_values_not_fully_normalized",
+      "note": "Program ranges from contents; computer-engineering 2026 course rows visually verified at PDF 262-263, other programs incomplete."
+    },
+    {
+      "id": "T-MULTI-PROGRAM",
+      "title": "연계·융합·통합학부·USG 전공별 이수학점 및 과목표 모음",
+      "printed_page_start": 470,
+      "printed_page_end": 498,
+      "pdf_page_start": 478,
+      "pdf_page_end": 506,
+      "status": "location_indexed_values_not_fully_normalized",
+      "note": "Per-program values and footnotes are not fully normalized."
+    },
+    {
+      "id": "T-TEACHING",
+      "title": "교직과정 선발·이수학점 표 모음",
+      "printed_page_start": 539,
+      "printed_page_end": 556,
+      "pdf_page_start": 547,
+      "pdf_page_end": 564,
+      "status": "location_indexed_values_not_fully_normalized",
+      "note": "Teacher qualification conditions are distinct from general degree conditions."
+    },
+    {
+      "id": "T-THESIS",
+      "title": "학과·전공별 졸업논문 대체요건 표",
+      "printed_page_start": 557,
+      "printed_page_end": 561,
+      "pdf_page_start": 565,
+      "pdf_page_end": 569,
+      "status": "location_indexed_values_not_fully_normalized",
+      "note": "Keep choice/mandatory markers, department and legacy-period notes together."
+    },
+    {
+      "id": "T-CERT",
+      "title": "졸업인증 시험·선택영역 및 별표",
+      "printed_page_start": 561,
+      "printed_page_end": 567,
+      "pdf_page_start": 569,
+      "pdf_page_end": 575,
+      "status": "location_indexed_values_not_fully_normalized",
+      "note": "Keep exemptions, minimum scores, course exclusions and year conditions together."
+    },
+    {
+      "id": "T-2026-GRAD",
+      "title": "2026학년도 입학자 졸업이수학점 표",
+      "printed_page_start": 568,
+      "printed_page_end": 569,
+      "pdf_page_start": 576,
+      "pdf_page_end": 577,
+      "status": "location_indexed_values_not_fully_normalized",
+      "note": "Computer-engineering 2026 row visually verified at PDF 577; remaining department rows not fully verified."
+    },
+    {
+      "id": "T-YEAR-GRAD",
+      "title": "연도별 졸업이수학점 표",
+      "printed_page_start": 570,
+      "printed_page_end": 598,
+      "pdf_page_start": 578,
+      "pdf_page_end": 606,
+      "status": "location_indexed_values_not_fully_normalized",
+      "note": "Combined 2006-2019, 2020-2024, and 2025-onward subsections."
+    },
+    {
+      "id": "T-YEAR-DOUBLE",
+      "title": "연도별 복수전공자 최소전공학점 표",
+      "printed_page_start": 599,
+      "printed_page_end": 607,
+      "pdf_page_start": 607,
+      "pdf_page_end": 615,
+      "status": "location_indexed_values_not_fully_normalized",
+      "note": "2009-and-earlier entries refer to applicable-year curricula rather than a local numeric table."
+    },
+    {
+      "id": "T-CE-CREDITS",
+      "title": "컴퓨터공학과 기본이수 학점구조표",
+      "printed_page_start": 253,
+      "printed_page_end": 253,
+      "pdf_page_start": 261,
+      "pdf_page_end": 261,
+      "status": "computer_engineering_visually_verified",
+      "note": "04장 10 표, 유형별 병합 셀"
+    },
+    {
+      "id": "T-CE-RECOMMENDED",
+      "title": "컴퓨터공학과 학과 권장 교과목",
+      "printed_page_start": 253,
+      "printed_page_end": 253,
+      "pdf_page_start": 261,
+      "pdf_page_end": 261,
+      "status": "computer_engineering_visually_verified",
+      "note": "04장 9 표"
+    },
+    {
+      "id": "T-CE-COURSES",
+      "title": "컴퓨터공학과 전공 교과목 편성표 43행",
+      "printed_page_start": 254,
+      "printed_page_end": 255,
+      "pdf_page_start": 262,
+      "pdf_page_end": 263,
+      "status": "computer_engineering_visually_verified",
+      "note": "04장 II 표·상단 ※"
+    },
+    {
+      "id": "T-CE-TRANSITION",
+      "title": "컴퓨터공학과 연도별 경과조치",
+      "printed_page_start": 256,
+      "printed_page_end": 256,
+      "pdf_page_start": 264,
+      "pdf_page_end": 264,
+      "status": "computer_engineering_visually_verified",
+      "note": "04장 III 표·57(35) 각주"
+    },
+    {
+      "id": "T-CE-THESIS-ALT",
+      "title": "컴퓨터공학과 졸업논문 대체요건 행",
+      "printed_page_start": 559,
+      "printed_page_end": 559,
+      "pdf_page_start": 567,
+      "pdf_page_end": 567,
+      "status": "computer_engineering_visually_verified",
+      "note": "08장 2 학과별 대체요건 표"
+    },
+    {
+      "id": "T-CE-CERT-QUAL",
+      "title": "컴퓨터공학과 실용인증 학과 지정 자격증 행",
+      "printed_page_start": 564,
+      "printed_page_end": 564,
+      "pdf_page_start": 572,
+      "pdf_page_end": 572,
+      "status": "computer_engineering_visually_verified",
+      "note": "08장 3 별표1"
+    },
+    {
+      "id": "T-CE-2026-GRAD",
+      "title": "2026 컴퓨터공학과 졸업이수학점 행",
+      "printed_page_start": 569,
+      "printed_page_end": 569,
+      "pdf_page_start": 577,
+      "pdf_page_end": 577,
+      "status": "computer_engineering_visually_verified",
+      "note": "08장 5 2026 컴퓨터공 행"
+    },
+    {
+      "id": "T-CE-YEAR-GRAD-2006-2012",
+      "title": "2006–2012 컴퓨터공학과 졸업이수학점 행",
+      "printed_page_start": 583,
+      "printed_page_end": 583,
+      "pdf_page_start": 591,
+      "pdf_page_end": 591,
+      "status": "computer_engineering_visually_verified",
+      "note": "08장 연도별 졸업학점 표"
+    },
+    {
+      "id": "T-CE-YEAR-GRAD-2013-2019",
+      "title": "2013–2019 컴퓨터공학과 졸업이수학점 행",
+      "printed_page_start": 585,
+      "printed_page_end": 585,
+      "pdf_page_start": 593,
+      "pdf_page_end": 593,
+      "status": "computer_engineering_visually_verified",
+      "note": "08장 연도별 졸업학점 표"
+    },
+    {
+      "id": "T-CE-YEAR-GRAD-2020-2024",
+      "title": "2020–2024 컴퓨터공학과 졸업이수학점 행",
+      "printed_page_start": 594,
+      "printed_page_end": 594,
+      "pdf_page_start": 602,
+      "pdf_page_end": 602,
+      "status": "computer_engineering_visually_verified",
+      "note": "08장 연도별 졸업학점 표"
+    },
+    {
+      "id": "T-CE-YEAR-GRAD-2025",
+      "title": "2025 컴퓨터공학과 졸업이수학점 행",
+      "printed_page_start": 597,
+      "printed_page_end": 597,
+      "pdf_page_start": 605,
+      "pdf_page_end": 605,
+      "status": "computer_engineering_visually_verified",
+      "note": "08장 연도별 졸업학점 표"
+    },
+    {
+      "id": "T-CE-DOUBLE-2013-2016",
+      "title": "2013–2016 컴퓨터공학과 복수전공 최소전공 행",
+      "printed_page_start": 602,
+      "printed_page_end": 602,
+      "pdf_page_start": 610,
+      "pdf_page_end": 610,
+      "status": "computer_engineering_visually_verified",
+      "note": "08장 연도별 복수전공 최소전공학점"
+    },
+    {
+      "id": "T-CE-DOUBLE-2017-2019",
+      "title": "2017–2019 컴퓨터공학과 복수전공 최소전공 행",
+      "printed_page_start": 603,
+      "printed_page_end": 603,
+      "pdf_page_start": 611,
+      "pdf_page_end": 611,
+      "status": "computer_engineering_visually_verified",
+      "note": "08장 연도별 복수전공 최소전공학점"
+    },
+    {
+      "id": "T-CE-DOUBLE-2020-2021",
+      "title": "2020–2021 컴퓨터공학과 복수전공 최소전공 행",
+      "printed_page_start": 605,
+      "printed_page_end": 605,
+      "pdf_page_start": 613,
+      "pdf_page_end": 613,
+      "status": "computer_engineering_visually_verified",
+      "note": "08장 연도별 복수전공 최소전공학점"
+    },
+    {
+      "id": "T-CE-DOUBLE-2022-2023",
+      "title": "2022–2023 컴퓨터공학과 복수전공 최소전공 행",
+      "printed_page_start": 606,
+      "printed_page_end": 606,
+      "pdf_page_start": 614,
+      "pdf_page_end": 614,
+      "status": "computer_engineering_visually_verified",
+      "note": "08장 연도별 복수전공 최소전공학점"
+    },
+    {
+      "id": "T-CE-DOUBLE-2024",
+      "title": "2024 컴퓨터공학과 복수전공 최소전공 행",
+      "printed_page_start": 607,
+      "printed_page_end": 607,
+      "pdf_page_start": 615,
+      "pdf_page_end": 615,
+      "status": "computer_engineering_visually_verified",
+      "note": "08장 연도별 복수전공 최소전공학점"
+    }
+  ],
+  "computer_engineering_focus": {
+    "scope_document": "docs/design/computer_engineering_scope.md",
+    "verification_status": "core_values_visually_verified_with_explicit_unverified_gaps",
+    "source_locators": [
+      {
+        "id": "CE-SECTION",
+        "title": "컴퓨터공학과 교육과정·로드맵",
+        "pdf_page_start": 259,
+        "pdf_page_end": 264,
+        "printed_page_start": 251,
+        "printed_page_end": 256,
+        "table_section_note": "04장 컴퓨터공학과",
+        "verification": "visual_cross_check"
+      },
+      {
+        "id": "CE-CREDITS",
+        "title": "컴퓨터공학과 기본이수 학점구조표",
+        "pdf_page_start": 261,
+        "pdf_page_end": 261,
+        "printed_page_start": 253,
+        "printed_page_end": 253,
+        "table_section_note": "04장 10 표, 유형별 병합 셀",
+        "verification": "visual_cross_check"
+      },
+      {
+        "id": "CE-RECOMMENDED",
+        "title": "컴퓨터공학과 학과 권장 교과목",
+        "pdf_page_start": 261,
+        "pdf_page_end": 261,
+        "printed_page_start": 253,
+        "printed_page_end": 253,
+        "table_section_note": "04장 9 표",
+        "verification": "visual_cross_check"
+      },
+      {
+        "id": "CE-COURSES",
+        "title": "컴퓨터공학과 전공 교과목 편성표 43행",
+        "pdf_page_start": 262,
+        "pdf_page_end": 263,
+        "printed_page_start": 254,
+        "printed_page_end": 255,
+        "table_section_note": "04장 II 표·상단 ※",
+        "verification": "visual_cross_check"
+      },
+      {
+        "id": "CE-TRANSITION",
+        "title": "컴퓨터공학과 연도별 경과조치",
+        "pdf_page_start": 264,
+        "pdf_page_end": 264,
+        "printed_page_start": 256,
+        "printed_page_end": 256,
+        "table_section_note": "04장 III 표·57(35) 각주",
+        "verification": "visual_cross_check"
+      },
+      {
+        "id": "CE-2026-OVERVIEW",
+        "title": "2026 적용자 컴퓨터공학과 학점 행",
+        "pdf_page_start": 23,
+        "pdf_page_end": 23,
+        "printed_page_start": 15,
+        "printed_page_end": 15,
+        "table_section_note": "01장 5 컴퓨터공학과 행",
+        "verification": "visual_cross_check"
+      },
+      {
+        "id": "CE-THESIS-ALT",
+        "title": "컴퓨터공학과 졸업논문 대체요건 행",
+        "pdf_page_start": 567,
+        "pdf_page_end": 567,
+        "printed_page_start": 559,
+        "printed_page_end": 559,
+        "table_section_note": "08장 2 학과별 대체요건 표",
+        "verification": "visual_cross_check"
+      },
+      {
+        "id": "CE-CERT-QUAL",
+        "title": "컴퓨터공학과 실용인증 학과 지정 자격증 행",
+        "pdf_page_start": 572,
+        "pdf_page_end": 572,
+        "printed_page_start": 564,
+        "printed_page_end": 564,
+        "table_section_note": "08장 3 별표1",
+        "verification": "visual_cross_check"
+      },
+      {
+        "id": "CE-2026-GRAD",
+        "title": "2026 컴퓨터공학과 졸업이수학점 행",
+        "pdf_page_start": 577,
+        "pdf_page_end": 577,
+        "printed_page_start": 569,
+        "printed_page_end": 569,
+        "table_section_note": "08장 5 2026 컴퓨터공 행",
+        "verification": "visual_cross_check"
+      },
+      {
+        "id": "CE-YEAR-GRAD-2006-2012",
+        "title": "2006–2012 컴퓨터공학과 졸업이수학점 행",
+        "pdf_page_start": 591,
+        "pdf_page_end": 591,
+        "printed_page_start": 583,
+        "printed_page_end": 583,
+        "table_section_note": "08장 연도별 졸업학점 표",
+        "verification": "visual_cross_check"
+      },
+      {
+        "id": "CE-YEAR-GRAD-2013-2019",
+        "title": "2013–2019 컴퓨터공학과 졸업이수학점 행",
+        "pdf_page_start": 593,
+        "pdf_page_end": 593,
+        "printed_page_start": 585,
+        "printed_page_end": 585,
+        "table_section_note": "08장 연도별 졸업학점 표",
+        "verification": "visual_cross_check"
+      },
+      {
+        "id": "CE-YEAR-GRAD-2020-2024",
+        "title": "2020–2024 컴퓨터공학과 졸업이수학점 행",
+        "pdf_page_start": 602,
+        "pdf_page_end": 602,
+        "printed_page_start": 594,
+        "printed_page_end": 594,
+        "table_section_note": "08장 연도별 졸업학점 표",
+        "verification": "visual_cross_check"
+      },
+      {
+        "id": "CE-YEAR-GRAD-2025",
+        "title": "2025 컴퓨터공학과 졸업이수학점 행",
+        "pdf_page_start": 605,
+        "pdf_page_end": 605,
+        "printed_page_start": 597,
+        "printed_page_end": 597,
+        "table_section_note": "08장 연도별 졸업학점 표",
+        "verification": "visual_cross_check"
+      },
+      {
+        "id": "CE-DOUBLE-2013-2016",
+        "title": "2013–2016 컴퓨터공학과 복수전공 최소전공 행",
+        "pdf_page_start": 610,
+        "pdf_page_end": 610,
+        "printed_page_start": 602,
+        "printed_page_end": 602,
+        "table_section_note": "08장 연도별 복수전공 최소전공학점",
+        "verification": "visual_cross_check"
+      },
+      {
+        "id": "CE-DOUBLE-2017-2019",
+        "title": "2017–2019 컴퓨터공학과 복수전공 최소전공 행",
+        "pdf_page_start": 611,
+        "pdf_page_end": 611,
+        "printed_page_start": 603,
+        "printed_page_end": 603,
+        "table_section_note": "08장 연도별 복수전공 최소전공학점",
+        "verification": "visual_cross_check"
+      },
+      {
+        "id": "CE-DOUBLE-2020-2021",
+        "title": "2020–2021 컴퓨터공학과 복수전공 최소전공 행",
+        "pdf_page_start": 613,
+        "pdf_page_end": 613,
+        "printed_page_start": 605,
+        "printed_page_end": 605,
+        "table_section_note": "08장 연도별 복수전공 최소전공학점",
+        "verification": "visual_cross_check"
+      },
+      {
+        "id": "CE-DOUBLE-2022-2023",
+        "title": "2022–2023 컴퓨터공학과 복수전공 최소전공 행",
+        "pdf_page_start": 614,
+        "pdf_page_end": 614,
+        "printed_page_start": 606,
+        "printed_page_end": 606,
+        "table_section_note": "08장 연도별 복수전공 최소전공학점",
+        "verification": "visual_cross_check"
+      },
+      {
+        "id": "CE-DOUBLE-2024",
+        "title": "2024 컴퓨터공학과 복수전공 최소전공 행",
+        "pdf_page_start": 615,
+        "pdf_page_end": 615,
+        "printed_page_start": 607,
+        "printed_page_end": 607,
+        "table_section_note": "08장 연도별 복수전공 최소전공학점",
+        "verification": "visual_cross_check"
+      }
+    ],
+    "unverified": [
+      "2002–2005 graduation-total rows",
+      "2010–2012 separate computer-engineering double-major rows",
+      "historical course-level mandatory lists",
+      "official equivalence/substitution designation list",
+      "individual student applicability and evidence"
+    ],
+    "course_row_locators": [
+      {
+        "course_code": "CDA0163",
+        "pdf_page": 262,
+        "printed_page": 254,
+        "source_table_id": "T-CE-COURSES",
+        "row_order": 1,
+        "verification": "visual_cross_check"
+      },
+      {
+        "course_code": "CDA0174",
+        "pdf_page": 262,
+        "printed_page": 254,
+        "source_table_id": "T-CE-COURSES",
+        "row_order": 2,
+        "verification": "visual_cross_check"
+      },
+      {
+        "course_code": "CDA0157",
+        "pdf_page": 262,
+        "printed_page": 254,
+        "source_table_id": "T-CE-COURSES",
+        "row_order": 3,
+        "verification": "visual_cross_check"
+      },
+      {
+        "course_code": "CDA0170",
+        "pdf_page": 262,
+        "printed_page": 254,
+        "source_table_id": "T-CE-COURSES",
+        "row_order": 4,
+        "verification": "visual_cross_check"
+      },
+      {
+        "course_code": "CDA0008",
+        "pdf_page": 262,
+        "printed_page": 254,
+        "source_table_id": "T-CE-COURSES",
+        "row_order": 5,
+        "verification": "visual_cross_check"
+      },
+      {
+        "course_code": "CDA0010",
+        "pdf_page": 262,
+        "printed_page": 254,
+        "source_table_id": "T-CE-COURSES",
+        "row_order": 6,
+        "verification": "visual_cross_check"
+      },
+      {
+        "course_code": "CDA0014",
+        "pdf_page": 262,
+        "printed_page": 254,
+        "source_table_id": "T-CE-COURSES",
+        "row_order": 7,
+        "verification": "visual_cross_check"
+      },
+      {
+        "course_code": "CDA0143",
+        "pdf_page": 262,
+        "printed_page": 254,
+        "source_table_id": "T-CE-COURSES",
+        "row_order": 8,
+        "verification": "visual_cross_check"
+      },
+      {
+        "course_code": "CDA0006",
+        "pdf_page": 262,
+        "printed_page": 254,
+        "source_table_id": "T-CE-COURSES",
+        "row_order": 9,
+        "verification": "visual_cross_check"
+      },
+      {
+        "course_code": "CDA0013",
+        "pdf_page": 262,
+        "printed_page": 254,
+        "source_table_id": "T-CE-COURSES",
+        "row_order": 10,
+        "verification": "visual_cross_check"
+      },
+      {
+        "course_code": "CDA0125",
+        "pdf_page": 262,
+        "printed_page": 254,
+        "source_table_id": "T-CE-COURSES",
+        "row_order": 11,
+        "verification": "visual_cross_check"
+      },
+      {
+        "course_code": "CDA0176",
+        "pdf_page": 262,
+        "printed_page": 254,
+        "source_table_id": "T-CE-COURSES",
+        "row_order": 12,
+        "verification": "visual_cross_check"
+      },
+      {
+        "course_code": "CDA0155",
+        "pdf_page": 262,
+        "printed_page": 254,
+        "source_table_id": "T-CE-COURSES",
+        "row_order": 13,
+        "verification": "visual_cross_check"
+      },
+      {
+        "course_code": "CDA0156",
+        "pdf_page": 262,
+        "printed_page": 254,
+        "source_table_id": "T-CE-COURSES",
+        "row_order": 14,
+        "verification": "visual_cross_check"
+      },
+      {
+        "course_code": "CDA0016",
+        "pdf_page": 262,
+        "printed_page": 254,
+        "source_table_id": "T-CE-COURSES",
+        "row_order": 15,
+        "verification": "visual_cross_check"
+      },
+      {
+        "course_code": "CDA0027",
+        "pdf_page": 262,
+        "printed_page": 254,
+        "source_table_id": "T-CE-COURSES",
+        "row_order": 16,
+        "verification": "visual_cross_check"
+      },
+      {
+        "course_code": "CDA0028",
+        "pdf_page": 262,
+        "printed_page": 254,
+        "source_table_id": "T-CE-COURSES",
+        "row_order": 17,
+        "verification": "visual_cross_check"
+      },
+      {
+        "course_code": "CDA0065",
+        "pdf_page": 262,
+        "printed_page": 254,
+        "source_table_id": "T-CE-COURSES",
+        "row_order": 18,
+        "verification": "visual_cross_check"
+      },
+      {
+        "course_code": "CDA0164",
+        "pdf_page": 262,
+        "printed_page": 254,
+        "source_table_id": "T-CE-COURSES",
+        "row_order": 19,
+        "verification": "visual_cross_check"
+      },
+      {
+        "course_code": "CDA0165",
+        "pdf_page": 262,
+        "printed_page": 254,
+        "source_table_id": "T-CE-COURSES",
+        "row_order": 20,
+        "verification": "visual_cross_check"
+      },
+      {
+        "course_code": "CDA0017",
+        "pdf_page": 262,
+        "printed_page": 254,
+        "source_table_id": "T-CE-COURSES",
+        "row_order": 21,
+        "verification": "visual_cross_check"
+      },
+      {
+        "course_code": "CDA0023",
+        "pdf_page": 262,
+        "printed_page": 254,
+        "source_table_id": "T-CE-COURSES",
+        "row_order": 22,
+        "verification": "visual_cross_check"
+      },
+      {
+        "course_code": "CDA0139",
+        "pdf_page": 262,
+        "printed_page": 254,
+        "source_table_id": "T-CE-COURSES",
+        "row_order": 23,
+        "verification": "visual_cross_check"
+      },
+      {
+        "course_code": "CDA0154",
+        "pdf_page": 263,
+        "printed_page": 255,
+        "source_table_id": "T-CE-COURSES",
+        "row_order": 24,
+        "verification": "visual_cross_check"
+      },
+      {
+        "course_code": "CDA0169",
+        "pdf_page": 263,
+        "printed_page": 255,
+        "source_table_id": "T-CE-COURSES",
+        "row_order": 25,
+        "verification": "visual_cross_check"
+      },
+      {
+        "course_code": "CDA0167",
+        "pdf_page": 263,
+        "printed_page": 255,
+        "source_table_id": "T-CE-COURSES",
+        "row_order": 26,
+        "verification": "visual_cross_check"
+      },
+      {
+        "course_code": "CDA0030",
+        "pdf_page": 263,
+        "printed_page": 255,
+        "source_table_id": "T-CE-COURSES",
+        "row_order": 27,
+        "verification": "visual_cross_check"
+      },
+      {
+        "course_code": "CDA0031",
+        "pdf_page": 263,
+        "printed_page": 255,
+        "source_table_id": "T-CE-COURSES",
+        "row_order": 28,
+        "verification": "visual_cross_check"
+      },
+      {
+        "course_code": "CDA0119",
+        "pdf_page": 263,
+        "printed_page": 255,
+        "source_table_id": "T-CE-COURSES",
+        "row_order": 29,
+        "verification": "visual_cross_check"
+      },
+      {
+        "course_code": "CDA0177",
+        "pdf_page": 263,
+        "printed_page": 255,
+        "source_table_id": "T-CE-COURSES",
+        "row_order": 30,
+        "verification": "visual_cross_check"
+      },
+      {
+        "course_code": "CDA0150",
+        "pdf_page": 263,
+        "printed_page": 255,
+        "source_table_id": "T-CE-COURSES",
+        "row_order": 31,
+        "verification": "visual_cross_check"
+      },
+      {
+        "course_code": "CDA0153",
+        "pdf_page": 263,
+        "printed_page": 255,
+        "source_table_id": "T-CE-COURSES",
+        "row_order": 32,
+        "verification": "visual_cross_check"
+      },
+      {
+        "course_code": "CDA0166",
+        "pdf_page": 263,
+        "printed_page": 255,
+        "source_table_id": "T-CE-COURSES",
+        "row_order": 33,
+        "verification": "visual_cross_check"
+      },
+      {
+        "course_code": "CDA0175",
+        "pdf_page": 263,
+        "printed_page": 255,
+        "source_table_id": "T-CE-COURSES",
+        "row_order": 34,
+        "verification": "visual_cross_check"
+      },
+      {
+        "course_code": "CDA0034",
+        "pdf_page": 263,
+        "printed_page": 255,
+        "source_table_id": "T-CE-COURSES",
+        "row_order": 35,
+        "verification": "visual_cross_check"
+      },
+      {
+        "course_code": "CDA0168",
+        "pdf_page": 263,
+        "printed_page": 255,
+        "source_table_id": "T-CE-COURSES",
+        "row_order": 36,
+        "verification": "visual_cross_check"
+      },
+      {
+        "course_code": "CDA0147",
+        "pdf_page": 263,
+        "printed_page": 255,
+        "source_table_id": "T-CE-COURSES",
+        "row_order": 37,
+        "verification": "visual_cross_check"
+      },
+      {
+        "course_code": "CDA0173",
+        "pdf_page": 263,
+        "printed_page": 255,
+        "source_table_id": "T-CE-COURSES",
+        "row_order": 38,
+        "verification": "visual_cross_check"
+      },
+      {
+        "course_code": "CDA0144",
+        "pdf_page": 263,
+        "printed_page": 255,
+        "source_table_id": "T-CE-COURSES",
+        "row_order": 39,
+        "verification": "visual_cross_check"
+      },
+      {
+        "course_code": "CDA0145",
+        "pdf_page": 263,
+        "printed_page": 255,
+        "source_table_id": "T-CE-COURSES",
+        "row_order": 40,
+        "verification": "visual_cross_check"
+      },
+      {
+        "course_code": "CDA0171",
+        "pdf_page": 263,
+        "printed_page": 255,
+        "source_table_id": "T-CE-COURSES",
+        "row_order": 41,
+        "verification": "visual_cross_check"
+      },
+      {
+        "course_code": "CDA0172",
+        "pdf_page": 263,
+        "printed_page": 255,
+        "source_table_id": "T-CE-COURSES",
+        "row_order": 42,
+        "verification": "visual_cross_check"
+      },
+      {
+        "course_code": "CDA0088",
+        "pdf_page": 263,
+        "printed_page": 255,
+        "source_table_id": "T-CE-COURSES",
+        "row_order": 43,
+        "verification": "visual_cross_check"
+      }
+    ]
+  },
+  "runtime_verification": {
+    "verified_general_education": {
+      "pdf_pages": [34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45],
+      "processed_path": "data/processed/general_education_2026.json",
+      "verified_row_count": 280,
+      "candidate_path": "data/raw/general_education_candidates.json",
+      "candidate_row_count": 282,
+      "excluded_candidate_count": 2,
+      "excluded_candidate_status": "CONFLICTED"
+    },
+    "policy_fact_source_pages": {
+      "PF-APPLICATION-ADMISSION": 13,
+      "PF-APPLICATION-COURSES": 13,
+      "PF-FREE-CHOICE": 13,
+      "PF-REPEAT": 14,
+      "PF-SUBSTITUTE": 14,
+      "PF-CE-RECOMMENDATIONS": 261,
+      "PF-CE-TRANSITION": 264,
+      "PF-DOUBLE-2026": 476,
+      "PF-MINOR-2026": 477
+    },
+    "source_conflicts": [
+      {
+        "course_code": "GEA8617",
+        "pdf_pages": [42, 45],
+        "printed_pages": [34, 37],
+        "locations": ["02장 2-2 균형교양 자연·과학·기술의이해 행", "02장 2-2 확대교양 소양교육 행"],
+        "status": "CONFLICTED",
+        "effect": "No automatic classification or credit recognition by this course code"
+      }
+    ]
+  }
+}
