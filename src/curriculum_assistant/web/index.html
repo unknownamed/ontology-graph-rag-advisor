@@ -54,7 +54,7 @@
     <h2>학생 상태 입력</h2>
     <p class="muted">실제 학생 자료를 업로드해 확인하거나, 검증된 구조화 학생 상태를 직접 입력하세요.</p>
     <textarea id="state" spellcheck="false" aria-label="학생 상태 JSON"></textarea>
-    <p id="state-status" class="muted">실제 학생 자료 미업로드 상태입니다.</p>
+    <p id="state-status" class="muted">실제 학생 자료 미업로드 상태입니다. 과목·정책 질문은 바로 할 수 있습니다.</p>
     <h2>이수자료 가져오기</h2>
     <div class="upload-panel">
       <input id="upload-file" type="file" accept=".pdf,.docx,.hwp,.png,.jpg,.jpeg,.webp" aria-label="이수자료 파일">
@@ -79,7 +79,7 @@
     <div id="messages" aria-live="polite"></div>
     <form id="form" class="composer">
       <input id="question" aria-label="한국어 질문" placeholder="교육과정과 이수 상태를 질문하세요" autocomplete="off">
-      <button id="send" type="submit" disabled>질문</button>
+      <button id="send" type="submit">질문</button>
     </form>
   </main>
 </div>
@@ -108,8 +108,8 @@ function clearUploadDerivedState() {
   messages.replaceChildren();
   question.value = '';
   context = {};
-  send.disabled = true;
-  statusBox.textContent = '실제 학생 자료 미업로드 상태입니다.';
+  send.disabled = false;
+  statusBox.textContent = '실제 학생 자료 미업로드 상태입니다. 과목·정책 질문은 바로 할 수 있습니다.';
 }
 function resetUploadSession() {
   clearUploadDerivedState();
@@ -119,7 +119,7 @@ function resetUploadSession() {
 resetUploadSession();
 document.getElementById('reset-upload').addEventListener('click', resetUploadSession);
 stateBox.addEventListener('input', () => {
-  send.disabled = !stateBox.value.trim() || (!!uploadFile.files?.length && !normalizedUploadReady);
+  send.disabled = false;
 });
 function el(tag, text, cls) { const node=document.createElement(tag); if(text!==undefined) node.textContent=String(text); if(cls) node.className=cls; return node; }
 function addMessage(role, content) { const wrap=el('article',undefined,'message '+role); wrap.append(el('div',role==='user'?'질문':'판정 조교','role')); wrap.append(el('div',content,'answer')); messages.append(wrap); messages.scrollTop=messages.scrollHeight; return wrap; }
@@ -154,7 +154,7 @@ function reviewField(root,label,value='',type='text') { const wrap=el('label');w
 uploadFile.addEventListener('change',()=>{
   clearUploadDerivedState();
   if(uploadFile.files?.length)statusBox.textContent='파일이 선택되었습니다. StudentState는 아직 생성되지 않았습니다.';
-  uploadStatus.textContent=uploadFile.files?.length?'업로드 자료를 검토하고 정규화하기 전에는 질문할 수 없습니다.':'새 성적표 파일을 선택하고 후보 추출을 누르세요.';
+  uploadStatus.textContent=uploadFile.files?.length?'학생별 계산은 자료 검토·정규화 후 가능합니다. 과목·정책 질문은 바로 할 수 있습니다.':'새 성적표 파일을 선택하고 후보 추출을 누르세요.';
 });
 document.getElementById('extract').addEventListener('click',async()=>{
   const file=uploadFile.files?.[0];
@@ -248,8 +248,14 @@ function detailView(wrap,payload,state) {
       .forEach(r=>line(box,`가정 후 ${r.rule_id}: ${before.get(r.rule_id).status} → ${r.status}`));}
   (payload.decision?.lookup_result?.rules||[]).forEach(r=>line(box,`${r.rule_id}: 원문 규칙 조회 · ${r.rule_type}${r.required_value!=null?' · 기준 '+r.required_value+'학점':''}`));
   (payload.decision?.lookup_result?.policy_facts||[]).forEach(f=>line(box,`${f.policy_fact_id}: 원문 정책 사실 조회 · ${f.predicate}`));
+  Object.entries(payload.decision?.lookup_result?.rule_applicability||{}).forEach(([ruleId,scope])=>line(box,`${ruleId}: 적용 범위 ${scope.status} · 이유 ${scope.reason} · 근거 ${(scope.source_refs||[]).join(', ')}`));
   box=section(det,'5. 계산');
   if(payload.decision?.intent==='POLICY_LOOKUP')line(box,'원문 규칙 조회이며 학생 이수학점 계산은 수행하지 않았습니다.');
+  (payload.decision?.lookup_result?.calculations||[]).forEach(calc=>{
+    const labels={required_amount:'필요',earned_amount:'취득',recognized_amount:'인정',remaining_amount:'부족',excess_amount:'초과',capped_amount:'상한',excluded_amount:'제외'};
+    const values=Object.entries(labels).filter(([key])=>calc[key]!=null).map(([key,label])=>`${label} ${calc[key]}학점`);
+    line(box,`정책 계산 ${calc.operation}: ${values.join(' · ')} · Rule ${calc.source_rule_ids.join(', ')}`);
+  });
   const amount=payload.credited_amount;
   if(amount) { line(box,`졸업 산입 합계: ${amount.total??'미확인'} · 확인된 하한: ${amount.confirmed_minimum}`); Object.entries(amount.by_area||{}).forEach(([area,value])=>line(box,`${area}: ${value??'미확인'}`)); }
   const remaining=payload.decision?.remaining_requirements;
@@ -312,21 +318,25 @@ function drawGraph(payload) {
   const height=Math.max(160,...groups.map(g=>g.length*55+30));
   svg.setAttribute('width','850');svg.setAttribute('height',height);
   const points=new Map();groups.forEach((group,col)=>group.forEach((n,i)=>points.set(n.id,{x:30+col*270,y:20+i*55})));
-  edges.forEach(edge=>{const a=points.get(edge.src),b=points.get(edge.dst);if(!a||!b)return;const ln=document.createElementNS(svg.namespaceURI,'line');ln.setAttribute('x1',a.x+210);ln.setAttribute('y1',a.y+18);ln.setAttribute('x2',b.x);ln.setAttribute('y2',b.y+18);ln.setAttribute('stroke','#8aa9af');ln.setAttribute('stroke-width','1.5');svg.append(ln);});
+  edges.forEach(edge=>{const a=points.get(edge.src),b=points.get(edge.dst);if(!a||!b)return;const ln=document.createElementNS(svg.namespaceURI,'line');ln.dataset.relationshipId=edge.id;ln.setAttribute('x1',a.x+210);ln.setAttribute('y1',a.y+18);ln.setAttribute('x2',b.x);ln.setAttribute('y2',b.y+18);ln.setAttribute('stroke','#8aa9af');ln.setAttribute('stroke-width','1.5');svg.append(ln);});
   nodes.forEach(n=>{const p=points.get(n.id);const rect=document.createElementNS(svg.namespaceURI,'rect');rect.setAttribute('x',p.x);rect.setAttribute('y',p.y);rect.setAttribute('width','210');rect.setAttribute('height','38');rect.setAttribute('rx','8');rect.setAttribute('fill',n.kind==='Requirement'?'#e6eff9':'#dff1ed');rect.setAttribute('stroke','#a9c9c7');svg.append(rect);const title=document.createElementNS(svg.namespaceURI,'title');title.textContent=`${n.kind}: ${n.id}`;rect.append(title);const text=document.createElementNS(svg.namespaceURI,'text');text.setAttribute('x',p.x+7);text.setAttribute('y',p.y+23);text.setAttribute('font-size','11');text.textContent=n.label.length>29?n.label.slice(0,28)+'…':n.label;svg.append(text);});
   return svg;
 }
 document.getElementById('form').addEventListener('submit',async event=>{
   event.preventDefault();const text=question.value.trim();if(!text)return;
-  if(!stateBox.value.trim() || (uploadFile.files?.length && !normalizedUploadReady)){
-    statusBox.textContent='학생 상태를 확인한 뒤 질문할 수 있습니다.';send.disabled=true;return;
-  }
   const generation = uploadGeneration;
-  let state;try { state=JSON.parse(stateBox.value);statusBox.textContent='학생 상태 JSON 형식 확인됨';statusBox.className='muted'; }
+  let state={};try {
+    if(stateBox.value.trim()&&(!uploadFile.files?.length||normalizedUploadReady)){
+      state=JSON.parse(stateBox.value);
+      if(state===null||typeof state!=='object'||Array.isArray(state))throw new Error('학생 상태는 JSON 객체여야 합니다.');
+      statusBox.textContent='학생 상태 JSON 형식 확인됨';
+    }else statusBox.textContent='학생 상태 미확인: 과목·정책 조회만 가능하며 개인 판정에는 확인된 자료가 필요합니다.';
+    statusBox.className='muted';
+  }
   catch(error) { statusBox.textContent='학생 상태 JSON 오류: '+error.message;statusBox.className='notice';return; }
   addMessage('user',text);question.value='';send.disabled=true;
-  try {const response=await fetch('/api/query',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({student_state:state,utterance:text,context,use_local_llm:document.getElementById('llm').checked})});const payload=await response.json();if(generation!==uploadGeneration)return;
-    if(!response.ok) {addMessage('assistant',`입력 확인 필요: ${payload.detail||payload.error}`);return;}
+  try {const response=await fetch('/api/query',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({...(Object.keys(state).length?{student_state:state}:{}),utterance:text,context,use_local_llm:document.getElementById('llm').checked})});const payload=await response.json();if(generation!==uploadGeneration)return;
+    if(!response.ok) {const missingStudent=payload.detail==='StudentState is required for personal credit and graduation decisions';addMessage('assistant',missingStudent?'학생 이수 상태가 없어 개인별 인정학점·졸업 여부를 계산할 수 없습니다. 성적표를 확인해 입력하거나, 일반 정책을 물을 때는 기준·한도임을 명확히 해 주세요.':`입력 확인 필요: ${payload.detail||payload.error}`);return;}
     const wrap=addMessage('assistant',payload.answer_text||'판정 결과가 없습니다.');if(payload.interpretation?.context)context=payload.interpretation.context;detailView(wrap,payload,state);
   } catch(error) {if(generation===uploadGeneration)addMessage('assistant','로컬 서버 연결을 확인해 주세요: '+error.message);}
   finally {if(generation===uploadGeneration){send.disabled=false;question.focus();}}

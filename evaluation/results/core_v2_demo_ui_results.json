@@ -1,0 +1,236 @@
+{
+  "notice": "SYNTHETIC DEMO ONLY / 실제 학생 자료 아님",
+  "verified_at": "2026-09-30",
+  "method": "Actual CUA browser UI interaction; independently compared with local HTTP API payload. Not an API-only UI pass.",
+  "authoritative_document_set_id": "ADS-CE-2026-CORE",
+  "document_set_version": 1,
+  "ruleset_id": "CRS-CE-2026-CORE",
+  "ruleset_version": 2,
+  "scenarios": [
+    {
+      "id": "D01",
+      "status": "PASS",
+      "checks": {
+        "answer": true,
+        "version": true,
+        "decision": true,
+        "requirement_results": true,
+        "execution_events": true,
+        "graph_matches_returned_evidence": true,
+        "pdf_matches_returned_evidence": true,
+        "student_state_preserved": true
+      },
+      "displayed_edges": 3,
+      "displayed_nodes": 4,
+      "pdf_links": 2
+    },
+    {
+      "id": "D02",
+      "status": "PASS",
+      "checks": {
+        "answer": true,
+        "version": true,
+        "decision": true,
+        "requirement_results": true,
+        "execution_events": true,
+        "graph_matches_returned_evidence": true,
+        "pdf_matches_returned_evidence": true,
+        "student_state_preserved": true,
+        "policy_calculation": true
+      },
+      "displayed_edges": 5,
+      "displayed_nodes": 6,
+      "pdf_links": 2
+    },
+    {
+      "id": "D03",
+      "status": "PASS",
+      "checks": {
+        "answer": true,
+        "version": true,
+        "decision": true,
+        "requirement_results": true,
+        "execution_events": true,
+        "graph_matches_returned_evidence": true,
+        "pdf_matches_returned_evidence": true,
+        "student_state_preserved": true
+      },
+      "displayed_edges": 28,
+      "displayed_nodes": 29,
+      "pdf_links": 11
+    },
+    {
+      "id": "D04",
+      "status": "PASS",
+      "checks": {
+        "answer": true,
+        "version": true,
+        "decision": true,
+        "requirement_results": true,
+        "execution_events": true,
+        "graph_matches_returned_evidence": true,
+        "pdf_matches_returned_evidence": true,
+        "student_state_preserved": true
+      },
+      "displayed_edges": 77,
+      "displayed_nodes": 41,
+      "pdf_links": 22
+    },
+    {
+      "id": "D05",
+      "status": "PASS",
+      "checks": {
+        "answer": true,
+        "version": true,
+        "decision": true,
+        "requirement_results": true,
+        "execution_events": true,
+        "graph_matches_returned_evidence": true,
+        "pdf_matches_returned_evidence": true,
+        "student_state_preserved": true
+      },
+      "displayed_edges": 74,
+      "displayed_nodes": 41,
+      "pdf_links": 22
+    },
+    {
+      "id": "D06",
+      "status": "PASS",
+      "checks": {
+        "answer": true,
+        "version": true,
+        "decision": true,
+        "requirement_results": true,
+        "execution_events": true,
+        "graph_matches_returned_evidence": true,
+        "pdf_matches_returned_evidence": true,
+        "student_state_preserved": true
+      },
+      "displayed_edges": 144,
+      "displayed_nodes": 125,
+      "pdf_links": 16
+    },
+    {
+      "id": "D07",
+      "status": "PASS",
+      "checks": {
+        "answer": true,
+        "version": true,
+        "decision": true,
+        "requirement_results": true,
+        "execution_events": true,
+        "graph_matches_returned_evidence": true,
+        "pdf_matches_returned_evidence": true,
+        "student_state_preserved": true
+      },
+      "displayed_edges": 146,
+      "displayed_nodes": 147,
+      "pdf_links": 16
+    },
+    {
+      "id": "D08",
+      "status": "PASS",
+      "checks": {
+        "answer": true,
+        "version": true,
+        "decision": true,
+        "requirement_results": true,
+        "execution_events": true,
+        "graph_matches_returned_evidence": true,
+        "pdf_matches_returned_evidence": true,
+        "student_state_preserved": true,
+        "simulation_delta": true
+      },
+      "displayed_edges": 160,
+      "displayed_nodes": 161,
+      "pdf_links": 15
+    },
+    {
+      "id": "D09",
+      "status": "PASS",
+      "checks": {
+        "answer": true,
+        "version": true,
+        "decision": true,
+        "requirement_results": true,
+        "execution_events": true,
+        "graph_matches_returned_evidence": true,
+        "pdf_matches_returned_evidence": true,
+        "student_state_preserved": true
+      },
+      "displayed_edges": 160,
+      "displayed_nodes": 161,
+      "pdf_links": 15
+    },
+    {
+      "id": "D10",
+      "status": "PASS",
+      "checks": {
+        "answer": true,
+        "version": true,
+        "decision": true,
+        "requirement_results": true,
+        "execution_events": true,
+        "graph_matches_returned_evidence": true,
+        "pdf_matches_returned_evidence": true,
+        "student_state_preserved": true,
+        "upload_state_matches_api": true,
+        "missing_applicability_blocks_calculation": true
+      },
+      "displayed_edges": 0,
+      "displayed_nodes": 0,
+      "pdf_links": 0
+    }
+  ],
+  "reviewer": [
+    {
+      "id": "UI-R1",
+      "status": "PASS",
+      "description": "Empty student input: Korean guidance, no fabricated decision or graph"
+    },
+    {
+      "id": "UI-R2",
+      "status": "PASS",
+      "description": "Invalid JSON syntax and null: input error, no calculation or fabricated server connection error"
+    },
+    {
+      "id": "UI-R3",
+      "status": "PASS",
+      "description": "Ambiguous policy/personal question safely requests student data; language limitation retained"
+    },
+    {
+      "id": "UI-R4",
+      "status": "PASS",
+      "description": "Repeated 0-credit simulation preserves actual state and matches delta"
+    }
+  ],
+  "candidate_list": {
+    "actual_rows": 274,
+    "expected_rows": 274,
+    "course_credit_relationship_match": true,
+    "scroll_client_height": 379
+  },
+  "upload": {
+    "pages": 2,
+    "candidates": 43,
+    "usable_records": 42,
+    "needs_review": 1,
+    "student_state_matches_api": true,
+    "applicability_status": "UNVERIFIED",
+    "completion_coverage": "PARTIAL"
+  },
+  "chained_conversation": {
+    "question_sequence": [
+      "앞으로 뭐 더 들어야 해?",
+      "CDA0143 추가로 들으면 뭐가 바뀌어?",
+      "그럼 실제 지금 졸업 가능해?"
+    ],
+    "actual_total_before": 7,
+    "scenario_total": 10,
+    "scenario_major_delta": 3,
+    "actual_total_after": 7,
+    "actual_records_after": 3,
+    "pass": true
+  },
+  "quality_gate": "PASS"
+}

@@ -284,10 +284,10 @@ def main() -> None:
         server.server_close()
         thread.join(timeout=5)
     RESULTS.parent.mkdir(parents=True, exist_ok=True)
-    RESULTS.write_text(json.dumps({"notice": NOTICE, "results": details}, ensure_ascii=False, indent=2) + "\n",
+    RESULTS.write_text(json.dumps({"notice": NOTICE, "ruleset_version": catalog["curriculum_ruleset"]["ruleset_version"], "results": details}, ensure_ascii=False, indent=2) + "\n",
                        encoding="utf-8")
     report = ["# 2026 Core 합성 PDF 업로드 E2E 검증", "",
-              "모든 자료는 테스트용 모의 성적표이며 실제 학생 자료가 아니다.", "",
+              f"활성 RuleSet v{catalog['curriculum_ruleset']['ruleset_version']}. 모든 자료는 테스트용 모의 성적표이며 실제 학생 자료가 아니다.", "",
               "| fixture | PDF 후보/연결 | 원문학점 | PDF 단독 | 기대 | 실제 | LLM 일치 |",
               "| --- | ---: | ---: | --- | --- | --- | --- |"]
     report.extend(f"| {d['fixture_id']} | {d['candidate_count']}/{d['resolved_count']} | "

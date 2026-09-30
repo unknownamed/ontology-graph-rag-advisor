@@ -1,5 +1,6 @@
 {
   "notice": "테스트용 모의 성적표 / 실제 학생 자료 아님",
+  "ruleset_version": 2,
   "results": [
     {
       "fixture_id": "mock_2026_complete",

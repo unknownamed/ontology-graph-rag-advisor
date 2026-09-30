@@ -8,7 +8,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path[:0] = [str(ROOT / "src"), str(ROOT / "scripts")]
-from build_catalog import build  # noqa: E402
+from curriculum_assistant.authority import RuleSetStore  # noqa: E402
 from curriculum_assistant.engine import execute  # noqa: E402
 from curriculum_assistant.graph import Graph  # noqa: E402
 from curriculum_assistant.verifier import verify_payload  # noqa: E402
@@ -18,7 +18,9 @@ def main() -> None:
     request = json.loads((ROOT / "tests/fixtures/core_eligible_synthetic.json").read_text(encoding="utf-8"))
     assert request["fixture_notice"].startswith("SYNTHETIC INPUT ONLY")
     base = request["student_state"]
-    graph = Graph(Path(":memory:"), build())
+    catalog = RuleSetStore(ROOT / "data/processed/ruleset_versions").load_active()
+    print(f"RuleSet: {catalog['curriculum_ruleset']['ruleset_id']} v{catalog['curriculum_ruleset']['ruleset_version']}")
+    graph = Graph(Path(":memory:"), catalog)
     try:
         eligible = execute(graph, base, {"intent": "GRADUATION_STATUS"})
         verify_payload(eligible)

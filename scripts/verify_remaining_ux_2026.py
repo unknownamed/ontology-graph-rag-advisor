@@ -144,10 +144,11 @@ def main() -> None:
         server.shutdown()
         server.server_close()
         thread.join(timeout=5)
-    RESULTS.write_text(json.dumps({"notice": "SYNTHETIC TEST DATA ONLY", "profile_count": len(rows),
+    version = catalog["curriculum_ruleset"]["ruleset_version"]
+    RESULTS.write_text(json.dumps({"notice": "SYNTHETIC TEST DATA ONLY", "ruleset_version": version, "profile_count": len(rows),
                                    "question_count": sum(len(r["questions"]) for r in rows),
                                    "profiles": rows, "reviewer": reviewer}, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    lines = ["# 학생용 남은 요건 답변 UX 검증", "", "RuleSet v1 결정값을 바꾸지 않고 10개 합성 학생 상태에 10개 질문을 실제 `/api/query`로 실행했다.", "",
+    lines = ["# 학생용 남은 요건 답변 UX 검증", "", f"활성 RuleSet v{version} 결정값을 바꾸지 않고 10개 합성 학생 상태에 10개 질문을 실제 `/api/query`로 실행했다.", "",
              "| 상태 | 과목 수 | 필수 미이수 | 전공 선택 후보 | 교양 선택 후보 | 기본 답변 길이 |",
              "| --- | ---: | ---: | ---: | ---: | ---: |"]
     for row in rows:

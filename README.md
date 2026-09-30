@@ -10,7 +10,7 @@
 
 ## 현재 Core 기능
 
-- AuthoritativeDocumentSet **ADS-CE-2026-CORE v1**에는 「2026년도 교육과정」 PDF 한 건만 있습니다. 검증된 규칙은 **CRS-CE-2026-CORE v1**에 고정됩니다. 새 공식 문서는 범위·시행·충돌 관계를 확인한 뒤 새 버전으로 반영하며 과거 판정은 당시 버전을 참조합니다.
+- AuthoritativeDocumentSet **ADS-CE-2026-CORE v1**에는 「2026년도 교육과정」 PDF 한 건만 있습니다. 시연 기준은 **CRS-CE-2026-CORE v2**입니다. v1의 실행 규칙 19개를 유지하고 같은 PDF의 정책 사실 2건을 보강한 불변 스냅샷입니다. 새 공식 문서는 검증 후 새 버전으로 반영하며 과거 판정은 당시 버전을 참조합니다.
 - StudentState는 실제 이수, 학생 증빙, 적용 교육과정을 분리합니다. SQLite 속성 그래프의 허용된 조회와 Rule Engine이 DeterministicDecision을 만듭니다.
 - RemainingRequirementSummary는 충족·미충족·정보 부족과 영역별 부족 학점을, CandidateCourse는 남은 요건에 연결되는 필수·선택 과목을 계산합니다. “앞으로 뭐 더 들어야 해?”에 대한 후보는 **졸업요건상 후보**이며 실제 다음 학기 개설이나 수강 가능 여부가 아닙니다.
 - 과목 추가 simulation은 원래 StudentState를 바꾸지 않고 전후 요건·학점·판정 차이를 계산합니다. ExecutionTrace와 provenance는 실제 그래프 관계, 적용 Rule, 계산, PDF 페이지를 연결합니다.
@@ -20,7 +20,9 @@
 
 검증된 Core 범위는 **2026 컴퓨터공학과 국내 일반 학생의 단일전공**입니다. 적용 조건과 전체 이수·별도 증빙이 확인된 경우에만 해당 PDF·RuleSet 기준의 졸업 가능, 미충족, 정보 부족을 구분합니다. 합성 fixture의 VERIFIED는 실제 학생 증빙 검증을 뜻하지 않습니다. 과거 연도 학생의 전체 판정, 타 학과·다전공, 공식 동일·대체 지정, PDF 내부 GEA8617 코드 충돌은 지원 범위 제한 또는 공식 자료 확인 대상으로 남아 있습니다.
 
-승인 요청서 평가 **이전 baseline**에서 전체 회귀 **191개 PASS**, 독립 50문항 **49 PASS / 0 FAIL / 1 SKIP**, 학생용 /api/query **100/100**, 1~4학년 합성 상태 질문 **70/70**, 모의 2026 PDF 업로드 E2E **4/4**가 기록되었습니다. 가능한 항목의 LLM ON/OFF 핵심 판정·수치·근거가 일치했습니다. 자세한 조건과 미완료 항목은 [baseline 보고서](evaluation/results/pre_approval_core_baseline_2026-09-30.md)와 [PLAN.md](PLAN.md)에 있습니다.
+2026-09-30 **v2 데모 기준 재검증**: 전체 회귀 **215/215 PASS**, 실제 UI 시나리오 **10/10**, UI 안전 처리 반례 **4/4**, 학생용 실제 `/api/query` **100/100**와 Reviewer **4/4**, 독립 50문항 **49 PASS / 0 FAIL / 1 SKIP**, 모의 2026 PDF 업로드 E2E **4/4**입니다. LLM ON/OFF 핵심 판정·수치·요건·근거는 독립 문항 49/49, 학생 상태 10/10, 모의 PDF 4/4에서 일치했습니다. 상세 조건은 [v2 데모 검수 보고서](evaluation/results/core_v2_demo_baseline.md)에 있습니다. 과거 **191개** 결과는 [승인 요청서 평가 전 v1 baseline](evaluation/results/pre_approval_core_baseline_2026-09-30.md)의 역사적 기록입니다.
+
+정책·과목 질문은 학생 입력 없이 바로 할 수 있습니다. 개인 판정에는 확인된 StudentState가 필요합니다. PDF 업로드만으로 적용 교육과정·전체 이수범위·논문/인증 증빙을 확정하지 않습니다. 알려진 제한과 공식 자료 대기(B)·사람 검토(C)는 [지원 범위](docs/design/core_scope.md)에 분리되어 있습니다. 평가 기록은 개발에 노출된 자료이므로 최초 블라인드 점수로 주장하지 않습니다.
 
 ## 실행과 테스트
 
@@ -34,7 +36,9 @@ Windows PowerShell과 Python 3.12 이상을 사용합니다. python이 WindowsAp
 python -m unittest discover -s tests -q
 ~~~
 
-합성 PDF 업로드 경로는 python scripts/verify_mock_2026_pdf_e2e.py, 남은 요건 경로는 python scripts/verify_remaining_2026_e2e.py, 학생용 표현은 python scripts/verify_remaining_ux_2026.py로 검증합니다. 이 스크립트의 옵션과 실행 환경은 [PLAN.md](PLAN.md)를 참고하세요. 공개 fixture는 실제 학생 자료가 아닙니다.
+합성 PDF 업로드 경로는 `python scripts/verify_mock_2026_pdf_e2e.py`, 남은 요건 경로는 `python scripts/verify_remaining_2026_e2e.py`, 학생용 표현은 `python scripts/verify_remaining_ux_2026.py`로 검증합니다. 실행 중인 서버의 데모 API 대조 자료는 `python scripts/verify_demo_v2_api.py --port 18473`으로 재생성합니다. 이 명령은 브라우저 검수까지 자동 통과시키지 않습니다.
+
+[데모 진행 안내](docs/demo/core_v2_demo.md)의 10개 시나리오를 사용할 수 있습니다. UI의 학생 상태 JSON에는 공개 fixture의 **`student_state` 객체만** 붙여넣으세요. 모든 공개 fixture와 모의 PDF는 실제 학생 자료가 아닙니다. 모델이 없으면 UI의 로컬 LLM 체크를 끄고 같은 결정적 경로를 실행할 수 있습니다.
 
 ## 저장소 구조와 자료 경계
 

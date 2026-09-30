@@ -1,5 +1,6 @@
 {
   "notice": "SYNTHETIC TEST DATA ONLY",
+  "ruleset_version": 2,
   "profile_count": 10,
   "question_count": 100,
   "profiles": [

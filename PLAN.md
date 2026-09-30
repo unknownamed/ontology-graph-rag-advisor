@@ -17,6 +17,15 @@
 | 10 | 평가·회귀·일반화 검증 | IN PROGRESS |
 | 11 | 로컬 통합 실행 및 최종 검수 | BLOCKED |
 
+## 현재 시연 기준: Core Prototype v2 (2026-09-30)
+
+- **DONE / Quality Gate PASS:** `ADS-CE-2026-CORE v1 / CRS-CE-2026-CORE v2`를 현재 구현의 발표·시연 기준으로 고정했다. 공식 PDF·RuleSet 스냅샷·19개 Rule·323개 편성행은 변경하지 않았다. 전체 제품의 4·10단계 IN PROGRESS, 9·11단계 BLOCKED는 Extended Scope 기준으로 유지한다.
+- **Builder:** 빈 학생 상태의 기존 과목/정책 조회를 UI에서 허용하고 개인 판정에는 한국어 입력 안내를 표시했다. 기존 정책 계산·적용 결과와 실제 관계 ID를 펼쳐보기에 연결했다. CLI 데모가 최초 v1을 새로 빌드하던 문제를 활성 스냅샷 조회로 수정했다. README·Architecture·지원 범위를 v2에 동기화하고 `docs/demo/core_v2_demo.md`에 10개 공개 합성 시나리오를 작성했다.
+- **Reviewer:** 별도 브라우저 탭에서 10개 질문·후보 펼쳐보기·simulation·모의 PDF 실제 파일 선택→43후보→정규화→질문을 수행했다. 빈 입력·잘못된 JSON·모호한 정책/개인 표현·반복 가정 반례 4개를 검사했다. 정책 의미를 명시해야 하는 기존 표현 제한은 해결됐다고 주장하지 않고 범위 문서에 남겼다. 같은 채팅의 남은 요건→3학점 가정→현재 판정에서도 실제 7학점·3기록은 보존됐다.
+- **Verifier:** 화면 답변·v2·Rule 관찰/요구값·실행 이벤트·그래프 노드/간선·PDF 페이지가 실제 API 결과와 일치했다. D10은 적용 정보 미확인으로 조회 전 종료해 허위 관계/출처를 표시하지 않았다. 274개 후보 전부의 학점·SATISFIES가 일치했다. 실제 학생 자료·평가 QA는 데모·공개 파일에 포함하지 않았다.
+- **재검증:** 전체 회귀 215/215, 학생용 API 100/100 및 Reviewer 4/4, 독립 49 PASS / 0 FAIL / 1 SKIP, 모의 PDF E2E 4/4, 브라우저 10/10 및 UI 반례 4/4, 활성 v2 CLI 5/5 PASS. LLM ON/OFF 핵심값은 독립 49/49·상태 10/10·모의 PDF 4/4 일치했다. UI JS 문법·Git diff·공개 경계 검사 PASS.
+- **기록:** `evaluation/results/core_v2_demo_baseline.md`, API/브라우저 JSON 두 파일. API 준비 스크립트는 실제 브라우저 검증을 자동 PASS 처리하지 않는다. Extended 구현·B 공식 자료 대기·C 사람 검토는 `docs/design/core_scope.md`에 유지한다.
+
 ## 0단계 확인 기록 (2026-09-29)
 
 - 기준 자료 `docs/curriculum/2026년도 교육과정.pdf` 존재 확인. PDF를 정상적으로 열었고 `pdfinfo`와 `pdfplumber`에서 모두 615쪽으로 확인했다.

@@ -1,6 +1,6 @@
 # 설계 아키텍처와 컴퓨터공학과 검증 흐름
 
-## 현재 구현 선택 (2026-09-29)
+## 현재 구현 선택 (2026-09-30, Core v2)
 
 첫 vertical slice는 Docker 엔진 없이 재현 가능한 Python 3.12·SQLite 속성 그래프를 사용한다. 그래프는 PDF에서 확인한 편성 사실·요건과 출처를 저장하며, 허용된 `FETCH_CATALOG_ENTRY`·`FETCH_REQUIREMENTS`·`FETCH_POLICY_FACTS`를 실행한다. Python 규칙 엔진이 학생 실제 이수·가상 추가 이수에 대해 별도의 결정적 판정을 만든다. `verifier.py`는 그래프 반환 관계, 규칙 입력, 판정 해시, 답변 데이터, 실제 실행 이벤트의 일치를 출력 전에 검사한다. 2026 컴퓨터공학과 전공 43행과 교양 280행을 출처와 연결해 적재했다. `GEA8617`은 PDF 내부의 코드 충돌로 적재하지 않는다. 2006–2025 학점표는 연도별 정책 사실 조회에만 사용한다.
 
@@ -35,7 +35,7 @@ flowchart LR
 | 단계 | 담당 | 출력·검증 |
 | --- | --- | --- |
 | 입력 추출·상태 정규화 | 결정적 파서/OCR·검증 코드와 필요한 사용자 확인 | 이미지/PDF/HWP/DOCX의 **후보**를 `StudentState`로 정규화. 추출 신뢰·누락 학기·학생 증거를 표시하며 추측해서 학점 인정하지 않음. |
-| 자연어 질문 구조화 | **로컬 LLM의 입력 역할** | 의도·언급 후보·시나리오 요청만 `StructuredQuery`로 출력. 규칙, 학점, 졸업 여부, Cypher를 만들지 않음. |
+| 자연어 질문 구조화 | 결정적 해석 우선 + 검증된 **로컬 LLM 보조** | 의도·언급 후보·시나리오 요청만 `StructuredQuery`로 출력. 규칙, 학점, 졸업 여부, Cypher를 만들지 않음. |
 | 엔티티 연결/검증·조회 | 결정적 서버 코드; 향후 그래프 어댑터 | 과목/학과/적용연도 ID를 검증하고 allowlist `QueryPlan` 생성. 실제 반환된 사실·관계·출처만 `EvidenceBundle`에 포함. |
 | 규칙 엔진·판정 | 결정적 코드 | `RuleEngineInput`과 검증된 IR로 `CreditRecognition`, 요건별 결과, `DeterministicDecision` 계산. 적용 범위·누락·충돌을 상태로 전달. |
 | 실행 기록 | 각 실제 단계의 코드 | 조회·반환 관계·계산 입력/결과의 논리 순서를 `ExecutionTrace`에 기록. DB의 물리 탐색 순서나 숨은 추론을 생성하지 않음. |
@@ -73,12 +73,12 @@ flowchart LR
 
 ## 공식 문서집합과 RuleSet 버전 경로
 
-현재 `build_catalog.py`는 확인된 교육과정 PDF의 SHA-256과 원문 locator에서 `AuthoritativeDocument`, 문서집합 v1, RuleSet v1, 규칙별 버전·복수 출처 계약을 만든다. `RuleSetStore`는 내용 주소가 붙은 불변 카탈로그 스냅샷과 활성 버전 포인터를 관리한다. 서버 시작 시 활성 스냅샷을 선택하고, `QUERY_PLAN`·Decision·ExecutionTrace에 문서집합/RuleSet 버전을 기록한다. 학생별 적용 Rule ID는 검증된 범위 조건으로 좁힌다. 펼쳐보기 화면은 적용 문서·RuleSet·규칙 출처·미해결 충돌을 이 실행 결과에서 표시한다.
+`build_catalog.py`는 확인된 교육과정 PDF의 SHA-256과 원문 locator에서 최초 문서집합 v1·RuleSet v1을 만든다. 현재 활성 버전은 **ADS-CE-2026-CORE v1 / CRS-CE-2026-CORE v2**다. v2는 같은 PDF 33쪽의 정책 사실 두 건만 보강했으며 19개 실행 규칙과 323개 편성행을 유지한다. `RuleSetStore`는 불변 카탈로그 스냅샷과 활성 버전 포인터를 관리한다. 서버와 CLI 데모는 활성 스냅샷을 읽고 `QUERY_PLAN`·Decision·ExecutionTrace에 문서집합/RuleSet 버전을 기록한다. 학생별 적용 Rule ID는 검증된 범위 조건으로 좁힌다. 펼쳐보기 화면은 적용 문서·RuleSet·규칙 출처·미해결 충돌을 이 실행 결과에서 표시한다.
 
 새 공식 문서 경로는 `파일 → 추출·해시 → 문서 유형·공식성 검토 대기 → 관련 규칙 후보 탐색 → 검토자가 문서 관계/원문 위치/변경을 확정 → 새 문서집합 및 RuleSet 스냅샷 발행 → 서버 재시작 후 새 판정`이다. 추출 단계는 규칙을 바꾸지 않는다. `SUPPLEMENTS/CLARIFIES/OVERRIDES/CONFLICTS_WITH`는 검증된 관계와 출처가 있어야 발행된다. 이전 스냅샷은 남아 같은 학생 입력으로 재실행할 수 있고, `compare_decisions`가 두 버전의 규칙·요건·결론 차이를 계산한다. 미해결 충돌의 범위가 학생과 겹치면 졸업 결론은 `UNKNOWN`이다.
 ## 남은 요건·과목 후보 경로 (2026 Core)
 
-한국어 질문은 서버의 허용된 `REMAINING_PLAN`과 영역 필터로 구조화된다. 실제 StudentState와 고정된 `CRS-CE-2026-CORE v1`으로 먼저 기존 Rule Engine의 `RequirementResult`를 계산한다. 서버가 VERIFIED 편성행을 `FETCH_CATALOG_SET`으로, 미충족 요건의 `SATISFIES` 간선을 `FETCH_COURSE_REQUIREMENT_LINKS`로 조회한다. `RemainingRequirementSummary`는 실행된 요건 결과를 투영하고 `CandidateCourse`는 조회된 간선과 실제 인정 과목을 대조해 분류한다. 결정·근거·실행 이벤트를 같은 스냅샷에 고정한 뒤 서버 템플릿으로 답한다. 로컬 LLM은 판정이나 과목 선택을 바꿀 수 없다. 가상 추가 이수는 기존 별도 `WHAT_IF` 경로를 사용한다. 학년 메타데이터, 미확인 개설/선수과목 정보는 요건 계산에 들어가지 않는다.
+한국어 질문은 서버의 허용된 `REMAINING_PLAN`과 영역 필터로 구조화된다. 실제 StudentState와 서버 시작 시 선택한 활성 `CRS-CE-2026-CORE v2`로 먼저 기존 Rule Engine의 `RequirementResult`를 계산한다. 서버가 VERIFIED 편성행을 `FETCH_CATALOG_SET`으로, 미충족 요건의 `SATISFIES` 간선을 `FETCH_COURSE_REQUIREMENT_LINKS`로 조회한다. `RemainingRequirementSummary`는 실행된 요건 결과를 투영하고 `CandidateCourse`는 조회된 간선과 실제 인정 과목을 대조해 분류한다. 결정·근거·실행 이벤트를 같은 스냅샷에 고정한 뒤 서버 템플릿으로 답한다. 로컬 LLM은 판정이나 과목 선택을 바꿀 수 없다. 가상 추가 이수는 기존 별도 `WHAT_IF` 경로를 사용한다. 학년 메타데이터,미확인 개설/선수과목 정보는 요건 계산에 들어가지 않는다.
 
 학생용 표시에서는 기존 결정과 후보를 바꾸지 않고 `remaining_presentation`으로 전공/교양 및 연결된 미충족 Rule별 후보 수를 계산한다. 기본 채팅 답변은 현재 상태, 필수, 부족 학점, 후보 수, 미확인 사항을 구분한다. 전체 후보는 펼쳐보기에서 요청할 때만 화면에 채우며 각 행의 실제 `SATISFIES` 관계, Rule 출처, PDF 페이지를 보여준다. 표시 투영은 서버 verifier가 원래 `DeterministicDecision`과 대조한다.
 

@@ -1,0 +1,119 @@
+{
+  "notice": "SYNTHETIC DEMO ONLY / 실제 학생 자료 아님",
+  "document_set_version": 1,
+  "ruleset_version": 2,
+  "api_scenarios": [
+    {
+      "id": "D01",
+      "title": "과목 조회",
+      "question": "고자구 몇 학점이야?",
+      "decision_id": "DEC-36af8b7e7ffe20a5",
+      "execution_id": "EX-00356219fca76b78",
+      "intent": "COURSE_LOOKUP",
+      "graduation_outcome": "NOT_REQUESTED",
+      "ruleset_version": 2,
+      "provenance_verification": "PASS"
+    },
+    {
+      "id": "D02",
+      "title": "학생 없는 정책·상한 계산",
+      "question": "교양 47학점 취득한 경우 인정 한도는?",
+      "decision_id": "DEC-0a0a72270fa9b203",
+      "execution_id": "EX-b28ee7db5a29c625",
+      "intent": "POLICY_LOOKUP",
+      "graduation_outcome": "NOT_REQUESTED",
+      "ruleset_version": 2,
+      "provenance_verification": "PASS"
+    },
+    {
+      "id": "D03",
+      "title": "현재 졸업 상태",
+      "question": "지금 졸업 가능해?",
+      "decision_id": "DEC-f77513bbd9707b3d",
+      "execution_id": "EX-0bb8bd48f1c5ab88",
+      "intent": "GRADUATION_STATUS",
+      "graduation_outcome": "NOT_ELIGIBLE_PDF",
+      "ruleset_version": 2,
+      "provenance_verification": "PASS"
+    },
+    {
+      "id": "D04",
+      "title": "남은 요건과 후보 요약",
+      "question": "앞으로 뭐 더 들어야 해?",
+      "decision_id": "DEC-a1376d73d9c40d13",
+      "execution_id": "EX-bc4bb75194154ad9",
+      "intent": "REMAINING_PLAN",
+      "graduation_outcome": "NOT_REQUESTED",
+      "ruleset_version": 2,
+      "provenance_verification": "PASS"
+    },
+    {
+      "id": "D05",
+      "title": "교양 영역별 부족·후보",
+      "question": "교양 뭐 더 들어야 해?",
+      "decision_id": "DEC-7b056b8819d859bd",
+      "execution_id": "EX-5269ccda9ac3ba78",
+      "intent": "REMAINING_PLAN",
+      "graduation_outcome": "NOT_REQUESTED",
+      "ruleset_version": 2,
+      "provenance_verification": "PASS"
+    },
+    {
+      "id": "D06",
+      "title": "전공 남은 요건",
+      "question": "전공에서 남은 거 알려줘.",
+      "decision_id": "DEC-e4493a7c14edae47",
+      "execution_id": "EX-7d8eaa3df63ddd2f",
+      "intent": "REMAINING_PLAN",
+      "graduation_outcome": "NOT_REQUESTED",
+      "ruleset_version": 2,
+      "provenance_verification": "PASS"
+    },
+    {
+      "id": "D07",
+      "title": "총학점 충족·필수 누락",
+      "question": "전필 뭐 남았어?",
+      "decision_id": "DEC-89fe6b4a114de97a",
+      "execution_id": "EX-6d6b4389269d15d0",
+      "intent": "REMAINING_PLAN",
+      "graduation_outcome": "NOT_REQUESTED",
+      "ruleset_version": 2,
+      "provenance_verification": "PASS"
+    },
+    {
+      "id": "D08",
+      "title": "0학점 필수 추가 simulation",
+      "question": "CDA0088 추가로 들으면 졸업 가능해?",
+      "decision_id": "DEC-700e99022ac85eb6",
+      "execution_id": "EX-7b7bc63906d8d4a7",
+      "intent": "WHAT_IF",
+      "graduation_outcome": "NOT_REQUESTED",
+      "ruleset_version": 2,
+      "provenance_verification": "PASS"
+    },
+    {
+      "id": "D09",
+      "title": "모든 증빙 충족 졸업",
+      "question": "지금 졸업 가능해?",
+      "decision_id": "DEC-377b88d3047c71da",
+      "execution_id": "EX-1e3b8ba19cf63d44",
+      "intent": "GRADUATION_STATUS",
+      "graduation_outcome": "ELIGIBLE_PDF",
+      "ruleset_version": 2,
+      "provenance_verification": "PASS"
+    },
+    {
+      "id": "D10",
+      "title": "PDF 업로드·정보 부족",
+      "question": "지금 졸업 가능해?",
+      "decision_id": "DEC-d3271fa05b777ae5",
+      "execution_id": "EX-f8ddef03dc7d302b",
+      "intent": "GRADUATION_STATUS",
+      "graduation_outcome": "UNKNOWN",
+      "ruleset_version": 2,
+      "provenance_verification": "PASS"
+    }
+  ],
+  "ui_verification": "NOT_EXECUTED_BY_THIS_SCRIPT",
+  "ui_result_file": "evaluation/results/core_v2_demo_ui_results.json"
+}
