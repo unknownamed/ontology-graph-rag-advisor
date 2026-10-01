@@ -20,6 +20,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path[:0] = [str(ROOT / "src"), str(ROOT / "scripts")]
 from build_catalog import build  # noqa: E402
 from curriculum_assistant.verifier import verify_payload  # noqa: E402
+from curriculum_assistant.authority import RuleSetStore  # noqa: E402
 
 SCENARIO_DIR = ROOT / "evaluation/core_scenarios"
 RESULTS = ROOT / "evaluation/results/independent_scenario_results.json"
@@ -519,7 +520,11 @@ def reviewer_counterexamples(port: int, fixtures: Fixtures) -> list[dict]:
 
     no_equivalence = deepcopy(complete)
     no_equivalence.pop("equivalence_review_evidence_id")
-    cases.append(("REV_03", "Missing official equivalence review evidence", no_equivalence, "UNKNOWN", {}))
+    # PDF 14 gives recognition rules, not a universal new review-certificate
+    # obligation. v4 source correction removes that internal guard for clean,
+    # unique catalog attempts; old version replay retains its earlier contract.
+    expected_review = 'ELIGIBLE_PDF' if fixtures.catalog.get('coverage_policy') else 'UNKNOWN'
+    cases.append(("REV_03", "Clean unique attempts need no universal equivalence review certificate", no_equivalence, expected_review, {}))
 
     no_category = deepcopy(complete)
     no_category.pop("student_category_evidence_id")
@@ -777,7 +782,7 @@ def main() -> None:
     scenarios = question_set["scenarios"]
     if len(scenarios) != 50 or len({s["id"] for s in scenarios}) != 50:
         raise SystemExit("Question set must contain 50 distinct scenario IDs")
-    catalog = build()
+    catalog = RuleSetStore(ROOT / 'data/processed/ruleset_versions').load_active()
     fixtures = Fixtures(catalog)
     import pdfplumber
     with pdfplumber.open(PDF) as pdf:

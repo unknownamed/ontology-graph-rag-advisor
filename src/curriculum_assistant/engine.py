@@ -12,6 +12,7 @@ from .authority import scope_applies, scope_status
 from .graph import Graph, canonical
 from .remaining import candidate_courses, summarize_remaining
 from .placement import CLASSES, group_placement, select_placement, validate_filter
+from .scope import YEAR_BASES, policy_targets, question_scope_conflicts, relevant_conditions
 
 INTENTS = {"COURSE_LOOKUP", "CREDIT_SUMMARY", "REQUIREMENT_GAPS", "WHAT_IF", "GRADUATION_STATUS",
            "POLICY_LOOKUP", "CATALOG_AGGREGATE", "ENTITY_CHECK", "CONSISTENCY_CHECK", "TRACE_EXPLAIN",
@@ -29,7 +30,7 @@ CORE_SINGLE_RULE_IDS = frozenset({
 })
 POLICY_RULE_TOPICS = {"GRADUATION_CREDITS", "GENERAL_CREDITS", "GENERAL_AREAS", "MAJOR_CREDITS",
                       "REQUIRED_COURSES", "GRADUATION_CONDITIONS", "ALL_REQUIREMENTS"}
-POLICY_FACT_TOPICS = {"APPLICABILITY", "FREE_CHOICE", "EQUIVALENCE", "RECOMMENDATIONS", "TRANSITION", "MULTI_PROGRAM"}
+POLICY_FACT_TOPICS = {"APPLICABILITY", "FREE_CHOICE", "EQUIVALENCE", "RECOMMENDATIONS", "TRANSITION", "MULTI_PROGRAM", "ENGLISH_EXEMPTION"}
 STATUSES = {"VERIFIED", "UNVERIFIED", "CONFLICTED", "MISSING"}
 PROGRAM_TYPES = {"SINGLE", "MINOR", "DOUBLE"}
 FREE_CHOICE_CATEGORIES = {"OTHER_DEPARTMENT_MAJOR", "TEACHER_EDUCATION", "LIFELONG_EDUCATOR",
@@ -57,6 +58,17 @@ def _validate(student: dict, query: dict) -> None:
             raise ValueError(f"{year_key} must be a year or null")
     if query.get("intent") not in INTENTS:
         raise ValueError("Unsupported StructuredQuery intent")
+    targets = query.get('year_targets', [])
+    if (not isinstance(targets,list) or len(targets)>32 or any(
+        not isinstance(t,dict) or set(t)-{'year','basis','invalid_range'} or
+        type(t.get('year')) is not int or not 1900<=t['year']<=2100 or t.get('basis') not in YEAR_BASES
+        or ('invalid_range' in t and type(t['invalid_range']) is not bool)
+        for t in targets)):
+        raise ValueError('Year targets must be bounded typed scopes')
+    conditions = query.get('declared_conditions',[])
+    if not isinstance(conditions,list) or len(conditions)>8 or not set(conditions).issubset({
+        'DISABILITY','STANDARD_DURATION_EXCEEDED','READMISSION','DEPARTMENT_TRANSFER','TRANSFER','LEAVE_OF_ABSENCE'}):
+        raise ValueError('Declared applicability conditions are not allowlisted')
     for key in ("placement_requested", "group_by_placement"):
         if key in query and type(query[key]) is not bool:
             raise ValueError("Placement flags must be boolean")
@@ -77,6 +89,10 @@ def _validate(student: dict, query: dict) -> None:
         if not isinstance(classes, list) or not classes or len(classes) > 5 or not set(classes).issubset(CLASSES):
             raise ValueError("Remaining placement classifications are not allowlisted")
     if query.get("intent") == "POLICY_LOOKUP":
+        claim=query.get('exam_claim')
+        if claim is not None and (not isinstance(claim,dict) or set(claim)!={'exam','score'} or
+            claim['exam']!='TOEIC' or type(claim['score']) is not int or not 0<=claim['score']<=990):
+            raise ValueError('Exam claim must be a typed TOEIC score')
         topics = query.get("topics")
         if not isinstance(topics, list) or not topics or len(topics) > 8 or any(topic not in POLICY_RULE_TOPICS | POLICY_FACT_TOPICS for topic in topics):
             raise ValueError("POLICY_LOOKUP requires allowlisted topics")
@@ -277,13 +293,41 @@ def _policy_rule_ids(catalog: dict, topic: str) -> list[str]:
     return []
 
 
-def _policy_lookup(graph: Graph, student: dict, query: dict, trace: list[dict], bundle: dict) -> dict:
+def _policy_lookup(graph: Graph, student: dict, query: dict, trace: list[dict], bundle: dict,
+                   target: dict | None = None, emit_decision: bool = True) -> dict:
+    targets = policy_targets(query, student)
+    if target is None and len(targets)>1:
+        rows=[]
+        for t in targets:
+            child=_policy_lookup(graph,student,query,trace,bundle,t,False)
+            rows.append({'target':t,'lookup_result':child['lookup_result'],
+                         'lookup_status':child['lookup_status'],'needs_information':child['needs_information']})
+            _event(trace,'POLICY_YEAR_RESULT',target=t,lookup_result=child['lookup_result'],
+                   needs_information=child['needs_information'])
+        result={'topics':sorted(set(query['topics'])),'program_type':query.get('program_type',student['program_type']),
+                'entry_year':None,'year_comparison':rows,'rules':bundle['rules'],
+                'policy_facts':bundle['policy_facts'],'courses':[],
+                'calculations':[c for row in rows for c in (row['lookup_result'] or {}).get('calculations',[])],
+                'rule_applicability':{k:v for row in rows for k,v in (row['lookup_result'] or {}).get('rule_applicability',{}).items()}}
+        needs=sorted({n for row in rows for n in row['needs_information']})
+        decision={'contract_version':'1','intent':'POLICY_LOOKUP','decision_status':None,
+                  'graduation_outcome':'NOT_REQUESTED','lookup_status':'NEEDS_INFORMATION' if needs else 'FOUND',
+                  'lookup_result':result,'requirement_results':[],'credited_amount':None,
+                  'missing_amount':None,'missing_courses':None,'needs_information':needs,
+                  'data_snapshot_id':graph.snapshot_id,'rule_set_hash':digest(graph.catalog['requirements'])}
+        _rehash_decision(decision)
+        _event(trace,'DECISION',result={'lookup_status':decision['lookup_status']})
+        return decision
+    target = target or targets[0]
     topics = sorted(set(query["topics"]))
     program_type = query.get("program_type", student["program_type"])
-    entry_year = query.get("entry_year", student.get("admission_year"))
-    year_specific_rules_available = entry_year in (None, 2026) and not query.get("historical_scope_requested", False)
-    historical_needed = not year_specific_rules_available and bool(set(topics) & {"GRADUATION_CREDITS", "GENERAL_CREDITS", "MAJOR_CREDITS"})
+    entry_year = target['year']
+    document_unavailable=target['basis']=='DOCUMENT_YEAR' and entry_year!=2026
+    year_specific_rules_available = entry_year in (None, 2026) and not target.get('invalid_range') and not query.get("historical_scope_requested", False)
+    historical_needed = not year_specific_rules_available and not document_unavailable and bool(set(topics) & {"GRADUATION_CREDITS", "GENERAL_CREDITS", "MAJOR_CREDITS"})
     missing = ["STUDENT_STATE_FOR_PERSONAL_CALCULATION"] if query.get("partial_student_information") else []
+    if document_unavailable:
+        missing.append(f'OFFICIAL_DOCUMENT_VERSION_NOT_REGISTERED:{entry_year}')
     selected_rules: dict[str, dict] = {}
     selected_facts: dict[str, dict] = {}
     selected_courses: dict[str, dict] = {}
@@ -425,9 +469,11 @@ def _policy_lookup(graph: Graph, student: dict, query: dict, trace: list[dict], 
     for calculation in calculations:
         _event(trace, "POLICY_CALCULATION", operation=calculation["operation"],
                input_refs=calculation["source_rule_ids"], result=calculation)
-    bundle["rules"] = list(selected_rules.values())
-    bundle["policy_facts"] = list(selected_facts.values())
-    result = {"topics": topics, "program_type": program_type, "entry_year": entry_year,
+    bundle['rules']=list({r['rule_id']:r for r in [*bundle['rules'],*selected_rules.values()]}.values())
+    bundle['policy_facts']=list({f['policy_fact_id']:f for f in [*bundle['policy_facts'],*selected_facts.values()]}.values())
+    result = {"topics": topics, "program_type": program_type, "entry_year": entry_year if target['basis']=='ADMISSION_YEAR' else None,
+              'policy_year':entry_year, 'year_target':target,
+              'document_scope_available':not document_unavailable,
               "policy_focus": query.get("policy_focus"),
               "student_category": category, "student_categories": categories,
               "historical_scope_requested": query.get("historical_scope_requested", False),
@@ -443,7 +489,17 @@ def _policy_lookup(graph: Graph, student: dict, query: dict, trace: list[dict], 
                 "data_snapshot_id": graph.snapshot_id, "rule_set_hash": digest(graph.catalog["requirements"])}
     decision["canonical_result_hash"] = digest(decision)
     decision["decision_id"] = "DEC-" + decision["canonical_result_hash"][:16]
-    _event(trace, "DECISION", result={"lookup_status": decision["lookup_status"]})
+    if query.get('exam_claim'):
+        fact=next((f for f in selected_facts.values() if f['predicate']=='ENGLISH_COURSE_EXEMPTION'),None)
+        if fact:
+            criterion=next(c for c in fact['value']['criteria'] if c['exam']==query['exam_claim']['exam'])
+            result['exam_criterion_result']={'exam':criterion['exam'],'score':query['exam_claim']['score'],
+                'minimum':criterion['minimum'],'meets_score_criterion':query['exam_claim']['score']>=criterion['minimum'],
+                'official_exemption_granted':False,'policy_fact_id':fact['policy_fact_id']}
+            _event(trace,'POLICY_EXAM_CRITERION',input_refs=[fact['policy_fact_id']],result=result['exam_criterion_result'])
+            _rehash_decision(decision)
+    if emit_decision:
+        _event(trace, "DECISION", result={"lookup_status": decision["lookup_status"]})
     return decision
 
 
@@ -578,7 +634,8 @@ def _recognize(student: dict, graph: Graph, trace: list[dict], bundle: dict, hyp
             "complete": student["completion_coverage"] == "COMPLETE" and not unknown}
 
 
-def _evaluate_rules(student: dict, graph: Graph, recognition: dict, trace: list[dict], bundle: dict) -> tuple[list[dict], dict, set[str]]:
+def _evaluate_rules(student: dict, graph: Graph, recognition: dict, trace: list[dict], bundle: dict,
+                    query: dict | None = None) -> tuple[list[dict], dict, set[str]]:
     rules = graph.query("FETCH_REQUIREMENTS", curriculum_id="CURRICULUM-CE-2026")
     _event(trace, "GRAPH_QUERY", operation="FETCH_REQUIREMENTS", filters={"curriculum_id": "CURRICULUM-CE-2026"},
            returned_ids=[item["rule_id"] for item in rules] + [item["relationship_id"] for item in rules])
@@ -588,6 +645,18 @@ def _evaluate_rules(student: dict, graph: Graph, recognition: dict, trace: list[
     for item in rules:
         bundle["nodes"][item["rule_id"]] = {"id": item["rule_id"], "kind": "Requirement", "label": item["rule_id"]}
         bundle["relationship_details"][item["relationship_id"]] = item["relationship_detail"]
+    conditional_facts = {}
+    if graph.catalog.get('coverage_policy'):
+        for topic in ('ENGLISH_EXEMPTION','GRADUATION_CONDITIONS','APPLICABILITY'):
+            facts=graph.query('FETCH_POLICY_FACTS',curriculum_id='CURRICULUM-CE-2026',topic=topic)
+            _event(trace,'GRAPH_QUERY',operation='FETCH_POLICY_FACTS',filters={'topic':topic},
+                   returned_ids=[f['policy_fact_id'] for f in facts]+[f['relationship_id'] for f in facts])
+            for f in facts:
+                conditional_facts[f['policy_fact_id']]=f
+                bundle['policy_facts'].append(f)
+                bundle['nodes'][f['policy_fact_id']]={'id':f['policy_fact_id'],'kind':'PolicyFact','label':f['predicate']}
+                bundle['relationships'].add(f['relationship_id'])
+                bundle['relationship_details'][f['relationship_id']]=f['relationship_detail']
     exception_fact = None
     if student.get("student_category") not in {None, "DOMESTIC_REGULAR"}:
         facts = graph.query("FETCH_POLICY_FACTS", curriculum_id="CURRICULUM-CE-2026", topic="GENERAL_AREAS")
@@ -630,6 +699,21 @@ def _evaluate_rules(student: dict, graph: Graph, recognition: dict, trace: list[
         applies = applicability != "NOT_APPLICABLE" and student["program_type"] in rule.get("program_types", PROGRAM_TYPES)
         general_rule = rid.startswith("R-GE-") or rid.startswith("R-GRAD-")
         category = student.get("student_category")
+        applied_adjustments=[]
+        pending_adjustment=False
+        exemption_condition=None
+        for condition in rule.get('conditional_exemptions',[]):
+            raw=student.get(condition['condition_key'])
+            mentioned='DISABILITY' in (query or {}).get('declared_conditions',[])
+            if raw is not None or mentioned:
+                value=raw.get('value') if isinstance(raw,dict) else raw
+                verified=isinstance(raw,dict) and raw.get('verification_status')=='VERIFIED' and bool(raw.get('evidence_id'))
+                if value is True and verified:
+                    exemption_condition={**condition,'status':'NOT_APPLICABLE','evidence_id':raw['evidence_id']}
+                elif not verified or (mentioned and value is not True):
+                    official=student.get('official_outcomes',{}).get(rule.get('evidence_key'),{})
+                    if not (official.get('value') is True and official.get('verification_status')=='VERIFIED' and official.get('evidence_id')):
+                        exemption_condition={**condition,'status':'NEEDS_INFORMATION','evidence_id':None}
         verified_category = bool(student.get("student_category_evidence_id"))
         exception_applies = bool(exception_fact and verified_category and rid.startswith("R-GE-") and (
             category in exception_fact["value"]["general_obligation_exempt"] or
@@ -662,6 +746,18 @@ def _evaluate_rules(student: dict, graph: Graph, recognition: dict, trace: list[
                       "required": rule.get("required_value"), "missing_amount": None, "missing_course_ids": None,
                       "used_fact_ids": [], "used_relationship_ids": [rule["relationship_id"]],
                       "used_student_evidence_ids": [], "needs_information": ["VERIFIED_STUDENT_CATEGORY_AND_EXCEPTIONS"], "source_refs": rule["source_refs"]}
+        elif exemption_condition and rule['verification_status']=='VERIFIED':
+            fact=conditional_facts[exemption_condition['policy_fact_id']]
+            status=exemption_condition['status']
+            result={'requirement_id':rid,'rule_id':rid,'status':status,'observed':None,'required':None,
+                    'missing_amount':None,'missing_course_ids':None,'used_fact_ids':[],
+                    'used_relationship_ids':[rule['relationship_id'],fact['relationship_id']],
+                    'used_student_evidence_ids':[exemption_condition['evidence_id']] if exemption_condition['evidence_id'] else [],
+                    'needs_information':[] if status=='NOT_APPLICABLE' else ['VERIFIED_DISABILITY_EXEMPTION_CONDITION'],
+                    'source_refs':rule['source_refs'],'applicability_reason':'PDF_CERTIFICATION_DISABILITY_EXEMPTION',
+                    'applicability_policy_fact_id':fact['policy_fact_id'],'applicability_source_refs':fact['source_refs'],
+                    'evaluation_basis':'VERIFIED_PDF_EXEMPTION' if status=='NOT_APPLICABLE' else 'CONDITION_INFORMATION_REQUIRED'}
+            _event(trace,'RULE_APPLICABILITY',rule_id=rid,input_refs=[fact['policy_fact_id'],*result['used_student_evidence_ids']],result=result['applicability_reason'])
         elif rule["verification_status"] != "VERIFIED" or rule.get("area") in unsafe_derived:
             result = {"requirement_id": rid, "rule_id": rid, "status": "NEEDS_INFORMATION", "observed": None,
                       "required": rule.get("required_value"), "missing_amount": None, "missing_course_ids": None,
@@ -676,13 +772,29 @@ def _evaluate_rules(student: dict, graph: Graph, recognition: dict, trace: list[
                         or r["classification"] == area]
                 observed = sums[area]
                 threshold = rule["required_value"]
+                for adjustment in rule.get('conditional_adjustments',[]):
+                    raw=student.get('official_outcomes',{}).get(adjustment['condition_key'])
+                    fact=conditional_facts[adjustment['policy_fact_id']]
+                    courses_present=any(r['course_id'] in fact['value']['exempt_course_ids'] for r in recognition['recognitions'])
+                    verified=bool(raw and raw.get('verification_status')=='VERIFIED' and raw.get('evidence_id'))
+                    if not courses_present and verified and raw.get('value') is adjustment['expected_value']:
+                        threshold-=adjustment['amount']
+                        applied_adjustments.append({**adjustment,'student_evidence_id':raw['evidence_id'],
+                            'base_required_amount':rule['required_value'],'effective_required_amount':threshold,
+                            'replacement_general_credits_required':adjustment['amount']})
+                        _event(trace,'RULE_CONDITIONAL_ADJUSTMENT',rule_id=rid,
+                            input_refs=[fact['policy_fact_id'],raw['evidence_id']],result=applied_adjustments[-1])
+                    elif not courses_present and not verified and observed<threshold:
+                        pending_adjustment=True
                 if observed >= threshold:
                     status = "SATISFIED"
+                elif pending_adjustment:
+                    status = 'NEEDS_INFORMATION'
                 elif recognition["complete"]:
                     status = "UNSATISFIED"
                 else:
                     status = "NEEDS_INFORMATION"
-                missing = max(0, threshold - observed) if recognition["complete"] else None
+                missing = max(0, threshold - observed) if recognition["complete"] and not pending_adjustment else None
                 missing_ids = None
             elif rule["rule_type"] == "REQUIRED_COURSES":
                 used = [r for r in recognition["recognitions"] if r["course_id"] in rule["course_ids"]]
@@ -706,7 +818,7 @@ def _evaluate_rules(student: dict, graph: Graph, recognition: dict, trace: list[
                 exempted = bool(exemption and exemption.get("verification_status") == "VERIFIED" and exemption.get("value") is True and exemption.get("evidence_id"))
                 if used or exempted:
                     status = "SATISFIED"
-                elif rule["rule_type"] == "ANY_COURSE_OR_EXEMPTION" and (not exemption or exemption.get("verification_status") != "VERIFIED"):
+                elif rule["rule_type"] == "ANY_COURSE_OR_EXEMPTION" and (not exemption or exemption.get("verification_status") != "VERIFIED" or not exemption.get('evidence_id') or type(exemption.get('value')) is not bool):
                     status = "NEEDS_INFORMATION"
                 elif recognition["complete"]:
                     status = "UNSATISFIED"
@@ -748,6 +860,22 @@ def _evaluate_rules(student: dict, graph: Graph, recognition: dict, trace: list[
                           ([exemption["evidence_id"]] if rule["rule_type"] == "ANY_COURSE_OR_EXEMPTION" and exempted and exemption.get("evidence_id") else []),
                       "needs_information": [] if status != "NEEDS_INFORMATION" else recognition["needs_information"] or [f"RULE_INPUT:{rid}"],
                       "source_refs": rule["source_refs"]}
+            if graph.catalog.get('coverage_policy'):
+                result['evaluation_basis']='OFFICIAL_RESULT_INPUT' if rule['rule_type']=='REQUIRED_EVIDENCE' else 'DIRECT_RULE_CALCULATION'
+                if rule['rule_type']=='ANY_COURSE_OR_EXEMPTION' and exempted and not used:
+                    fact=conditional_facts[rule['exemption_policy_fact_id']]
+                    result['evaluation_basis']='OFFICIAL_EXEMPTION_INPUT'
+                    result['used_policy_fact_ids']=[fact['policy_fact_id']]
+                    result['used_relationship_ids'].append(fact['relationship_id'])
+                    _event(trace,'RULE_EXEMPTION_INPUT',rule_id=rid,
+                           input_refs=[fact['policy_fact_id'],exemption['evidence_id']],result='VERIFIED_EXEMPTION')
+                if applied_adjustments:
+                    result['conditional_adjustments_applied']=applied_adjustments
+                    result['used_policy_fact_ids']=[a['policy_fact_id'] for a in applied_adjustments]
+                    result['used_relationship_ids']+= [conditional_facts[a['policy_fact_id']]['relationship_id'] for a in applied_adjustments]
+                    result['used_student_evidence_ids']+= [a['student_evidence_id'] for a in applied_adjustments]
+                if pending_adjustment:
+                    result['needs_information']=sorted(set(result['needs_information']+['VERIFIED_ENGLISH_EXEMPTION_OR_COURSE_COMPLETION']))
         if rule["rule_type"] == "MIN_CREDITS" and result["observed"] is not None:
             result["credit_calculation"] = {
                 "required_amount": result["required"],
@@ -775,7 +903,7 @@ def _evaluate_rules(student: dict, graph: Graph, recognition: dict, trace: list[
 
 def _one_decision(student: dict, graph: Graph, query: dict, trace: list[dict], bundle: dict, hypothetical: bool = False) -> dict:
     recognition = _recognize(student, graph, trace, bundle, hypothetical)
-    results, sums, unsafe_derived = _evaluate_rules(student, graph, recognition, trace, bundle)
+    results, sums, unsafe_derived = _evaluate_rules(student, graph, recognition, trace, bundle, query)
     missing_codes = {code for result in results for code in (result["missing_course_ids"] or [])}
     for code in sorted(missing_codes):
         _fetch_entry(graph, code, trace, bundle)
@@ -798,6 +926,43 @@ def _one_decision(student: dict, graph: Graph, query: dict, trace: list[dict], b
                          and not missing_core_rules
                          and student.get("equivalence_review_status") == "VERIFIED"
                          and bool(student.get("equivalence_review_evidence_id")))
+    coverage_details = None
+    boundary_needs = []
+    if graph.catalog.get('coverage_policy'):
+        scope_conflicts = question_scope_conflicts(query, student)
+        conditions = relevant_conditions(student, query)
+        unhandled = [c for c in conditions if c != 'DISABILITY']
+        loaded_complete = not missing_core_rules
+        identity_verified = (student['program_type']=='SINGLE' and student.get('student_category')=='DOMESTIC_REGULAR'
+                             and bool(student.get('student_category_evidence_id')) and bool(student.get('applicability_evidence_id')))
+        inputs_confirmed = recognition['complete'] and bool(student.get('completion_coverage_evidence_id')) and not any(
+            r['status']=='NEEDS_INFORMATION' for r in results)
+        boundary_needs = scope_conflicts + [f'UNHANDLED_APPLICABILITY_CONDITION:{c}' for c in unhandled]
+        if student['program_type']!='SINGLE':
+            boundary_needs.append('SECOND_PROGRAM_RULE_COVERAGE')
+        if not identity_verified:
+            boundary_needs.append('VERIFIED_STUDENT_CATEGORY_AND_APPLICABILITY')
+        if not student.get('completion_coverage_evidence_id'):
+            boundary_needs.append('COMPLETE_VERIFIED_TRANSCRIPT_EVIDENCE')
+        coverage_details = {
+            'loaded_rules_executed':loaded_complete,
+            'applicable_conditions_identified':identity_verified and not unhandled and not scope_conflicts,
+            'unhandled_conditions':unhandled,'question_scope_conflicts':scope_conflicts,
+            'unverified_rule_ids':[r['rule_id'] for r in bundle['rules'] if r['verification_status']!='VERIFIED'],
+            'required_student_inputs_confirmed':bool(inputs_confirmed),
+            'directly_calculated_rule_ids':[r['rule_id'] for r in results if r.get('evaluation_basis')=='DIRECT_RULE_CALCULATION'],
+            'official_result_rule_ids':[r['rule_id'] for r in results if r.get('evaluation_basis')=='OFFICIAL_RESULT_INPUT'],
+            'exempted_rule_ids':[r['rule_id'] for r in results if r.get('evaluation_basis')=='VERIFIED_PDF_EXEMPTION'],
+            'certification_subrules_computed':False,
+            'equivalence_review_required':any('equivalence' in c or 'replacement' in c for c in unhandled),
+            'source_scope':'REGISTERED_CORE_RULES_WITH_OFFICIAL_FINAL_OUTCOMES',
+            'applicability_source_refs':['CURRICULUM-APPLICATION-2026'],
+            'condition_source_refs':{c:(['GRAD-RULES-2026'] if c=='STANDARD_DURATION_EXCEEDED' else
+                ['CURRICULUM-APPLICATION-2026'] if c in {'READMISSION','DEPARTMENT_TRANSFER','TRANSFER'} else []) for c in unhandled},
+            'credit_policy_year':student.get('credit_policy_year'),'catalog_year':student.get('catalog_year'),
+            'admission_year':student.get('admission_year')}
+        coverage_complete = loaded_complete and coverage_details['applicable_conditions_identified'] and inputs_confirmed
+        needs.extend(boundary_needs)
     if query["intent"] == "GRADUATION_STATUS":
         coverage_gaps = []
         if student["program_type"] != "SINGLE":
@@ -811,16 +976,22 @@ def _one_decision(student: dict, graph: Graph, query: dict, trace: list[dict], b
             coverage_gaps.append("COMPLETE_VERIFIED_TRANSCRIPT_EVIDENCE")
         if student.get("academic_events"):
             coverage_gaps.append("ACADEMIC_EVENT_APPLICABILITY_REVIEW")
-        if student.get("equivalence_review_status") != "VERIFIED" or not student.get("equivalence_review_evidence_id"):
+        if not graph.catalog.get('coverage_policy') and (student.get("equivalence_review_status") != "VERIFIED" or not student.get("equivalence_review_evidence_id")):
             coverage_gaps.append("OFFICIAL_EQUIVALENCE_REVIEW")
+        coverage_gaps.extend(boundary_needs)
         _event(trace, "COVERAGE_CHECK", result="COMPLETE" if coverage_complete else "INCOMPLETE",
-               missing=coverage_gaps)
-        if decision_status == "UNSATISFIED":
+               missing=coverage_gaps, **({'details':coverage_details} if coverage_details else {}))
+        if coverage_details and coverage_details['question_scope_conflicts']:
+            graduation='UNKNOWN'
+            decision_status='NEEDS_INFORMATION'
+        elif decision_status == "UNSATISFIED":
             graduation = "NOT_ELIGIBLE_PDF"
         elif decision_status == "SATISFIED" and coverage_complete:
             graduation = "ELIGIBLE_PDF"
         else:
             graduation = "UNKNOWN"
+            if boundary_needs and decision_status == 'SATISFIED':
+                decision_status='NEEDS_INFORMATION'
         if not coverage_complete:
             needs.append("COMPLETE_VERIFIED_SINGLE_MAJOR_RULE_COVERAGE")
             needs.extend(coverage_gaps)
@@ -841,6 +1012,8 @@ def _one_decision(student: dict, graph: Graph, query: dict, trace: list[dict], b
                 "recognitions": recognition["recognitions"], "excluded": recognition["excluded"],
                 "data_snapshot_id": graph.snapshot_id, "rule_set_hash": digest(graph.catalog["requirements"]),
                 "hypothetical": hypothetical, "coverage_complete": coverage_complete}
+    if coverage_details is not None:
+        decision['coverage_details']=coverage_details
     decision["canonical_result_hash"] = digest(decision)
     decision["decision_id"] = "DEC-" + decision["canonical_result_hash"][:16]
     _event(trace, "DECISION", result={"decision_id": decision["decision_id"], "status": decision_status,
@@ -1002,8 +1175,8 @@ def execute(graph: Graph, student: dict, query: dict) -> dict:
     ruleset = graph.catalog["curriculum_ruleset"]
     if query["intent"] == "POLICY_LOOKUP":
         topics = set(query["topics"])
-        entry_year = query.get("entry_year", student.get("admission_year"))
-        scoped_rule_topics = topics & POLICY_RULE_TOPICS if entry_year in (None, 2026) and not query.get("historical_scope_requested") else set()
+        targets = policy_targets(query, student)
+        scoped_rule_topics = topics & POLICY_RULE_TOPICS if any(t['year'] in (None,2026) for t in targets) and not query.get("historical_scope_requested") else set()
         operations = ([] if not scoped_rule_topics else ["FETCH_REQUIREMENTS"])
         if "REQUIRED_COURSES" in scoped_rule_topics or ("MULTI_PROGRAM" in topics and query.get("program_type", student["program_type"]) == "MINOR"):
             operations.append("FETCH_CATALOG_ENTRY")
@@ -1020,17 +1193,31 @@ def execute(graph: Graph, student: dict, query: dict) -> dict:
             operations += ["FILTER_CURRICULUM_PLACEMENT", "GROUP_CURRICULUM_PLACEMENT"]
     else:
         operations = ["FETCH_CATALOG_ENTRY"] if query["intent"] == "COURSE_LOOKUP" else ["FETCH_CATALOG_ENTRY", "FETCH_REQUIREMENTS"]
+    if graph.catalog.get('coverage_policy') and query['intent'] not in {'COURSE_LOOKUP','POLICY_LOOKUP','CATALOG_AGGREGATE','PLACEMENT_LOOKUP','ENTITY_CHECK'}:
+        operations.append('FETCH_POLICY_FACTS')
     _event(trace, "QUERY_PLAN", intent=query["intent"], operations=operations, input_hash=input_id,
            authoritative_document_set_id=document_set["set_id"],
            authoritative_document_set_version=document_set["set_version"],
            ruleset_id=ruleset["ruleset_id"], ruleset_version=ruleset["ruleset_version"],
            student_state_version=student_version, candidate_rule_ids=ruleset["included_rule_ids"],
            placement_filter=query.get("placement_filter"),
+           requested_year_targets=query.get('year_targets',[]), declared_conditions=query.get('declared_conditions',[]),
            placement_classifications=query.get("classifications") if query["intent"] in {"PLACEMENT_LOOKUP", "REMAINING_PLAN"} else None,
            document_relation_ids=[r["relation_id"] for r in graph.catalog["document_relations"]])
     scenario_decision = None
+    requested_catalog_scopes=[t for t in query.get('year_targets',[]) if
+        t['basis'] in {'CATALOG_YEAR','CREDIT_POLICY_YEAR'} and (t['year']!=2026 or t.get('invalid_range'))]
     if query["intent"] == "POLICY_LOOKUP":
         decision = _policy_lookup(graph, student, query, trace, bundle)
+    elif requested_catalog_scopes and query['intent'] in {'COURSE_LOOKUP','CATALOG_AGGREGATE','PLACEMENT_LOOKUP','ENTITY_CHECK'}:
+        needs=[f"REQUESTED_CATALOG_SCOPE_UNAVAILABLE:{t['basis']}:{t['year']}" for t in requested_catalog_scopes]
+        decision={'contract_version':'1','intent':query['intent'],'decision_status':'NEEDS_INFORMATION',
+            'graduation_outcome':'NOT_REQUESTED','lookup_status':'NEEDS_INFORMATION','lookup_result':None,
+            'requirement_results':[],'credited_amount':None,'missing_amount':None,'missing_courses':None,
+            'needs_information':needs,'data_snapshot_id':graph.snapshot_id,'rule_set_hash':digest(graph.catalog['requirements'])}
+        _rehash_decision(decision)
+        _event(trace,'APPLICABILITY',result='NEEDS_INFORMATION',missing=needs)
+        _event(trace,'DECISION',result={'lookup_status':'NEEDS_INFORMATION'})
     elif query["intent"] == "CATALOG_AGGREGATE":
         decision = _catalog_aggregate(graph, query, trace, bundle)
     elif query["intent"] == "PLACEMENT_LOOKUP":
@@ -1122,6 +1309,12 @@ def execute(graph: Graph, student: dict, query: dict) -> dict:
                                          "verified_catalog_entry": found,
                                          "matching_student_attempt_ids": sorted(a["attempt_id"] for a in student["course_attempts"]
                                                                                 if a.get("course_id") == query["course_id"])}
+            conflict=next((c for c in graph.catalog.get('catalog_conflicts',[]) if c['course_id']==query['course_id']),None)
+            if conflict:
+                decision['lookup_result']['catalog_conflict']=deepcopy(conflict)
+                decision['lookup_status']='CONFLICTED'
+                _event(trace,'CATALOG_CONFLICT_LOOKUP',source_document_id=graph.catalog['source_document_id'],
+                       source_hash=graph.catalog['source_sha256'],result=deepcopy(conflict))
             if not found:
                 decision["decision_status"] = "NEEDS_INFORMATION"
                 decision["needs_information"] = sorted(set([*decision["needs_information"],
@@ -1131,7 +1324,7 @@ def execute(graph: Graph, student: dict, query: dict) -> dict:
             prior["result"].update({"decision_id": decision["decision_id"],
                                     "status": decision["decision_status"]})
             _event(trace, "ENTITY_RESOLUTION", course_id=query["course_id"],
-                   result="VERIFIED" if found else "NOT_FOUND")
+                   result="VERIFIED" if found else "CONFLICTED" if conflict else "NOT_FOUND")
         if query["intent"] == "TRACE_EXPLAIN":
             decision["lookup_result"] = {"relationship_ids": sorted(bundle["relationships"]),
                                          "rule_ids": [e["rule_id"] for e in trace if e["event_type"] == "RULE_EVALUATION"],
@@ -1219,6 +1412,7 @@ def execute(graph: Graph, student: dict, query: dict) -> dict:
                                               | {r["evidence_id"] for r in student.get("free_choice_records", [])}
                                               | {e["evidence_id"] for e in student.get("official_outcomes", {}).values()
                                                  if e.get("evidence_id")}
+                                              | ({student['disability_status']['evidence_id']} if isinstance(student.get('disability_status'),dict) and student['disability_status'].get('evidence_id') else set())
                                               | ({student["equivalence_review_evidence_id"]} if student.get("equivalence_review_evidence_id") else set())
                                               | {student[key] for key in ("student_category_evidence_id", "applicability_evidence_id", "completion_coverage_evidence_id") if student.get(key)}
                                               | {r["student_evidence_id"] for d in (decision, scenario_decision) if d

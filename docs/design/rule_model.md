@@ -1,5 +1,11 @@
 # Rule Model: 결정적 판정 IR
 
+## v4 원문 예외 정정
+
+기존 MIN_CREDITS/REQUIRED_COURSES/REQUIRED_EVIDENCE 유형은 유지한다. 영어 면제는 원문 PolicyFact와 `conditional_adjustments`로 특정 기초교양 Rule의 요구량만 조건부9→7로 조정한다. 조건은 확인된 개인 면제와 영어 미이수이며, 영어 이수의무 면제·학점 자동 부여0·교양 총량 보충 Rule·다른 필수군 유지를 명시한다. 면제 미확인 입력으로 확정 감액하지 않는다. 졸업인증의 원문 장애 면제는 `conditional_exemptions`에 근거를 연결한다.
+
+RequirementResult는 실제 계산과 공식 최종 결과 입력, 확인된 면제, 적용조건 정보 부족을 구분한다. coverage는 Rule ID 존재만으로 확정하지 않고 학생 조건과 입력 범위를 함께 검사한다. 인증 세부 조건 전체 계산은 현재 미구현이다. v1/v2/v3 스냅샷은 보존하며 변경 Rule 세 건에 새 rule_version/supersedes 계보를 남겼다. [검증과 한계](source_accuracy_corrections.md)를 따른다.
+
 ## 규칙 정의와 실행 결과를 분리
 
 원문 사실은 `ontology_model.md`의 편성표·증거로 저장하고, 판정은 아래 **유형이 정해진 IR**로 수행한다. 규칙 문장은 설명용 메타데이터일 뿐 실행식이 아니다. 규칙 집합은 `rule_set_id`·버전·콘텐츠 해시로 고정한다. 각 `RuleDefinition`은 `rule_id`, `rule_type`, `applies_to`(학과/프로그램/입학·적용연도/이수유형), `when`(조건), `inputs`(타입·조회 범위), `required_value`, `calculation`(허용 연산과 산입 순서), `source_refs`, `verification_status`, `supersedes`/`exception_of`(필요 시)를 갖는다. **`result_state`와 계산값은 학생·시나리오별 `RuleEvaluation`에만** 기록한다.

@@ -89,7 +89,7 @@ const KIND_LABELS={CurriculumVersion:'교육과정',CatalogEntry:'교육과정 �
 const REL_LABELS={SATISFIES:'요건에 연결',HAS_COURSE:'과목 포함',HAS_REQUIREMENT:'요건 포함',CLASSIFIED_AS:'이수구분',OFFERS:'과목 편성',HAS_POLICY_FACT:'정책 포함',IN_CURRICULUM:'적용 교육과정'};
 const AREA_LABELS={GRADUATION_TOTAL:'졸업 총학점',GENERAL_TOTAL:'교양',GENERAL_BASIC:'기초교양',GENERAL_BALANCED:'균형교양',GENERAL_EXPANDED:'확대교양',MAJOR_REQUIRED:'전공필수',MAJOR_REQUIRED_COURSES:'지정 전공필수 과목',MAJOR_ELECTIVE:'최소전공 전공선택',MAJOR_ADVANCED:'심화전공',MAJOR_TOTAL:'전공 합계',FREE_CHOICE:'자유선택'};
 const STATUS_LABELS={SATISFIED:'충족',UNSATISFIED:'미충족',NEEDS_INFORMATION:'확인 필요',NOT_APPLICABLE:'적용 대상 아님'};
-function ruleLabel(payload,id){const rule=(payload.evidence?.rules||[]).find(r=>r.rule_id===id);if(!rule)return id;if(rule.area)return (AREA_LABELS[rule.area]||rule.area)+(rule.rule_type==='CREDIT_CAP'?' 산입 상한':'');const keys={thesis_passed:'졸업논문 합격 증빙',thesis_final_semester_enrollment:'최종학기 졸업논문 신청 증빙',graduation_certification_passed:'졸업인증 증빙'};return keys[rule.evidence_key]||{REQUIRED_COURSES:'지정 전공필수',ALL_AREAS:'교양 영역 이수',ANY_COURSE:'필수 교양 선택 과목군',ANY_COURSE_OR_EXEMPTION:'영어교양 또는 면제',REQUIRED_EVIDENCE:'졸업 필수 증빙'}[rule.rule_type]||rule.rule_type;}
+function ruleLabel(payload,id){const rule=(payload.evidence?.rules||[]).find(r=>r.rule_id===id);if(!rule)return id;if(rule.area)return (AREA_LABELS[rule.area]||rule.area)+(rule.rule_type==='CREDIT_CAP'?' 산입 상한':'');const keys={thesis_passed:'졸업논문 합격 여부',thesis_final_semester_enrollment:'최종학기 졸업논문 신청 여부',graduation_certification_passed:'졸업인증 통과 여부'};return keys[rule.evidence_key]||{REQUIRED_COURSES:'지정 전공필수',ALL_AREAS:'교양 영역 이수',ANY_COURSE:'필수 교양 선택 과목군',ANY_COURSE_OR_EXEMPTION:'영어교양 또는 면제',REQUIRED_EVIDENCE:'졸업 필수 상태 확인'}[rule.rule_type]||rule.rule_type;}
 function displayNode(node){const kind=KIND_LABELS[node.kind]||'관계 개체';return `${kind} · ${AREA_LABELS[node.label]||node.label}`;}
 function el(tag, text, cls) { const node=document.createElement(tag); if(text!==undefined) node.textContent=String(text); if(cls) node.className=cls; return node; }
 function addMessage(role, content) {
@@ -247,6 +247,15 @@ function detailView(wrap,payload,state) {
   if(payload.requirement_results?.length)payload.requirement_results.forEach(r=>{const row=el('div',`${ruleLabel(payload,r.rule_id)}: ${STATUS_LABELS[r.status]||r.status} · 관찰 ${r.observed??'미확인'} / 요구 ${r.required??'미확인'}`,'line');row.dataset.ruleId=r.rule_id;row.dataset.status=r.status;row.dataset.observed=JSON.stringify(r.observed??null);row.dataset.required=JSON.stringify(r.required??null);const ids=el('details');ids.append(el('summary','Rule 식별자'),el('div',r.rule_id,'mono'));row.append(ids);box.append(row);});
   else if(!payload.decision?.lookup_result?.rules?.length&&!payload.decision?.lookup_result?.policy_facts?.length)line(box,'기록 없음');
   const lookup=payload.decision?.lookup_result;
+  const coverage=payload.decision?.coverage_details;
+  if(coverage){line(box,`현재 적재 규칙 실행: ${coverage.loaded_rules_executed?'완료':'불완전'} · 학생 적용조건 식별: ${coverage.applicable_conditions_identified?'확인':'확인 필요'} · 필수 학생 입력: ${coverage.required_student_inputs_confirmed?'확인':'확인 필요'}`);
+    line(box,`입학연도 ${coverage.admission_year??'미확인'} · 학점기준 ${coverage.credit_policy_year??'미확인'} · 과목표 ${coverage.catalog_year??'미확인'}`);
+    line(box,'논문·졸업인증은 확인된 최종 결과를 입력받아 사용합니다. 졸업인증 세부 시험·자격 조건을 모두 계산한 결과는 아닙니다.');
+    if(coverage.unhandled_conditions.length)line(box,'현재 계산하지 못하는 적용조건: '+coverage.unhandled_conditions.join(', '));
+    if(coverage.question_scope_conflicts.length)line(box,'질문과 학생 상태의 적용연도 차이: '+coverage.question_scope_conflicts.join(', '));}
+  (payload.requirement_results||[]).forEach(r=>{if(r.evaluation_basis)line(box,`${r.rule_id}: ${ {OFFICIAL_RESULT_INPUT:'확인된 공식 결과 입력',OFFICIAL_EXEMPTION_INPUT:'확인된 공식 면제 결과 입력 (학점 부여 없음)',DIRECT_RULE_CALCULATION:'규칙 직접 계산',VERIFIED_PDF_EXEMPTION:'원문 면제조건 적용',CONDITION_INFORMATION_REQUIRED:'적용조건 확인 필요'}[r.evaluation_basis]||r.evaluation_basis}`);
+    (r.conditional_adjustments_applied||[]).forEach(a=>line(box,`영어 면제 조건부 보충: 기초교양 ${a.base_required_amount} → ${a.effective_required_amount}학점 · 영어 학점 자동 부여 없음 · 교양 총량 요건 유지 · 근거 ${a.policy_fact_id}`));});
+  (lookup?.year_comparison||[]).forEach(row=>line(box,`연도별 조회: ${row.target.year} (${row.target.basis}) · ${row.lookup_status}`));
   if(payload.decision?.intent==='COURSE_LOOKUP'&&lookup?.curriculum_placement){const placementBox=section(det,'교육과정상 편성 정보');line(placementBox,placementText(lookup.curriculum_placement));line(placementBox,'편성 학년은 수강 제한이 아닙니다. 실제 개설·수강 가능 여부는 미확인입니다.');sourceLink(placementBox,lookup.source.pdf_page);}
   if(payload.decision?.intent==='PLACEMENT_LOOKUP'){
     const placementBox=section(det,'교육과정상 편성 과목 조회');line(placementBox,'공식 PDF의 편성표를 조회했습니다. 실제 개설·개인 수강 가능 여부는 미확인입니다.');

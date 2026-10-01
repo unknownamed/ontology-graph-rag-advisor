@@ -7,6 +7,8 @@ from __future__ import annotations
 import difflib
 import re
 
+from .scope import year_targets, declared_conditions
+
 ALIASES = {"고자구": "CDA0143", "데베": "CDA0065", "컴구": "CDA0016", "운체": "CDA0017"}
 STOPWORDS = {"전공필수", "전공선택", "전공학점", "졸업학점", "교양학점", "필수과목", "남은과목", "그과목", "학점", "과목", "졸업", "교양", "전공"}
 
@@ -14,6 +16,8 @@ STOPWORDS = {"전공필수", "전공선택", "전공학점", "졸업학점", "�
 def _policy_topics(question: str) -> list[str]:
     """Map rule-fact language to broad source-derived topics, never to an answer."""
     clean = _norm(question)
+    if ('영어' in clean or '토익' in clean or 'toeic' in clean) and '면제' in clean:
+        return ['ENGLISH_EXEMPTION']
     if any(term in clean for term in ("지금", "현재", "남았", "남은", "남음", "부족", "이수하면", "들으면",
                                      "추가", "안들은", "안들었", "빠진", "빠졌", "인정받", "졸업가능",
                                      "졸업할수", "졸업돼", "졸업됨", "졸업여부", "이수기록", "성적표", "넣어도", "산입해")):
@@ -39,12 +43,12 @@ def _policy_topics(question: str) -> list[str]:
         topics.add("APPLICABILITY")
     if "졸업학점" in clean or ("졸업" in clean and "총학점" in clean):
         topics.add("GRADUATION_CREDITS")
-    if "교양" in clean and any(term in clean for term in ("학점", "상한", "최소", "이수기준")):
+    if "교양" in clean and any(term in clean for term in ("학점", "상한", "최소", "기준")):
         topics.add("GENERAL_CREDITS")
     if "균형교양" in clean and any(term in clean for term in ("영역", "과목", "각", "제외", "의무")):
         topics.add("GENERAL_AREAS")
     major_clean = clean.replace("단일전공", "").replace("복수전공", "").replace("부전공", "")
-    if "전공" in major_clean and "학점" in clean:
+    if "전공" in major_clean and any(term in clean for term in ('학점','최소','기준')):
         topics.add("MAJOR_CREDITS")
     if "전필" in clean and "학점" in clean and any(term in clean for term in ("필요", "기준", "최소")):
         topics.add("MAJOR_CREDITS")
@@ -93,9 +97,11 @@ def partial_policy_query(question: str) -> dict | None:
         topics.append("GRADUATION_CREDITS")
     if not topics:
         return None
+    targets = year_targets(question)
     year = re.search(r"(20\d{2})(?:학번|학년도입학생|년입학생)", clean)
     return {"intent": "POLICY_LOOKUP", "topics": sorted(set(topics)),
             "partial_student_information": True,
+            **({'year_targets': targets} if targets else {}),
             **({"entry_year": int(year.group(1))} if year else {})}
 
 
@@ -156,7 +162,7 @@ def _explicit_entities(question: str, catalog: dict) -> list[str]:
     return sorted(set(chosen))
 
 
-def interpret(question: str, catalog: dict, context: dict | None = None) -> dict:
+def _interpret(question: str, catalog: dict, context: dict | None = None) -> dict:
     """Return a parsed intent or explicit ambiguity; never guesses a rule/value."""
     if not isinstance(question, str) or not question.strip():
         return {"interpretation_status": "NEEDS_INFORMATION", "ambiguities": ["EMPTY_QUESTION"], "structured_query": None, "context": context or {}}
@@ -245,7 +251,7 @@ def interpret(question: str, catalog: dict, context: dict | None = None) -> dict
         if "전공선택" in clean and (any(term in clean for term in ("심화전공", "합계", "합치", "합산")) or "+" in question):
             calculations.append("MAJOR_ELECTIVE_WITH_ADVANCED")
         focus = ("DOUBLE_COUNT" if "중복" in clean and "잔여학점" in clean else
-                 "APPLICABILITY_CHOICE" if "교육과정" in clean and "선택" in clean and "적용" in clean else
+                 "APPLICABILITY_CHOICE" if "교육과정" in clean and "선택" in clean.replace('전공선택','') and "적용" in clean else
                  "COUNSELING_SCHEDULE" if "심층상담" in clean and any(term in clean for term in ("횟수", "몇번", "한번", "학기")) else
                  "GENERAL_AREA_COURSE_CREDITS" if "균형교양" in clean and "과목" in clean and re.search(r"\d+학점", clean) else
                  "GENERAL_AREA_DOUBLE_COUNT" if "균형교양" in clean and "한과목" in clean and "두영역" in clean else None)
@@ -344,6 +350,23 @@ def interpret(question: str, catalog: dict, context: dict | None = None) -> dict
         structured["assumed_completion"] = "SUCCESS"
     next_context = {"last_course_id": course_id or (context or {}).get("last_course_id")}
     return {"interpretation_status": "RESOLVED", "ambiguities": [], "structured_query": structured, "context": next_context}
+
+
+def interpret(question: str, catalog: dict, context: dict | None = None) -> dict:
+    parsed = _interpret(question, catalog, context)
+    query = parsed.get('structured_query')
+    if query is not None:
+        targets = year_targets(question)
+        if targets:
+            query['year_targets'] = targets
+        conditions = declared_conditions(question)
+        if conditions:
+            query['declared_conditions'] = conditions
+        if query['intent'] == 'POLICY_LOOKUP' and 'ENGLISH_EXEMPTION' in query['topics']:
+            score = re.search(r'(?:TOEIC|토익)\s*(\d{1,3})\s*점', question, re.I)
+            if score:
+                query['exam_claim'] = {'exam':'TOEIC', 'score':int(score[1])}
+    return parsed
 
 
 def _placement_query(question: str, catalog: dict, context: dict | None) -> dict | None:

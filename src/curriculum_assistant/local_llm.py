@@ -85,6 +85,11 @@ def interpret_with_local_llm(question: str, catalog: dict, context: dict | None 
     if not evidence_cue or not any(term in clean for term in evidence_cue):
         return {**deterministic, "llm": {"status": "REJECTED_INTENT_WITHOUT_TEXT_CUE", **metrics}}
     query = {"intent": intent, "course_id": codes[0]}
+    from .scope import year_targets, declared_conditions
+    if year_targets(question):
+        query['year_targets']=year_targets(question)
+    if declared_conditions(question):
+        query['declared_conditions']=declared_conditions(question)
     if intent == "WHAT_IF":
         query["assumed_completion"] = "SUCCESS"
     return {"interpretation_status": "RESOLVED", "ambiguities": [], "structured_query": query,

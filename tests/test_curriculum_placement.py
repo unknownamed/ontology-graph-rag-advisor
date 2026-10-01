@@ -303,7 +303,9 @@ class PlacementReviewerCases(unittest.TestCase):
 
     def test_v2_snapshot_and_graduation_simulation_values_reproducible(self):
         store = RuleSetStore(ROOT / 'data/processed/ruleset_versions')
-        old, current = store.load_version(2), store.load_active()
+        # Placement-only v2 -> v3 guarantee; source corrections are separately
+        # versioned and tested in test_source_accuracy, not assumed unchanged.
+        old, current = store.load_version(2), store.load_version(3)
         self.assertEqual(old['requirements'], current['requirements'])
         self.assertEqual(old['authoritative_document_set'], current['authoritative_document_set'])
         a, b = Graph(Path(':memory:'), old), Graph(Path(':memory:'), current)

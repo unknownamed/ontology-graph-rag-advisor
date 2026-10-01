@@ -27,8 +27,8 @@ def _rule_name(payload: dict, result: dict) -> str:
     if kind == "CREDIT_CAP":
         return "교양 졸업 산입 상한"
     if kind == "REQUIRED_EVIDENCE":
-        return {"thesis_passed": "졸업논문 합격 증빙", "thesis_final_semester_enrollment": "최종학기 졸업논문 신청 증빙",
-                "graduation_certification_passed": "졸업인증 증빙"}.get(rule["evidence_key"], result["rule_id"])
+        return {"thesis_passed": "졸업논문 합격 여부", "thesis_final_semester_enrollment": "최종학기 졸업논문 신청 여부",
+                "graduation_certification_passed": "졸업인증 통과 여부"}.get(rule["evidence_key"], result["rule_id"])
     if kind in {"ANY_COURSE", "ANY_COURSE_OR_EXEMPTION"}:
         return {"R-GE-2026-FUTURE-DESIGN": "미래설계 교양", "R-GE-2026-AI-FOUNDATION": "AI 기초 교양",
                 "R-GE-2026-WRITING": "글쓰기 교양", "R-GE-2026-ENGLISH": "영어 교양 또는 면제"}.get(result["rule_id"], result["rule_id"])
@@ -38,13 +38,25 @@ def _rule_name(payload: dict, result: dict) -> str:
 def _needs_name(item: str) -> str:
     direct = {"COMPLETE_STUDENT_TRANSCRIPT": "전체 이수내역", "OFFICIAL_EQUIVALENCE_REVIEW": "공식 동일·대체 과목 검토",
               "VERIFIED_STUDENT_CATEGORY_AND_EXCEPTIONS": "학생 적용 대상과 예외", "VERIFIED_2026_CREDIT_AND_CATALOG_APPLICABILITY": "적용 교육과정",
-              "COMPLETE_VERIFIED_SINGLE_MAJOR_RULE_COVERAGE": "단일전공 규칙 적재 범위",
-              "VERIFIED_APPLICABILITY_EVIDENCE": "적용 교육과정 확인 증빙",
-              "COMPLETE_VERIFIED_TRANSCRIPT_EVIDENCE": "전체 이수내역 확인 증빙",
+              "COMPLETE_VERIFIED_SINGLE_MAJOR_RULE_COVERAGE": "이 학생의 적용조건·입력 확인 범위",
+              "VERIFIED_APPLICABILITY_EVIDENCE": "적용 교육과정 확인 입력",
+              "COMPLETE_VERIFIED_TRANSCRIPT_EVIDENCE": "전체 이수내역의 완전성 확인 입력",
               "ACADEMIC_EVENT_APPLICABILITY_REVIEW": "재입학·전과 등 학적변동 적용 검토",
               "SECOND_PROGRAM_RULE_COVERAGE": "제2전공 적용 규칙과 학생 이수정보"}
     if item in direct:
         return direct[item]
+    if item.startswith('QUESTION_STUDENT_SCOPE_CONFLICT:'):
+        return '질문에 명시된 적용연도와 현재 학생 정보의 차이: '+item.split(':',1)[1]
+    if item.startswith('UNHANDLED_APPLICABILITY_CONDITION:'):
+        label=item.split(':',1)[1]
+        names={'STANDARD_DURATION_EXCEEDED':'수업연한 초과자의 이번 학기 등록 조건',
+               'READMISSION':'재입학자의 적용 교육과정', 'DEPARTMENT_TRANSFER':'전과자의 적용 교육과정',
+               'TRANSFER':'편입생 적용 조건','LEAVE_OF_ABSENCE':'휴학 상태에서의 적용 조건'}
+        return '이 학생에게 명시된 적용조건의 계산 범위 확인: '+names.get(label,label)
+    if item == 'VERIFIED_ENGLISH_EXEMPTION_OR_COURSE_COMPLETION':
+        return '영어 이수 또는 공식 영어 면제 여부'
+    if item == 'VERIFIED_DISABILITY_EXEMPTION_CONDITION':
+        return '졸업인증 면제 대상 여부'
     if item.startswith("STUDENT_EVIDENCE:"):
         return "학생 이수 증빙 " + item.split(":", 1)[1]
     if item.startswith("RULE_NOT_LOADED:"):
@@ -139,6 +151,17 @@ def _render_policy(payload: dict) -> str:
     result = payload["decision"].get("lookup_result")
     if not result:
         return "확인된 2026 컴퓨터공학과 정책 사실을 찾지 못했습니다. 적용 범위를 확인해 주세요."
+    if result.get('year_comparison'):
+        from copy import deepcopy
+        answers=[]
+        for row in result['year_comparison']:
+            child=deepcopy(payload)
+            child['decision']['lookup_result']=row['lookup_result']
+            child['decision']['needs_information']=row['needs_information']
+            answers.append(_render_policy(child))
+        return '\n'.join(answers)
+    if result.get('document_scope_available') is False:
+        return f"요청한 {result['policy_year']}년도 공식 문서는 등록되어 있지 않습니다. 현재 등록된 2026년도 교육과정의 적용 원칙은 확인할 수 있지만, 이를 요청 문서의 수치로 확정하지 않습니다."
     if "ALL_REQUIREMENTS" in result["topics"]:
         listed = []
         for rule in result["rules"]:
@@ -204,7 +227,7 @@ def _render_policy(payload: dict) -> str:
         elif kind == "REQUIRED_EVIDENCE":
             labels = {"thesis_passed": "졸업논문 합격", "thesis_final_semester_enrollment": "최종학기 졸업논문 수강신청",
                       "graduation_certification_passed": "졸업인증 충족"}
-            parts.append(labels.get(rule["evidence_key"], rule["evidence_key"]) + " 증빙이 필요합니다")
+            parts.append(labels.get(rule["evidence_key"], rule["evidence_key"]) + " 여부를 확인합니다. 현재 경로는 확인된 최종 결과를 입력받으며 세부 기준을 모두 직접 계산한 것은 아닙니다")
     for fact in result["policy_facts"]:
         predicate, value = fact["predicate"], fact["value"]
         if predicate == "DEFAULT_CREDIT_POLICY_BASIS":
@@ -234,13 +257,15 @@ def _render_policy(payload: dict) -> str:
             listed = ", ".join(f"{course['name']}({course['course_id']})" for course in value["courses"])
             parts.append(f"학과 권장 교양은 {listed}이며 이 권장 자체가 필수 이수 지정은 아닙니다")
         elif predicate == "YEAR_SCOPED_TRANSITION_EXISTS":
-            year = result.get("entry_year")
+            year = result.get('policy_year',result.get("entry_year"))
             if year == 2026:
                 parts.append("2002–2024 교육과정 적용자를 위한 학과 경과조치는 2026학년도 신입생에게 자동 적용되지 않습니다")
                 continue
             band = next((b for b in value["retroactive_credit_bands"] if year is not None and b["first_year"] <= year <= b["last_year"]), None)
             if band:
                 parts.append(f"학과 경과조치 표에는 {year} 적용연도에 교양 {band['general_total']}·전필 {band['major_required']}·전선 {band['major_elective']}학점이 소급 적용된다고 별도로 적혀 있습니다")
+                if 2021 <= year <= 2024:
+                    parts.append('2021–2024 적용자는 전공선택 최소 35학점 인정 단서도 함께 확인해야 합니다')
                 if 2002 <= year <= 2007:
                     parts.append("2012년 2월 이후 졸업대상자는 2008 교육과정을 적용하는 단서도 있습니다")
             else:
@@ -262,6 +287,15 @@ def _render_policy(payload: dict) -> str:
         elif predicate == "MINOR_SCOPE":
             parts.append("부전공은 주전공의 최소전공·심화전공과 부전공 21학점 이상, 지정된 부전공 필수과목을 확인해야 합니다")
             parts.append("동일 과목의 중복 인정은 9학점까지이며 졸업 총학점에는 이중 산입하지 않습니다")
+        elif predicate == 'ENGLISH_COURSE_EXEMPTION':
+            criterion=result.get('exam_criterion_result')
+            if criterion:
+                direct.insert(0, f"{criterion['exam']} {criterion['score']}점은 대학영어 면제 시험점수 기준 {criterion['minimum']}점을 "
+                              + ('충족합니다' if criterion['meets_score_criterion'] else '충족하지 않습니다'))
+            parts.append('대학영어 면제 기준: '+', '.join(c['display'] for c in value['criteria']))
+            parts.append('시험점수 기준 충족과 개인의 공식 면제 처리 완료는 다릅니다. 공식 면제가 확인되면 영어 이수 의무를 면제하지만 학점은 자동 부여하지 않으며, 다른 교양으로 교양 최소 34학점을 채워야 합니다. 영어 외 기초교양 조건은 유지됩니다. 졸업인증 영어 기준과는 별개입니다')
+        elif predicate == 'CERTIFICATION_DISABILITY_EXEMPTION':
+            parts.append('원문은 장애 학생의 졸업인증을 면제합니다. 개인 적용에는 해당 학생 조건 확인이 필요합니다')
     if result.get("compared_program_type") == "MINOR" and result["program_type"] == "SINGLE":
         direct.insert(0, "단일전공 학생에게 부전공 지정 필수과목은 추가 졸업요건으로 적용되지 않습니다")
     if "MULTI_PROGRAM" in result["topics"] and result["program_type"] == "MINOR":
@@ -288,14 +322,18 @@ def _render_policy(payload: dict) -> str:
     scope = {"SINGLE": "단일전공", "DOUBLE": "복수전공", "MINOR": "부전공"}.get(result["program_type"], result["program_type"])
     if any(item.startswith("APPLICABLE_CURRICULUM_RULES_FOR_ENTRY_YEAR:")
            for item in payload["decision"]["needs_information"]):
-        year = result.get("entry_year")
-        target = f"{year}학년도 입학생" if year is not None else "해당 입학연도 학생"
+        year = result.get('policy_year',result.get("entry_year"))
+        basis = result.get('year_target', {}).get('basis')
+        target = (f"{year}학년도 입학생" if basis == 'ADMISSION_YEAR' else f"학점기준 연도 {year} 적용자") if year is not None else "해당 적용연도 학생"
         parts.append(f"{target}에게 적용되는 수치 기준은 확인된 표와 학생별 적용 조건을 함께 검토해야 하며 2026 수치로 확정하지 않습니다")
     if "STUDENT_STATE_FOR_PERSONAL_CALCULATION" in payload["decision"]["needs_information"]:
         parts.append("학생 이수내역이 없어 개인별 인정학점과 부족량은 아직 계산할 수 없습니다. 성적표 또는 확인된 StudentState가 필요합니다")
-    year = result.get("entry_year")
+    year = result.get('policy_year',result.get("entry_year"))
+    basis={'ADMISSION_YEAR':'입학연도','CREDIT_POLICY_YEAR':'적용 학점기준 연도',
+           'CATALOG_YEAR':'과목표 연도','DOCUMENT_YEAR':'문서 발행연도'}.get(result.get('year_target',{}).get('basis'),'적용연도')
     heading = ("기존 학번 적용 원칙: " if result.get("historical_scope_requested") else
-               f"컴퓨터공학과 {year}학년도 입학생 적용 원칙: " if year is not None and year != 2026
+               f"컴퓨터공학과 {year}학년도 입학생 적용 원칙: " if year is not None and year != 2026 and basis=='입학연도' else
+               f"컴퓨터공학과 {basis} {year} 기준: " if year is not None and year != 2026
                else f"2026 컴퓨터공학과 {scope} 기준: ")
     return heading + ". ".join([*direct, *parts]) + (f". 근거: 교육과정 PDF {', '.join(map(str, pages))}쪽." if pages else ".")
 
@@ -303,6 +341,8 @@ def _render_policy(payload: dict) -> str:
 def _render_locked(payload: dict) -> str:
     decision = payload["decision"]
     intent = decision["intent"]
+    if any(n.startswith('REQUESTED_CATALOG_SCOPE_UNAVAILABLE:') for n in decision['needs_information']):
+        return '요청한 연도의 과목표를 확인할 수 없어 해당 연도의 과목 분류·편성 결과를 확정하지 않습니다. 현재 등록된 과목표는 2026년도이며 다른 연도 대신 적용하지 않았습니다.'
     if intent == "POLICY_LOOKUP":
         return _render_policy(payload)
     if intent == "CATALOG_AGGREGATE":
@@ -326,6 +366,8 @@ def _render_locked(payload: dict) -> str:
         return f"{kind} 검증을 확정하려면 비교 대상 과목 또는 입력 정보를 더 확인해야 합니다."
     if intent == "ENTITY_CHECK":
         result = decision["lookup_result"]
+        if result.get('catalog_conflict'):
+            return f"{result['course_id']}는 공식 PDF에 존재하지만 이름·분류가 충돌합니다. {result['catalog_conflict']['reason']} 자동 연결·학점 인정은 보류했습니다."
         if result["verified_catalog_entry"]:
             return f"{result['course_id']}는 확인된 2026 교육과정 편성 과목입니다. 학생별 인정은 이수 증빙과 적용 조건을 별도로 검증합니다."
         return (f"{result['course_id']}는 확인된 2026 교육과정 편성표에서 찾지 못했습니다. "
@@ -491,7 +533,7 @@ def _render_locked(payload: dict) -> str:
             return f"{heading}. {credit_text}" + major_text + f" 확인된 미충족 요건: {', '.join(unmet[:5])}." + _missing_course_text(payload) + pending
         if outcome == "UNKNOWN":
             return f"{heading}. {credit_text}" + major_text + f" 추가 확인 항목: {', '.join(_needs_name(n) for n in decision['needs_information'][:5])}."
-        return f"{heading}. {credit_text}" + major_text + " 적용된 요건과 공식 증빙은 근거 펼쳐보기에서 확인할 수 있습니다."
+        return f"{heading}. {credit_text}" + major_text + " 적용된 요건·학생 입력·확인된 최종 결과는 근거 펼쳐보기에서 확인할 수 있습니다."
     if intent == "REQUIREMENT_GAPS":
         unmet = [_rule_name(payload, r) for r in decision["requirement_results"] if r["status"] == "UNSATISFIED"]
         unknown = [_rule_name(payload, r) for r in decision["requirement_results"] if r["status"] == "NEEDS_INFORMATION"]
@@ -515,6 +557,10 @@ def _render_locked(payload: dict) -> str:
 def render_answer(payload: dict) -> str:
     """Only prevalidated wording choices can surround server-owned facts."""
     base = _render_locked(payload)
+    details=payload['decision'].get('coverage_details')
+    if details and details.get('question_scope_conflicts'):
+        base=('질문의 연도와 현재 학생 상태가 다릅니다. 아래는 학생 상태의 학점기준 '
+              f"{details['credit_policy_year']}·과목표 {details['catalog_year']}로 계산한 부분 결과이며, 질문의 다른 연도 기준 판정은 확정하지 않습니다. " +base)
     style = payload.get("answer_style", "DIRECT")
     if style == "DIRECT":
         return base

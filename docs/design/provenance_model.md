@@ -1,5 +1,11 @@
 # Provenance Model: 원문부터 실제 실행까지
 
+## v4 조건부 계산과 범위 근거
+
+영어 조정은 실제 조회 PolicyFact 관계·PDF33 locator·확인된 학생 면제 입력을 연결하며, `RULE_CONDITIONAL_ADJUSTMENT`에 기본/실효 요구량·보충 Rule·자동 학점0을 기록한다. 개인 면제 사용은 `RULE_EXEMPTION_INPUT`, 시험점수 정책 비교는 `POLICY_EXAM_CRITERION`으로 분리한다. 정책 연도별 실행은 `POLICY_YEAR_RESULT`, 원문 충돌 행은 `CATALOG_CONFLICT_LOOKUP`에 실제 문서 해시/행을 기록한다.
+
+`COVERAGE_CHECK.details`는 적재 실행·적용조건·입력 완전성·직접 계산/공식 결과 입력을 구분한다. 미구현 조건에 실제 PDF locator가 있으면 연결하되, 알려지지 않은 주장에 원문을 꾸며 붙이지 않는다. UI는 이 실행 기록과 당시 답변 payload를 표시하며 PDF 내부 방문 순서를 만들지 않는다. verifier는 조건부 계산·연도·coverage·실제 관계/학생 입력 근거를 대조한다. [v4 기록](source_accuracy_corrections.md)에 원문과 회귀 결과를 정리했다.
+
 ## 세 종류의 근거
 
 1. **원문 근거** `SourceDocument`: `source_document_id`, 경로, SHA-256, 제목, PDF 총 페이지. 현재 유일한 교육과정 기준은 `docs/curriculum/2026년도 교육과정.pdf`이며 SHA-256은 `source_index.json`의 `source.sha256`과 일치해야 한다. `SourceLocator`는 PDF 물리 페이지, 인쇄 페이지, 절·표·행·각주, 원문 확인 방식과 범위를 가진다. 인쇄 페이지를 단순 계산해 표기할 때는 관찰된 본문 오프셋 8쪽임을 명시한다.

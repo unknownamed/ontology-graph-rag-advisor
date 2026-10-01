@@ -156,6 +156,22 @@ def validate_registry(catalog: dict) -> None:
                 or any(locators[ref]["source_document_id"] not in included for ref in refs)):
             raise ValueError("Verified policy fact requires unique identity and official PDF evidence")
         policy_ids.add(fact["policy_fact_id"])
+    for rule in rules.values():
+        for adjustment in rule.get('conditional_adjustments',[]):
+            compensation=rules.get(adjustment.get('compensated_by_rule_id'),{})
+            if (rule['rule_type']!='MIN_CREDITS' or adjustment.get('operation')!='REDUCE_REQUIRED_CREDITS' or
+                type(adjustment.get('amount')) is not int or not 0<adjustment['amount']<=rule['required_value'] or
+                adjustment.get('automatic_credit_award')!=0 or adjustment.get('affected_rule_id')!=rule['rule_id'] or
+                adjustment.get('policy_fact_id') not in policy_ids or compensation.get('area')!='GENERAL_TOTAL' or
+                compensation.get('rule_type')!='MIN_CREDITS' or adjustment.get('required_verification_status')!='VERIFIED' or
+                adjustment.get('requires_evidence_id') is not True or
+                not adjustment.get('source_refs') or
+                not set(adjustment.get('source_refs',[])).issubset(rule['source_refs'])):
+                raise ValueError('Conditional credit adjustment requires verified source, compensation and no credit award')
+        for exemption in rule.get('conditional_exemptions',[]):
+            if (exemption.get('policy_fact_id') not in policy_ids or not exemption.get('source_refs') or
+                not set(exemption['source_refs']).issubset(rule['source_refs'])):
+                raise ValueError('Conditional exemption lacks verified rule/policy provenance')
     for conflict in ruleset["unresolved_conflicts"]:
         if conflict["resolution_status"] != "UNRESOLVED" or not set(conflict["source_documents"]).issubset(included):
             raise ValueError("RuleSet conflict provenance or status is invalid")
@@ -518,6 +534,36 @@ class RuleSetStore:
         entry = self._save(catalog)
         temporary = self.directory / "active.json.tmp"
         temporary.write_text(json.dumps(entry, indent=2) + "\n", encoding="utf-8")
+        temporary.replace(self.pointer)
+        return catalog
+
+    def activate_rule_correction(self, catalog: dict) -> dict:
+        """Correct source interpretation without pretending a new document was added."""
+        current = self.load_active()
+        validate_registry(catalog)
+        preserved = ('authoritative_documents', 'authoritative_document_set', 'document_relations',
+                     'courses', 'department', 'curriculum', 'historical_credit_rows', 'coverage_manifest')
+        if any(catalog[key] != current[key] for key in preserved):
+            raise ValueError('Source correction must preserve document set, catalog and scope')
+        old, new = current['curriculum_ruleset'], catalog['curriculum_ruleset']
+        if (new['ruleset_version'] != old['ruleset_version'] + 1 or
+                new['included_rule_ids'] != old['included_rule_ids'] or
+                new['effective_scope'] != old['effective_scope']):
+            raise ValueError('Source correction needs the next immutable version and same rule membership')
+        if (catalog['source_locators'][:len(current['source_locators'])] != current['source_locators'] or
+                catalog['policy_facts'][:len(current['policy_facts'])] != current['policy_facts'] or
+                catalog['rule_lineage'][:len(current['rule_lineage'])] != current['rule_lineage']):
+            raise ValueError('Earlier source facts must remain preserved')
+        before = {r['rule_id']:r for r in current['requirements']}
+        for r in catalog['requirements']:
+            original = before[r['rule_id']]
+            if r != original and (r['rule_version'] != original['rule_version'] + 1 or
+                                  r['supersedes'] != rule_ref(original) or
+                                  r['verification_status'] != 'VERIFIED'):
+                raise ValueError('Corrected rules require verified source and version lineage')
+        entry = self._save(catalog)
+        temporary = self.directory / 'active.json.tmp'
+        temporary.write_text(json.dumps(entry, indent=2) + '\n', encoding='utf-8')
         temporary.replace(self.pointer)
         return catalog
 

@@ -71,7 +71,7 @@ def verify_payload(payload: dict) -> None:
         raise ValueError("Displayed graph relation was not returned by an executed query")
     if any(event["event_type"] == "GRAPH_QUERY" and event["operation"] not in {"FETCH_CATALOG_ENTRY", "FETCH_CATALOG_SET", "FETCH_REQUIREMENTS", "FETCH_POLICY_FACTS", "FETCH_COURSE_REQUIREMENT_LINKS"} for event in events):
         raise ValueError("Unexpected graph operation in trace")
-    if payload["decision"]["intent"] == "REMAINING_PLAN":
+    if payload["decision"]["intent"] == "REMAINING_PLAN" and payload['decision'].get('remaining_requirements'):
         decision = payload["decision"]
         summary = decision["remaining_requirements"]
         statuses = {r["rule_id"]: r["status"] for r in decision["requirement_results"]}
@@ -143,7 +143,7 @@ def verify_payload(payload: dict) -> None:
             unknown = sorted((c for c in courses if c['course_id'] in selection['needs_verification_course_ids']), key=lambda c: c['course_id'])
             if pv['courses'] != expected or pv['needs_verification'] != unknown:
                 raise ValueError('Placement lookup result hides or changes returned course facts')
-    if payload["decision"]["intent"] == "CATALOG_AGGREGATE":
+    if payload["decision"]["intent"] == "CATALOG_AGGREGATE" and payload['decision'].get('lookup_result'):
         result = payload["decision"]["lookup_result"]
         aggregation = [event for event in events if event["event_type"] == "CATALOG_AGGREGATION"]
         catalog_queries = [event for event in events if event["event_type"] == "GRAPH_QUERY"
@@ -166,6 +166,15 @@ def verify_payload(payload: dict) -> None:
             raise ValueError("Policy fact lacks verified PDF provenance")
     if payload["decision"]["intent"] == "POLICY_LOOKUP":
         lookup = payload["decision"].get("lookup_result") or {}
+        targets=selected[0].get('requested_year_targets',[])
+        returned_targets=([row['target'] for row in lookup['year_comparison']] if lookup.get('year_comparison') else
+                          [lookup['year_target']] if lookup.get('year_target') else [])
+        if targets and any(t not in targets for t in returned_targets):
+            raise ValueError('Policy output scope differs from explicitly requested years')
+        for row in lookup.get('year_comparison',[]):
+            if not any(e['event_type']=='POLICY_YEAR_RESULT' and e.get('target')==row['target'] and
+                       e.get('lookup_result')==row['lookup_result'] for e in events):
+                raise ValueError('Year comparison has no executed scoped lookup')
         rules = {rule["rule_id"]: rule for rule in lookup.get("rules", [])}
         calculations = lookup.get("calculations", [])
         recorded = [event for event in events if event["event_type"] == "POLICY_CALCULATION"]
@@ -199,7 +208,17 @@ def verify_payload(payload: dict) -> None:
             if (rid not in rules or not set(assessment["source_refs"]).issubset(evidence["source_locators"])
                     or not any(event["event_type"] == "POLICY_APPLICABILITY" and event["rule_id"] == rid
                                and event["result"] == assessment for event in events)):
-                raise ValueError("Policy applicability lacks PDF evidence or actual execution")
+                    raise ValueError("Policy applicability lacks PDF evidence or actual execution")
+        for view in [lookup,*[r['lookup_result'] for r in lookup.get('year_comparison',[])]]:
+            claim=view.get('exam_criterion_result')
+            if claim:
+                fact=next((f for f in evidence['policy_facts'] if f['policy_fact_id']==claim['policy_fact_id']),None)
+                criterion=next((c for c in fact['value']['criteria'] if c['exam']==claim['exam']),None) if fact else None
+                if (not criterion or claim['minimum']!=criterion['minimum'] or
+                    claim['meets_score_criterion']!=(claim['score']>=criterion['minimum']) or
+                    claim['official_exemption_granted'] or not any(e['event_type']=='POLICY_EXAM_CRITERION' and
+                        e.get('result')==claim for e in events)):
+                    raise ValueError('Exam criterion differs from official policy or grants unconfirmed exemption')
     rule_events = {event["event_id"]: event for event in events if event["event_type"] == "RULE_EVALUATION"}
     for decision in decisions:
         unhashed = {key: value for key, value in decision.items() if key not in {"canonical_result_hash", "decision_id"}}
@@ -247,6 +266,22 @@ def verify_payload(payload: dict) -> None:
                     raise ValueError("Requirement applicability lacks executed official policy evidence")
             if not set(result["source_refs"]).issubset(evidence["source_locators"]):
                 raise ValueError("Rule result has no PDF source locator")
+            for adjustment in result.get('conditional_adjustments_applied',[]):
+                source_rule=next(r for r in evidence['rules'] if r['rule_id']==result['rule_id'])
+                ir=next((a for a in source_rule.get('conditional_adjustments',[]) if a['policy_fact_id']==adjustment['policy_fact_id']),None)
+                fact=next((f for f in evidence['policy_facts'] if f['policy_fact_id']==adjustment['policy_fact_id']),None)
+                if (not ir or not fact or fact['verification_status']!='VERIFIED' or
+                    result['required']!=source_rule['required_value']-ir['amount'] or
+                    adjustment['automatic_credit_award']!=0 or adjustment['student_evidence_id'] not in student_evidence_ids or
+                    fact['relationship_id'] not in result['used_relationship_ids'] or not any(
+                        e['event_type']=='RULE_CONDITIONAL_ADJUSTMENT' and e['rule_id']==result['rule_id'] and
+                        e['result']==adjustment for e in events)):
+                    raise ValueError('Conditional credit adjustment lacks source, input or actual execution')
+            if result.get('evaluation_basis')=='OFFICIAL_EXEMPTION_INPUT' and not any(
+                e['event_type']=='RULE_EXEMPTION_INPUT' and e['rule_id']==result['rule_id'] and
+                set(result['used_student_evidence_ids']).issubset(e['input_refs']) and
+                set(result.get('used_policy_fact_ids',[])).issubset(e['input_refs']) for e in events):
+                raise ValueError('Official exemption explanation has no executed input record')
             if any(eid not in rule_events or rule_events[eid]["rule_id"] != result["rule_id"] or rule_events[eid]["result"] != result["status"] for eid in result["execution_event_ids"]):
                 raise ValueError("Rule result has no matching actual calculation event")
             calculation = result.get("credit_calculation")
@@ -271,6 +306,11 @@ def verify_payload(payload: dict) -> None:
                 if not valid:
                     raise ValueError("Requirement credit calculation differs from verified rule")
     actual = payload["decision"]
+    catalog_conflict=(actual.get('lookup_result') or {}).get('catalog_conflict')
+    if catalog_conflict:
+        if (actual.get('lookup_status')!='CONFLICTED' or not any(e['event_type']=='CATALOG_CONFLICT_LOOKUP' and
+            e.get('result')==catalog_conflict and e.get('source_document_id') in included_documents for e in events)):
+            raise ValueError('Catalog conflict explanation lacks a recorded official-source lookup')
     affecting = {c["conflict_id"] for c in authority["unresolved_conflicts"]}
     if set(actual["unresolved_conflict_ids"]) != affecting:
         raise ValueError("Decision conflict list differs from selected RuleSet")
@@ -326,6 +366,17 @@ def verify_payload(payload: dict) -> None:
             raise ValueError("Graduation coverage result differs from actual execution")
         if not set(coverage_events[0]["missing"]).issubset(actual["needs_information"]):
             raise ValueError("Graduation coverage gaps are absent from the decision")
+        details=actual.get('coverage_details')
+        if details and (coverage_events[0].get('details')!=details or details['certification_subrules_computed'] or
+            actual['coverage_complete']!=(details['loaded_rules_executed'] and details['applicable_conditions_identified'] and
+                                          details['required_student_inputs_confirmed'])):
+            raise ValueError('Coverage explanation differs from actual checked scope')
+        if details and not set(details.get('applicability_source_refs',[])+[ref for refs in details.get('condition_source_refs',{}).values() for ref in refs]).issubset(evidence['source_locators']):
+            raise ValueError('Coverage condition explanation lacks cited official source')
+    parsed=payload.get('interpretation',{}).get('structured_query') or {}
+    if parsed.get('year_targets',[])!=selected[0].get('requested_year_targets',[]):
+        if payload.get('interpretation'):
+            raise ValueError('Interpretation years differ from executed query scope')
     for key in ("requirement_results", "credited_amount", "missing_amount", "missing_courses", "needs_information"):
         if payload[key] != actual[key]:
             raise ValueError(f"AnswerPayload {key} differs from DeterministicDecision")

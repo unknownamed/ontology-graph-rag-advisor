@@ -222,7 +222,7 @@ class Graph:
                                              "dst": json.loads(r["payload"])["rule_id"]}} for r in rows
                     if rule_ids is None or json.loads(r["payload"])["rule_id"] in rule_ids]
         if op == "FETCH_POLICY_FACTS":
-            if topic not in {"APPLICABILITY", "FREE_CHOICE", "EQUIVALENCE", "RECOMMENDATIONS", "TRANSITION", "MULTI_PROGRAM", "HISTORICAL_CREDITS", "GENERAL_CREDITS", "GENERAL_AREAS"}:
+            if topic not in {"APPLICABILITY", "FREE_CHOICE", "EQUIVALENCE", "RECOMMENDATIONS", "TRANSITION", "MULTI_PROGRAM", "HISTORICAL_CREDITS", "GENERAL_CREDITS", "GENERAL_AREAS", "ENGLISH_EXEMPTION", "GRADUATION_CONDITIONS"}:
                 raise ValueError("Policy topic is not allowlisted")
             rows = self.db.execute("""
                 SELECT n.payload, e.id edge_id FROM edges e JOIN nodes n ON n.id=e.dst

@@ -5331,7 +5331,32 @@
         42,
         45
       ],
-      "reason": "PDF 42: 수식없는물리로보는세상, 균형교양, 2학점 (raw extraction incorrectly says 3); PDF 45: 융합프로젝트Ⅰ, 확대교양, 3학점. Same code is unresolved."
+      "reason": "PDF 42: 수식없는물리로보는세상, 균형교양, 3학점, 이론3/실기0, 2학기; PDF 45: 융합프로젝트Ⅰ, 확대교양, 3학점, 이론3/실기0, 학기 원문 이룸. Same code has conflicting names/classifications; recognition remains on hold.",
+      "source_rows": [
+        {
+          "pdf_page": 42,
+          "printed_page": 34,
+          "course_id": "GEA8617",
+          "name": "수식없는물리로보는세상",
+          "classification": "GENERAL_BALANCED",
+          "credits": 3,
+          "theory": 3,
+          "practice": 0,
+          "term_raw": "2"
+        },
+        {
+          "pdf_page": 45,
+          "printed_page": 37,
+          "course_id": "GEA8617",
+          "name": "융합프로젝트Ⅰ",
+          "classification": "GENERAL_EXPANDED",
+          "credits": 3,
+          "theory": 3,
+          "practice": 0,
+          "term_raw": "이룸"
+        }
+      ],
+      "correction_record_id": "SOURCE-CORRECTION-GEA8617-2026-10-01"
     }
   ]
 }

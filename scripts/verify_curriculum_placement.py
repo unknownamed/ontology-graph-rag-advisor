@@ -40,6 +40,7 @@ def post(port, data):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--port', type=int, default=18473)
+    parser.add_argument('--output', type=Path, default=ROOT / 'evaluation/results/curriculum_placement_api_results.json')
     args = parser.parse_args()
     results = []
     for question, fid, expected in CASES:
@@ -77,7 +78,7 @@ def main():
                'provenance':'PASS','llm_expression':on['llm_expression']}
         results.append(row)
         print('PASS',question,flush=True)
-    path = ROOT / 'evaluation/results/curriculum_placement_api_results.json'
+    path = args.output
     path.write_text(json.dumps({'notice':'SYNTHETIC INPUTS ONLY; official PDF cells are placement, not live offerings', 'results':results},ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
     print(f'PASS: {len(results)} API scenarios, LLM ON/OFF, repeated execution and provenance')
 

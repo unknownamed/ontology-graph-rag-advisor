@@ -163,6 +163,19 @@ AnswerPayload = { contract_version, decision: DeterministicDecision,
 
 `ExecutionTrace.PLACEMENT_SELECTION`은 실제 읽은 entry ID와 필터·반환 분할을 기록한다. verifier가 원문 셀 투영, 실제 CatalogEntry 관계, 후보 연결, 선택 및 그룹을 재계산·대조한다. 상세 형식과 원문 사례는 [편성정보 설계](curriculum_placement.md)를 따른다.
 
+## 원문 예외·적용범위 계약 (v4)
+
+- `StudentState`는 기존 입학연도·`credit_policy_year`·`catalog_year`를 분리하고, `official_outcomes.english_course_exemption={value,verification_status,evidence_id}`를 확인된 개인 면제 결과로 사용한다. 시험점수만으로 이 값을 생성하지 않는다. `disability_status`의 동일 형태 확인 입력은 PDF569 인증 면제 조건에만 적용한다. 단순 Boolean 주장은 확인 결과가 아니다.
+- `StructuredQuery.year_targets[]={year,basis,invalid_range?}`의 basis는 `ADMISSION_YEAR|CREDIT_POLICY_YEAR|CATALOG_YEAR|DOCUMENT_YEAR`다. 허용 연도 범위/범위 길이를 검증한다. `declared_conditions[]`는 명시된 관련 학적 조건이며 `exam_claim={exam,score}`는 정책 기준 비교용 주장으로 개인 면제를 확정하지 않는다.
+- `QueryPlan.requested_year_targets`는 해석된 범위를 보존한다. `lookup_result.policy_year`와 `entry_year`는 구분한다. 후자는 실제 입학연도 요청일 때만 채운다. 여러 범위는 `year_comparison[{target,lookup_status,lookup_result,needs_information}]`로 반환한다. 미지원 문서/과목표 범위는 다른 연도로 대체하지 않는다.
+- `Rule.conditional_adjustments[]`는 조건 키·확인 상태·학생 근거 필요 여부·감액·보충 Rule·PolicyFact·원문을 명시한다. `RequirementResult.conditional_adjustments_applied[]`에 실제9→7 및 면제 학점0을 기록한다. 영어 외 지정 필수·교양 총량은 별도 실행한다.
+- `RequirementResult.evaluation_basis`는 `DIRECT_RULE_CALCULATION`, `OFFICIAL_RESULT_INPUT`, `OFFICIAL_EXEMPTION_INPUT`, `VERIFIED_PDF_EXEMPTION`, `CONDITION_INFORMATION_REQUIRED`를 구분한다. 공식 결과 입력은 인증의 모든 세부 조건을 직접 계산했다는 주장이 아니다.
+- `Decision.coverage_details`는 `loaded_rules_executed`, `applicable_conditions_identified`, `required_student_inputs_confirmed`, `unhandled_conditions[]`, `question_scope_conflicts[]`, `unverified_rule_ids[]`, 직접 계산/공식 결과/원문 면제 Rule ID, 원문 적용 근거 및 조건별 locator를 반환한다. `certification_subrules_computed:false`를 보존한다. coverage 완료를 전체 PDF 활용 완료로 해석하지 않는다.
+- 결과에 영향을 줄 수 있는 계약 밖 학적·면제·인정 주장은 미처리 조건으로 보존한다. 무관한 metadata 때문에 모든 결과를 미확인으로 만들지 않는다. 확인된 미충족과 NEEDS_INFORMATION은 함께 반환한다.
+- `catalog_conflicts[]`는 Course를 활성화하지 않고 원문 문서/행/열/정정 기록을 보존한다. GEA8617의 ENTITY_CHECK는 CONFLICTED와 실제 조회 기록을 반환한다.
+
+기존 v1/v2/v3 데이터·판정은 해당 버전의 계약으로 재현한다. 상세 의미와 source-derived 기대값은 [v4 정정 보고서](source_accuracy_corrections.md)를 따른다.
+
 ## 답변 불변식
 
 - `AnswerPayload.decision`은 `DeterministicDecision`과 동일 ID/해시를 가리킨다. LLM은 한국어 문장화만 하고 계산·조회·졸업 판정 필드를 쓸 권한이 없다.

@@ -107,6 +107,8 @@ class Handler(BaseHTTPRequestHandler):
                 payload = express_with_local_llm(payload)
             if parsed is not None:
                 payload["interpretation"] = parsed
+            from .verifier import verify_payload
+            verify_payload(payload)
             return self._json(200, payload)
         except (ValueError, TypeError, KeyError, json.JSONDecodeError) as error:
             return self._json(400, {"error": "INVALID_INPUT", "detail": str(error)})
