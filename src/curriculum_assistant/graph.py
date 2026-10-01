@@ -7,6 +7,7 @@ import sqlite3
 from pathlib import Path
 
 from .remaining import satisfaction_basis
+from .placement import normalize_placement
 
 
 def canonical(value: object) -> str:
@@ -62,6 +63,8 @@ class Graph:
             status = course["verification_status"]
             node(cid, "Course", {"course_id": cid, "name": course["name"]}, refs, status)
             node(entry, "CatalogEntry", {"catalog_credits": course["catalog_credits"], "grade_term": course.get("grade_term"),
+                                         "placement_term_raw": course.get("placement_term_raw"),
+                                         "placement_verification_status": course.get("placement_verification_status", status),
                                          "minor_required": course.get("minor_required", False), "general_area": course.get("general_area"),
                                          "eligible_scope": course.get("eligible_scope", "GENERAL"),
                                          "source": course["source"], "fact_id": course["fact_id"]}, refs, status)
@@ -193,7 +196,8 @@ class Graph:
             """, (curriculum_id, course_id)).fetchone()
             if not row:
                 return None
-            return {"course_id": row["course_id"], "name": json.loads(row["course_payload"])["name"],
+            result = {"course_id": row["course_id"], "name": json.loads(row["course_payload"])["name"],
+                    "curriculum_id": curriculum_id,
                     "entry_id": row["entry_id"], "classification_id": row["classification_id"],
                     "verification_status": row["entry_status"], "classification_verification_status": row["classification_status"],
                     "classification": json.loads(row["classification_payload"])["classification"],
@@ -204,6 +208,8 @@ class Graph:
                         {"id": row["course_edge_id"], "kind": "FOR_COURSE", "src": row["entry_id"], "dst": row["course_id"]},
                         {"id": row["classification_edge_id"], "kind": "CLASSIFIED_AS", "src": row["entry_id"], "dst": row["classification_id"]},
                     ]}
+            result["curriculum_placement"] = normalize_placement(result)
+            return result
         if op == "FETCH_REQUIREMENTS":
             if rule_ids is not None and not set(rule_ids).issubset({r["rule_id"] for r in self.catalog["requirements"]}):
                 raise ValueError("Requirement filter contains an unknown rule")

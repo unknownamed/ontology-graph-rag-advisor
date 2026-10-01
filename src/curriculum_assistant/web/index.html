@@ -26,7 +26,7 @@ dialog{width:min(760px,calc(100% - 24px));max-height:calc(100dvh - 32px);padding
 <div class="composer-shell"><form id="form" class="composer"><button id="attach" class="attach" type="button" aria-label="이수자료 첨부" title="이수자료 첨부">＋</button><textarea id="question" rows="1" aria-label="한국어 질문" placeholder="교육과정에 대해 질문하세요" autocomplete="off"></textarea><button id="send" class="send" type="submit">전송</button></form><p class="composer-note"><span id="request-status" role="status">Enter 전송 · Shift+Enter 줄바꿈</span><span>이 페이지 안에서만 유지 · 새로고침 시 초기화</span></p></div>
 </main>
 <input id="upload-file" type="file" accept=".pdf,.docx,.hwp,.png,.jpg,.jpeg,.webp" aria-label="이수자료 파일" hidden>
-<dialog id="settings-panel" aria-labelledby="settings-title"><header class="panel-head"><h2 id="settings-title">학생 정보 · 설정</h2><button class="secondary" type="button" data-close="settings-panel" aria-label="학생 정보 설정 닫기">닫기</button></header><div class="panel-body"><div id="applied-summary"></div><p id="state-status" class="muted" role="status"></p><label class="switch"><input type="checkbox" id="llm" checked> 로컬 LLM 질문 해석·답변 말투 보조</label><p class="muted">판정·학점 계산은 Rule Engine이 수행합니다. 마지막으로 확인한 과목을 참조하는 후속 질문을 지원하며 대화 전체를 기억하지는 않습니다.</p><details><summary>고급: 구조화 StudentState 확인 · 교체</summary><p class="muted">아래 편집은 아직 적용되지 않습니다. 적용 버튼으로 기존 학생 상태를 교체합니다. 미확인 값은 검증 완료로 바뀌지 않습니다.</p><textarea id="state" spellcheck="false" aria-label="학생 상태 JSON"></textarea><button id="apply-state" type="button">학생 상태 적용</button></details><details><summary>현재 지원 범위 · 자료 안내</summary><p>ADS-CE-2026-CORE v1 / CRS-CE-2026-CORE v2 · 국내 일반 학생 단일전공</p><p class="muted">컴퓨터공학과 43과목 · 원문 대조 교양 280과목. 과거 연도의 학점표 조회와 해당 학생의 전체 졸업 판정은 다릅니다. 졸업요건상 후보는 실제 다음 학기 개설·선수과목·시간표를 보장하지 않습니다.</p><p class="muted">PDF·DOCX·PNG 추출 경로를 검증했습니다. JPG/JPEG/WEBP와 텍스트 추출 가능한 HWP 5 경로도 있으며 형식별 검증에 제한이 있습니다. 파일당 10MB 이하입니다. 업로드 자료는 학생 입력이며 규칙 원천이 아닙니다.</p></details><div class="panel-actions"><button id="clear-student" class="secondary" type="button">적용 학생 정보 비우기</button><button id="reset-all" class="secondary" type="button">전체 초기화</button></div><p class="muted">이 탭의 메모리에만 보관합니다. 새로고침하면 대화·학생 상태·파일 후보·후속 질문 참조가 사라집니다. 영구 저장하지 않습니다.</p></div></dialog>
+<dialog id="settings-panel" aria-labelledby="settings-title"><header class="panel-head"><h2 id="settings-title">학생 정보 · 설정</h2><button class="secondary" type="button" data-close="settings-panel" aria-label="학생 정보 설정 닫기">닫기</button></header><div class="panel-body"><div id="applied-summary"></div><p id="state-status" class="muted" role="status"></p><label class="switch"><input type="checkbox" id="llm" checked> 로컬 LLM 질문 해석·답변 말투 보조</label><p class="muted">판정·학점 계산은 Rule Engine이 수행합니다. 마지막으로 확인한 과목을 참조하는 후속 질문을 지원하며 대화 전체를 기억하지는 않습니다.</p><details><summary>고급: 구조화 StudentState 확인 · 교체</summary><p class="muted">아래 편집은 아직 적용되지 않습니다. 적용 버튼으로 기존 학생 상태를 교체합니다. 미확인 값은 검증 완료로 바뀌지 않습니다.</p><textarea id="state" spellcheck="false" aria-label="학생 상태 JSON"></textarea><button id="apply-state" type="button">학생 상태 적용</button></details><details><summary>현재 지원 범위 · 자료 안내</summary><p>ADS-CE-2026-CORE / CRS-CE-2026-CORE · 국내 일반 학생 단일전공 (적용 버전은 각 답변의 근거에서 확인)</p><p class="muted">컴퓨터공학과 43과목 · 원문 대조 교양 280과목. 과거 연도의 학점표 조회와 해당 학생의 전체 졸업 판정은 다릅니다. 졸업요건상 후보는 실제 다음 학기 개설·선수과목·시간표를 보장하지 않습니다.</p><p class="muted">PDF·DOCX·PNG 추출 경로를 검증했습니다. JPG/JPEG/WEBP와 텍스트 추출 가능한 HWP 5 경로도 있으며 형식별 검증에 제한이 있습니다. 파일당 10MB 이하입니다. 업로드 자료는 학생 입력이며 규칙 원천이 아닙니다.</p></details><div class="panel-actions"><button id="clear-student" class="secondary" type="button">적용 학생 정보 비우기</button><button id="reset-all" class="secondary" type="button">전체 초기화</button></div><p class="muted">이 탭의 메모리에만 보관합니다. 새로고침하면 대화·학생 상태·파일 후보·후속 질문 참조가 사라집니다. 영구 저장하지 않습니다.</p></div></dialog>
 <dialog id="upload-panel" aria-labelledby="upload-title"><header class="panel-head"><h2 id="upload-title">이수자료 검토</h2><button type="button" class="secondary" data-close="upload-panel" aria-label="이수자료 검토 닫기">닫기</button></header><div class="panel-body"><p id="upload-status" role="status" class="muted">첨부 버튼에서 파일을 선택하세요.</p><p class="pending-note">검토 중인 후보는 판정에 사용하지 않습니다. 정규화 결과를 확인한 뒤 학생 이수정보로 적용하세요. 기존 학생 상태에는 임의로 합치지 않습니다.</p><div id="student-review"></div><div id="candidates"></div><div id="normalized-summary"></div><button id="apply-upload" type="button" hidden>학생 이수정보로 적용</button><details id="review-debug" hidden><summary>원문 · 정규화 · 연결 상태 상세 (JSON)</summary><pre id="review-output" class="review-debug"></pre></details><div class="panel-actions"><button id="reset-upload" type="button" class="secondary">검토 중인 업로드 폐기</button></div></div></dialog>
 <dialog id="confirm-panel" aria-labelledby="confirm-title"><header class="panel-head"><h2 id="confirm-title">변경 범위 확인</h2></header><div class="panel-body"><p id="confirm-description"></p><div class="panel-actions"><button id="confirm-cancel" type="button" class="secondary">취소</button><button id="confirm-accept" type="button">확인 후 진행</button></div></div></dialog>
 <script>
@@ -106,6 +106,18 @@ function section(root,title) { const box=el('div',undefined,'section'); box.appe
 function line(root,text) { root.append(el('div',text,'line')); }
 function listRows(root, rows, format) { if(!rows?.length) { line(root,'기록 없음'); return; } rows.forEach(row=>line(root,format(row))); }
 function sourceLink(root,page,label) { if(!Number.isInteger(page)) return; const a=el('a',label||`PDF ${page}쪽`); a.href=`/curriculum.pdf#page=${page}`; a.target='_blank'; a.rel='noopener'; root.append(a); root.append(document.createTextNode(' ')); }
+function placementText(p){
+  if(!p||p.term_verification_status!=='VERIFIED')return '편성학기 확인 필요'+(p?.raw_grade_term||p?.raw_term?` (원문: ${p.raw_grade_term||p.raw_term})`:'');
+  const terms={SEMESTER_1:'1학기',SEMESTER_2:'2학기',SUMMER:'하계',WINTER:'동계'};
+  const groups=new Map();for(const s of p.slots){const grade=s.grade_scope==='ALL'?'전 학년':s.grade!=null?`${s.grade}학년`:'학년 미기재';if(!groups.has(grade))groups.set(grade,[]);groups.get(grade).push(terms[s.term]);}
+  return [...groups].map(([grade,t])=>`${grade} ${t.join('·')}`).join('; ');
+}
+function placementRows(root,title,entries){
+  const detail=el('details');detail.append(el('summary',`${title} ${entries.length}개 전체 보기`));root.append(detail);
+  detail.addEventListener('toggle',()=>{if(!detail.open||detail.dataset.loaded)return;detail.dataset.loaded='true';const list=el('div',undefined,'candidate-list');detail.append(list);
+    entries.forEach(e=>{const row=el('div',undefined,'candidate');row.dataset.courseId=e.course_id;list.append(row);line(row,`${e.name}(${e.course_id}) · ${e.catalog_credits}학점 · ${AREA_LABELS[e.classification]||e.classification}`);line(row,`교육과정 편성: ${placementText(e.curriculum_placement)}`);line(row,'실제 개설 · 개인 수강 가능: 미확인');if(e.eligible_scope==='FOREIGN_ONLY')line(row,'외국인 유학생 대상 과목: 국내 일반 학생 인정 후보가 아닙니다.');if(e.eligible_scope==='NON_ENGINEERING_ONLY')line(row,'이공계 제외 대상 과목: 컴퓨터공학과 인정 후보가 아닙니다.');sourceLink(row,e.source?.pdf_page,`편성표 PDF ${e.source?.pdf_page}쪽`);line(row,`CatalogEntry: ${e.entry_id} · 관계: ${(e.relationship_ids||[]).join(', ')}`);});
+  });
+}
 function candidateDetails(root,title,courses,payload) {
   const detail=el('details');detail.append(el('summary',`${title} ${courses.length}개 전체 보기`));root.append(detail);
   detail.addEventListener('toggle',()=>{
@@ -116,9 +128,11 @@ function candidateDetails(root,title,courses,payload) {
     const locators=payload.evidence?.source_locators||{};
     courses.forEach(course=>{
       const row=el('div',undefined,'candidate');list.append(row);
+      row.dataset.courseId=course.course_id;
       const ruleIds=course.satisfies_requirement_ids||[];
       const edgeIds=(course.relationship_ids||[]).filter(id=>actualEdges.has(id));
-      line(row,`${course.course_name}(${course.course_id}) · ${course.credits}학점 · ${course.course_classification} · 연결 요건 ${ruleIds.join(', ')||'없음'}`);
+      line(row,`${course.course_name}(${course.course_id}) · ${course.credits}학점 · ${AREA_LABELS[course.course_classification]||course.course_classification} · 연결 요건 ${ruleIds.join(', ')||'없음'}`);
+      line(row,`교육과정 편성: ${placementText(course.curriculum_placement)} · 실제 개설/수강 가능: 미확인`);
       line(row,`실제 조회 SATISFIES 관계: ${edgeIds.join(', ')||'없음'}`);
       const refs=[...new Set(Object.values(course.provenance?.rule_source_refs||{}).flat())];
       const rulePages=[...new Set(refs.map(ref=>locators[ref]?.pdf_page_start).filter(Number.isInteger))].sort((a,b)=>a-b);
@@ -227,11 +241,18 @@ function detailView(wrap,payload,state) {
   const relationships=el('details');relationships.append(el('summary',`조회 관계 ${relationRows.length}건 · 연결 보기`));box.append(relationships);
   shownRelations.forEach(edge=>{const row=el('div',undefined,'line');row.dataset.relationshipId=edge.id;const a=nodeById.get(edge.src),b=nodeById.get(edge.dst);row.append(el('div',`${a?displayNode(a):edge.src} → ${b?displayNode(b):edge.dst} · ${REL_LABELS[edge.kind]||edge.kind}`));const ids=el('details');ids.append(el('summary','관계 식별자'),el('div',`${edge.id}: ${edge.src} → ${edge.dst} (${edge.kind})`,'mono'));row.append(ids);relationships.append(row);});
   if(relationRows.length>shownRelations.length)line(box,`실제 조회 관계 ${relationRows.length}건 중 ${shownRelations.length}건을 화면에 표시합니다. 전체 반환 관계는 아래 상세 실행 기록의 EvidenceBundle에서 확인할 수 있습니다.`);
-  line(box,'그림은 실행 결과에서 사용한 관계와 최대 12개 후보의 연결을 표시합니다. 물리적인 노드 방문 순서가 아닙니다. 전체 반환 관계는 상세 실행 기록에 있습니다.');
+  line(box,'그림은 실제 계산에 사용한 관계와 목록순 최대 12개 후보·편성 과목의 연결을 표시합니다. 전체 목록이나 물리적인 노드 방문 순서가 아닙니다. 전체 반환 관계는 상세 실행 기록에 있습니다.');
   const graph=el('div',undefined,'graph-wrap'); graph.append(drawGraph(payload)); box.append(graph);
   box=section(det,'3. 적용 규칙과 검증 결과');
   if(payload.requirement_results?.length)payload.requirement_results.forEach(r=>{const row=el('div',`${ruleLabel(payload,r.rule_id)}: ${STATUS_LABELS[r.status]||r.status} · 관찰 ${r.observed??'미확인'} / 요구 ${r.required??'미확인'}`,'line');row.dataset.ruleId=r.rule_id;row.dataset.status=r.status;row.dataset.observed=JSON.stringify(r.observed??null);row.dataset.required=JSON.stringify(r.required??null);const ids=el('details');ids.append(el('summary','Rule 식별자'),el('div',r.rule_id,'mono'));row.append(ids);box.append(row);});
   else if(!payload.decision?.lookup_result?.rules?.length&&!payload.decision?.lookup_result?.policy_facts?.length)line(box,'기록 없음');
+  const lookup=payload.decision?.lookup_result;
+  if(payload.decision?.intent==='COURSE_LOOKUP'&&lookup?.curriculum_placement){const placementBox=section(det,'교육과정상 편성 정보');line(placementBox,placementText(lookup.curriculum_placement));line(placementBox,'편성 학년은 수강 제한이 아닙니다. 실제 개설·수강 가능 여부는 미확인입니다.');sourceLink(placementBox,lookup.source.pdf_page);}
+  if(payload.decision?.intent==='PLACEMENT_LOOKUP'){
+    const placementBox=section(det,'교육과정상 편성 과목 조회');line(placementBox,'공식 PDF의 편성표를 조회했습니다. 실제 개설·개인 수강 가능 여부는 미확인입니다.');
+    lookup.groups.forEach(g=>{line(placementBox,`${g.label}: ${g.course_count}개 (여러 학기 편성은 중복 표시)`);placementRows(placementBox,g.label,lookup.courses.filter(c=>g.course_ids.includes(c.course_id)));});
+    placementRows(placementBox,'편성학기·학년 확인 필요',lookup.needs_verification);
+  }
   if(payload.scenario_decision){const before=new Map((payload.requirement_results||[]).map(r=>[r.rule_id,r]));
     (payload.scenario_decision.requirement_results||[]).filter(r=>before.has(r.rule_id)&&before.get(r.rule_id).status!==r.status)
       .forEach(r=>line(box,`가정 후 ${r.rule_id}: ${before.get(r.rule_id).status} → ${r.status}`));}
@@ -251,19 +272,27 @@ function detailView(wrap,payload,state) {
   if(remaining){
     line(box,`충족 ${remaining.satisfied_requirements.length}건 · 미충족 ${remaining.unsatisfied_requirements.length}건 · 확인 필요 ${remaining.needs_information.length}건`);
     Object.entries(remaining.progress||{}).forEach(([area,p])=>line(box,`${AREA_LABELS[area]||area}: ${p.current??'미확인'} / ${p.required} · ${STATUS_LABELS[p.status]||p.status}${p.is_lower_bound?' (확인된 하한)':''}`));
-    const courses=payload.decision?.candidate_courses||[];
+    const allCourses=payload.decision?.candidate_courses||[];
+    const placementView=payload.decision?.placement_view;
+    const matchedIds=placementView?new Set(placementView.selection.matched_course_ids):null;
+    const courses=matchedIds?allCourses.filter(c=>matchedIds.has(c.course_id)):allCourses;
+    if(placementView){
+      line(box,`편성 조건: ${JSON.stringify(placementView.selection.filters)} · 일치 ${courses.length}개. 남은 요건 전체는 편성 조건으로 변경하지 않았습니다.`);
+      placementView.groups.forEach(g=>candidateDetails(box,`${g.label} 졸업요건상 후보`,courses.filter(c=>g.course_ids.includes(c.course_id)),payload));
+      const unknownIds=new Set(placementView.selection.needs_verification_course_ids);candidateDetails(box,'편성학기·학년 확인 필요',allCourses.filter(c=>unknownIds.has(c.course_id)),payload);
+    }
     const presentation=payload.remaining_presentation;
     line(box,'졸업요건상 후보이며 수강 우선순위가 아닙니다. 다음 학기 개설·선수과목·시간표 충돌은 미확인입니다.');
     if(presentation){
       const mandatory=section(box,'반드시 이수할 지정 전공필수');
       line(mandatory,presentation.required_courses_status==='NEEDS_INFORMATION'
         ?'이수기록 확인 전에는 미이수 과목을 확정할 수 없습니다.'
-        :`${presentation.required_courses.length}과목: ${presentation.required_courses.map(c=>c.course_name?`${c.course_name}(${c.course_id})`:c.course_id).join(', ')||'없음'}`);
+        :`전체 미이수 필수 ${presentation.required_courses.length}과목${placementView?' · 요청한 편성 조건의 필수 '+courses.filter(c=>c.candidate_status==='REQUIRED').length+'과목':': '+presentation.required_courses.map(c=>c.course_name?`${c.course_name}(${c.course_id})`:c.course_id).join(', ')}`);
       candidateDetails(mandatory,'실제 조회한 필수과목 관계',courses.filter(c=>c.candidate_status==='REQUIRED'),payload);
       for(const group of presentation.candidate_groups){
         const label=group.area==='MAJOR'?'전공':'교양';
         const groupBox=section(box,`남은 ${label}요건의 선택 후보`);
-        line(groupBox,`${label} 후보 ${group.candidate_count}개 · 요건별 후보 수는 중복될 수 있습니다.`);
+        line(groupBox,`${label} 전체 후보 ${group.candidate_count}개${placementView?' · 요청한 편성 조건 '+courses.filter(c=>c.candidate_status==='ELIGIBLE_OPTION'&&c.course_classification.startsWith(group.area+'_')).length+'개':''} · 요건별 후보 수는 중복될 수 있습니다.`);
         group.requirement_groups.forEach(rule=>line(groupBox,`${rule.label} · 후보 ${rule.candidate_count}개 · Rule ${rule.rule_id}`));
         candidateDetails(groupBox,`${label} 선택 후보`,courses.filter(c=>c.candidate_status==='ELIGIBLE_OPTION'&&c.course_classification.startsWith(group.area+'_')),payload);
       }
@@ -299,9 +328,12 @@ function drawGraph(payload) {
   (payload.decision?.lookup_result?.relationship_ids||[]).forEach(id=>used.add(id));
   (payload.decision?.lookup_result?.rules||[]).forEach(r=>used.add(r.relationship_id));
   (payload.decision?.lookup_result?.policy_facts||[]).forEach(f=>used.add(f.relationship_id));
-  (payload.decision?.lookup_result?.courses||[]).forEach(c=>(c.relationship_ids||[]).forEach(id=>used.add(id)));
-  (payload.decision?.candidate_courses||[]).filter(c=>c.candidate_status==='REQUIRED'||c.candidate_status==='ELIGIBLE_OPTION').slice(0,12).forEach(c=>(c.relationship_ids||[]).forEach(id=>used.add(id)));
-  (payload.decision?.candidate_courses||[]).filter(c=>c.course_id===payload.decision?.requested_course_id).forEach(c=>(c.relationship_ids||[]).forEach(id=>used.add(id)));
+  const catalogCourses=payload.decision?.lookup_result?.courses||[];
+  (payload.decision?.intent==='PLACEMENT_LOOKUP'?catalogCourses.slice(0,12):catalogCourses).forEach(c=>(c.relationship_ids||[]).forEach(id=>used.add(id)));
+  const selected=payload.decision?.placement_view?.selection?.matched_course_ids;
+  const includeCandidate=course=>{(course.relationship_ids||[]).forEach(id=>used.add(id));const entry=(evidence.facts||[]).find(f=>f.entry_id===course.provenance?.entry_id);(entry?.relationship_ids||[]).forEach(id=>used.add(id));};
+  (payload.decision?.candidate_courses||[]).filter(c=>(c.candidate_status==='REQUIRED'||c.candidate_status==='ELIGIBLE_OPTION')&&(!selected||selected.includes(c.course_id))).slice(0,12).forEach(includeCandidate);
+  (payload.decision?.candidate_courses||[]).filter(c=>c.course_id===payload.decision?.requested_course_id).forEach(includeCandidate);
   const edges=(evidence.relationship_details||[]).filter(e=>used.has(e.id));
   const ids=new Set(edges.flatMap(e=>[e.src,e.dst]));
   const nodes=(evidence.nodes||[]).filter(n=>ids.has(n.id));

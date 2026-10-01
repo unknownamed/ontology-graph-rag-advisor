@@ -120,6 +120,8 @@ def candidate_courses(decision: dict, rules: list[dict], entries: list[dict], li
             continue
         candidates.append({"course_id": code, "course_name": entry["name"],
                            "credits": entry["catalog_credits"],
+                           "grade_term": entry.get("grade_term"),
+                           "curriculum_placement": entry["curriculum_placement"],
                            "course_classification": entry["classification"],
                            "candidate_status": status, "already_completed": code in completed,
                            "satisfies_requirement_ids": sorted({link["rule_id"] for link in linked}),
@@ -130,6 +132,7 @@ def candidate_courses(decision: dict, rules: list[dict], entries: list[dict], li
                                           "rule_source_refs": {link["rule_id"]: by_rule[link["rule_id"]]["source_refs"]
                                                                for link in linked}},
                            "next_term_offering_status": "NOT_VERIFIED",
+                           "student_eligibility_status": "NOT_VERIFIED",
                            "prerequisite_status": "NOT_VERIFIED"})
     return sorted(candidates, key=lambda c: ({"REQUIRED": 0, "ELIGIBLE_OPTION": 1,
                                              "ALREADY_COMPLETED": 2, "NOT_APPLICABLE": 3}[c["candidate_status"]],

@@ -145,13 +145,23 @@ AnswerPayload = { contract_version, decision: DeterministicDecision,
 
 `DeterministicDecision.remaining_requirements`와 `candidate_courses`는 RuleSet v1 및 그래프 스냅샷과 함께 해시된다. `ExecutionTrace`에는 카탈로그 조회, `SATISFIES` 관계 조회, 투영 계산 이벤트가 남는다. 가정 이수는 기존 `WHAT_IF` 계약을 사용하며 원본 StudentState를 수정하지 않는다.
 
-## 공식 PDF 정책 보강 계약 (활성 RuleSet v2)
+## 공식 PDF 정책 보강 계약 (v2 도입, v3 유지)
 
-현재 활성 `CRS-CE-2026-CORE` v2는 같은 `ADS-CE-2026-CORE` v1과 실행 규칙을 유지하고, 원문 33쪽에서 재확인한 교양 적용 예외·상한 초과분 처리 `PolicyFact` 두 건만 추가한다. 불변 v1 스냅샷은 과거 판정 재현에 남는다. 위 남은 요건 계약의 RuleSet v1 기술은 최초 구현 기준이며, 실행 시에는 항상 결정과 trace에 고정된 활성 버전을 사용한다.
+`CRS-CE-2026-CORE` v2는 같은 `ADS-CE-2026-CORE` v1과 실행 규칙을 유지하고, 원문 33쪽에서 재확인한 교양 적용 예외·상한 초과분 처리 `PolicyFact` 두 건만 추가했다. 현재 활성 v3는 이 정책과 실행 규칙을 그대로 보존하고 교양 편성학기 셀만 보강한다. 불변 v1/v2 스냅샷은 과거 판정 재현에 남는다. 위 남은 요건 계약의 RuleSet v1 기술은 최초 구현 기준이며, 실행 시에는 항상 결정과 trace에 고정된 활성 버전을 사용한다.
 
 `StructuredQuery(intent=POLICY_LOOKUP)`은 학생 상태 없는 정책 조회를 허용한다. `topics[]`, 적용 대상의 `student_categories[]`·`program_type`, `entry_year`, `historical_scope_requested`, `requested_calculations[]`는 서버가 허용 목록으로 검증한다. 학생 개인값이 필요한 질문의 정책 부분만 확정 가능하면 `partial_policy_query`와 `STUDENT_STATE_FOR_PERSONAL_CALCULATION`을 함께 반환한다. 미확인 학생 유형은 적용된 것으로 추측하지 않는다.
 
 `lookup_result.calculations[]`는 `operation`, `source_rule_ids[]`, `required_amount`, `earned_amount`, `recognized_amount`, `remaining_amount`, `excess_amount`, `capped_amount`, `excluded_amount` 중 해당 연산에 필요한 필드를 가진다. 교양 상한은 공식 42학점 규칙을 조회한 경우에만 `recognized=min(earned, cap)`, `excess=max(earned-recognized,0)`, `remaining=max(required-recognized,0)`으로 계산한다. 이는 정책 가정값 계산이지 학생 이수 인정 기록이 아니다. 개인 판정의 `RequirementResult.credit_calculation`은 실제 인정 입력과 Rule ID를 별도로 기록한다. 모든 계산은 `ExecutionTrace`의 실제 연산 이벤트와 출처 locator로 검증한다.
+
+## 편성정보 계약 (v3)
+
+`CatalogEntry.grade_term` 원문과 교양 `placement_term_raw`는 보존한다. 조회 결과와 `CandidateCourse`에 읽기 전용 `curriculum_placement={normalization_version,curriculum_id,raw_grade_term,raw_term,grade_scope,grades[],slots[{grade,grade_scope,term}],term_verification_status,grade_verification_status,source,fact_id,actual_offering_status,student_eligibility_status}`를 전달한다. `CandidateCourse.student_eligibility_status`와 기존 `next_term_offering_status`는 `NOT_VERIFIED`다. 편성 학년 미기재와 학기 미확인은 독립 상태다.
+
+`StructuredQuery(intent=PLACEMENT_LOOKUP,classifications[],curriculum_id,department_id,placement_filter)`는 학생 입력 없이 허용한다. `placement_filter={grade?,terms[],term_match:ANY|ALL}`은 서버 허용값으로 검증하며 학년 1..4와 정규·계절학기 네 열거값만 실행한다. 구체 과목은 `COURSE_LOOKUP, placement_requested:true`, 개인 미이수/후보 교집합은 `REMAINING_PLAN, placement_filter, classifications[], group_by_placement:true`로 구조화한다. QueryPlan의 `placement_classifications`가 요청 분류 범위를 기록한다. 특정 학생의 과거 졸업 적용조건과 현재 2026 편성표의 일반 조회는 구분한다.
+
+카탈로그 `lookup_result` 또는 개인 `placement_view`에 `selection={filters,matched_course_ids[],needs_verification_course_ids[],excluded_course_ids[]}`, `groups[{term,label,course_ids[],course_count}]`, `next_term_basis`를 반환한다. 미지정 다음 학기 기준은 `UNSPECIFIED`; 확인 필요 과목은 삭제하지 않는다. 복수 편성 과목은 여러 그룹에 속하므로 그룹별 수를 총 과목 수로 합산하지 않는다. 개인 필터는 요건·인정학점·전체 후보를 수정하지 않는 별도 표시다.
+
+`ExecutionTrace.PLACEMENT_SELECTION`은 실제 읽은 entry ID와 필터·반환 분할을 기록한다. verifier가 원문 셀 투영, 실제 CatalogEntry 관계, 후보 연결, 선택 및 그룹을 재계산·대조한다. 상세 형식과 원문 사례는 [편성정보 설계](curriculum_placement.md)를 따른다.
 
 ## 답변 불변식
 

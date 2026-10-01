@@ -161,6 +161,9 @@ def interpret(question: str, catalog: dict, context: dict | None = None) -> dict
     if not isinstance(question, str) or not question.strip():
         return {"interpretation_status": "NEEDS_INFORMATION", "ambiguities": ["EMPTY_QUESTION"], "structured_query": None, "context": context or {}}
     clean = _norm(question)
+    placement = _placement_query(question, catalog, context)
+    if placement is not None:
+        return placement
     personal = any(term in clean for term in ("내가", "나는", "제가", "저는", "지금까지", "인정받", "이수한"))
     aggregate_form = ("과목" in clean and not personal and
                          (any(term in clean for term in ("몇개", "개수", "과목수")) or
@@ -341,3 +344,72 @@ def interpret(question: str, catalog: dict, context: dict | None = None) -> dict
         structured["assumed_completion"] = "SUCCESS"
     next_context = {"last_course_id": course_id or (context or {}).get("last_course_id")}
     return {"interpretation_status": "RESOLVED", "ambiguities": [], "structured_query": structured, "context": next_context}
+
+
+def _placement_query(question: str, catalog: dict, context: dict | None) -> dict | None:
+    """Parse dimensions, not answers: the server filters literal verified table cells."""
+    clean = _norm(question)
+    simulation = any(word in clean for word in ("들으면", "추가하면", "이수하면", "가정", "시뮬레이션"))
+    dimension = '학기' in clean or '몇학년' in clean or bool(re.search(r'(?<!\d)[1-9]\d*학년(?!도)', clean)) or any(word in clean for word in ('하계', '동계', '여름', '겨울', '계절수업'))
+    cue = dimension and any(word in clean for word in ('편성', '개설', '과목', '전필', '전공', '교양', '후보', '몇학년'))
+    if not cue or simulation or any(word in clean for word in ("몇번", "횟수", "회차")):
+        return None
+    def incomplete(reason):
+        return {"interpretation_status": "NEEDS_INFORMATION", "ambiguities": [reason], "structured_query": None, "context": context or {}}
+    year = re.search(r"(20\d{2})(?:년도|년|학년도)?교육과정", clean)
+    departments = re.findall(r'([가-힣]+학과)(?:\s|의|에서|에|$)', question)
+    if any(name != '컴퓨터공학과' for name in departments):
+        return incomplete('CATALOG_DEPARTMENT_UNVERIFIED')
+    if year and year[1] != "2026":
+        return incomplete("CATALOG_VERSION_UNVERIFIED")
+    grade = re.search(r"(?<!\d)([1-9]\d*)학년(?!도)", clean)
+    if grade and not 1 <= int(grade[1]) <= 4:
+        return incomplete('PLACEMENT_GRADE_UNSUPPORTED')
+    terms = []
+    if "1학기" in clean or re.search(r"1[·,와과]2학기", clean):
+        terms.append("SEMESTER_1")
+    if "2학기" in clean:
+        terms.append("SEMESTER_2")
+    if "하계" in clean or "여름" in clean or "계절학기" in clean:
+        terms.append("SUMMER")
+    if "동계" in clean or "겨울" in clean or "계절학기" in clean:
+        terms.append("WINTER")
+    filters = {"terms": terms, "term_match": "ALL" if "모두" in clean or "둘다" in clean or "양쪽" in clean else "ANY"}
+    if grade:
+        filters["grade"] = int(grade[1])
+    codes, ambiguity = _entities(question, catalog)
+    if ambiguity or len(codes) > 1:
+        return {"interpretation_status": "AMBIGUOUS", "ambiguities": ambiguity or codes, "structured_query": None, "context": context or {}}
+    code_mentions = re.findall(r"[A-Z]{3}\d{4}", question.upper())
+    code = codes[0] if codes else code_mentions[0] if len(code_mentions) == 1 else None
+    reference = "그과목" in clean or "이과목" in clean
+    if reference and code is None:
+        code = (context or {}).get("last_course_id")
+        if not code:
+            return incomplete("PRIOR_COURSE_REFERENCE_REQUIRED")
+    personal = any(word in clean for word in ("남은", "미이수", "안들은", "앞으로", "더들어야"))
+    required = "전필" in clean or "전공필수" in clean
+    major = "전공" in clean or "전선" in clean or required
+    general = "교양" in clean
+    focus = "MAJOR_REQUIRED" if required else "MAJOR" if major and not general else "GENERAL" if general and not major else "ALL"
+    classes = (["MAJOR_REQUIRED"] if required else ["MAJOR_ELECTIVE"] if "전선" in clean or "전공선택" in clean else
+               ["MAJOR_REQUIRED", "MAJOR_ELECTIVE"] if major and not general else
+               ["GENERAL_BASIC"] if '기초교양' in clean and not major else
+               ["GENERAL_BALANCED"] if '균형교양' in clean and not major else
+               ["GENERAL_EXPANDED"] if '확대교양' in clean and not major else
+               ["GENERAL_BASIC", "GENERAL_BALANCED", "GENERAL_EXPANDED"] if general and not major else
+               ["MAJOR_REQUIRED", "MAJOR_ELECTIVE", "GENERAL_BASIC", "GENERAL_BALANCED", "GENERAL_EXPANDED"])
+    query = {"placement_filter": filters, "placement_requested": True}
+    if personal:
+        query.update(intent="REMAINING_PLAN", focus=focus, group_by_placement=True, classifications=classes)
+        if code:
+            query["course_id"] = code
+    elif code:
+        query.update(intent="COURSE_LOOKUP", course_id=code)
+    else:
+        query.update(intent="PLACEMENT_LOOKUP", classifications=classes,
+                     curriculum_id="CURRICULUM-CE-2026", department_id="DEPT-COMPUTER-ENGINEERING")
+    if "다음학기" in clean and not terms:
+        query["next_term_basis"] = "UNSPECIFIED"
+    return {"interpretation_status": "RESOLVED", "ambiguities": [], "structured_query": query,
+            "context": {**(context or {}), **({"last_course_id": code} if code else {})}}

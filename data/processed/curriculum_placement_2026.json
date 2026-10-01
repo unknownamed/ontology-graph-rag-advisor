@@ -1,0 +1,1969 @@
+{
+  "schema_version": "1",
+  "source_document_id": "CURRICULUM-2026",
+  "source_sha256": "0d800318dc367a89518f9be6be8f559092474bf00b3573e14bd37b6c44b54471",
+  "verification_method": "PDF 34–45 rendered pages: course code / opening-term column visually cross-checked; grade column absent; ambiguous 이룸 label retained literally. GEA8617 conflicting identifier not promoted.",
+  "checked_at": "2026-10-01",
+  "rows": [
+    {
+      "course_id": "GEA8001",
+      "raw_term": "1,2",
+      "pdf_page": 34,
+      "printed_page": 26,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8810",
+      "raw_term": "1,2",
+      "pdf_page": 34,
+      "printed_page": 26,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8811",
+      "raw_term": "1,2",
+      "pdf_page": 34,
+      "printed_page": 26,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8812",
+      "raw_term": "1,2",
+      "pdf_page": 34,
+      "printed_page": 26,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8813",
+      "raw_term": "1,2",
+      "pdf_page": 34,
+      "printed_page": 26,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8814",
+      "raw_term": "1,2",
+      "pdf_page": 34,
+      "printed_page": 26,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8510",
+      "raw_term": "1,2",
+      "pdf_page": 34,
+      "printed_page": 26,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8511",
+      "raw_term": "1,2",
+      "pdf_page": 34,
+      "printed_page": 26,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8512",
+      "raw_term": "1,2",
+      "pdf_page": 34,
+      "printed_page": 26,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8656",
+      "raw_term": "1,2",
+      "pdf_page": 34,
+      "printed_page": 26,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8704",
+      "raw_term": "1,2",
+      "pdf_page": 34,
+      "printed_page": 26,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8705",
+      "raw_term": "1,2",
+      "pdf_page": 34,
+      "printed_page": 26,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8658",
+      "raw_term": "1,2",
+      "pdf_page": 34,
+      "printed_page": 26,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8659",
+      "raw_term": "1,2",
+      "pdf_page": 34,
+      "printed_page": 26,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8655",
+      "raw_term": "하계\n동계",
+      "pdf_page": 34,
+      "printed_page": 26,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8801",
+      "raw_term": "1,2",
+      "pdf_page": 34,
+      "printed_page": 26,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8622",
+      "raw_term": "2",
+      "pdf_page": 34,
+      "printed_page": 26,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8623",
+      "raw_term": "1",
+      "pdf_page": 35,
+      "printed_page": 27,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8660",
+      "raw_term": "1",
+      "pdf_page": 35,
+      "printed_page": 27,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8652",
+      "raw_term": "2",
+      "pdf_page": 35,
+      "printed_page": 27,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8624",
+      "raw_term": "2",
+      "pdf_page": 35,
+      "printed_page": 27,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8671",
+      "raw_term": "2",
+      "pdf_page": 35,
+      "printed_page": 27,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8672",
+      "raw_term": "1",
+      "pdf_page": 35,
+      "printed_page": 27,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8653",
+      "raw_term": "2",
+      "pdf_page": 35,
+      "printed_page": 27,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8633",
+      "raw_term": "1",
+      "pdf_page": 35,
+      "printed_page": 27,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8631",
+      "raw_term": "1,2",
+      "pdf_page": 35,
+      "printed_page": 27,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA7543",
+      "raw_term": "1,2",
+      "pdf_page": 35,
+      "printed_page": 27,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA7565",
+      "raw_term": "1,2",
+      "pdf_page": 35,
+      "printed_page": 27,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA7261",
+      "raw_term": "1,2",
+      "pdf_page": 35,
+      "printed_page": 27,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8673",
+      "raw_term": "1,2",
+      "pdf_page": 35,
+      "printed_page": 27,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8806",
+      "raw_term": "1",
+      "pdf_page": 35,
+      "printed_page": 27,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA7564",
+      "raw_term": "1",
+      "pdf_page": 35,
+      "printed_page": 27,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8627",
+      "raw_term": "2",
+      "pdf_page": 35,
+      "printed_page": 27,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8694",
+      "raw_term": "이룸",
+      "pdf_page": 35,
+      "printed_page": 27,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8802",
+      "raw_term": "1,2",
+      "pdf_page": 35,
+      "printed_page": 27,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8835",
+      "raw_term": "1,2",
+      "pdf_page": 35,
+      "printed_page": 27,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8833",
+      "raw_term": "하계",
+      "pdf_page": 35,
+      "printed_page": 27,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8834",
+      "raw_term": "하계",
+      "pdf_page": 35,
+      "printed_page": 27,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8838",
+      "raw_term": "2",
+      "pdf_page": 35,
+      "printed_page": 27,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8703",
+      "raw_term": "1,2",
+      "pdf_page": 35,
+      "printed_page": 27,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA7559",
+      "raw_term": "1",
+      "pdf_page": 35,
+      "printed_page": 27,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8666",
+      "raw_term": "2",
+      "pdf_page": 36,
+      "printed_page": 28,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8585",
+      "raw_term": "1,2",
+      "pdf_page": 36,
+      "printed_page": 28,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8586",
+      "raw_term": "1,2",
+      "pdf_page": 36,
+      "printed_page": 28,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8663",
+      "raw_term": "1,2",
+      "pdf_page": 36,
+      "printed_page": 28,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8664",
+      "raw_term": "1,2",
+      "pdf_page": 36,
+      "printed_page": 28,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8665",
+      "raw_term": "1,2",
+      "pdf_page": 36,
+      "printed_page": 28,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8667",
+      "raw_term": "1,2",
+      "pdf_page": 36,
+      "printed_page": 28,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA5045",
+      "raw_term": "1,2",
+      "pdf_page": 36,
+      "printed_page": 28,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA7500",
+      "raw_term": "1,2",
+      "pdf_page": 36,
+      "printed_page": 28,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA6021",
+      "raw_term": "1,2",
+      "pdf_page": 36,
+      "printed_page": 28,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA5027",
+      "raw_term": "2",
+      "pdf_page": 36,
+      "printed_page": 28,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA5046",
+      "raw_term": "1,2",
+      "pdf_page": 36,
+      "printed_page": 28,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA2005",
+      "raw_term": "2",
+      "pdf_page": 36,
+      "printed_page": 28,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA7322",
+      "raw_term": "1,2",
+      "pdf_page": 36,
+      "printed_page": 28,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA7323",
+      "raw_term": "1,2",
+      "pdf_page": 36,
+      "printed_page": 28,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA7324",
+      "raw_term": "1,2",
+      "pdf_page": 36,
+      "printed_page": 28,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8513",
+      "raw_term": "1,2",
+      "pdf_page": 36,
+      "printed_page": 28,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8638",
+      "raw_term": "1",
+      "pdf_page": 36,
+      "printed_page": 28,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8637",
+      "raw_term": "1,2",
+      "pdf_page": 36,
+      "printed_page": 28,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8651",
+      "raw_term": "1",
+      "pdf_page": 36,
+      "printed_page": 28,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA2013",
+      "raw_term": "1,2",
+      "pdf_page": 36,
+      "printed_page": 28,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA2014",
+      "raw_term": "1,2",
+      "pdf_page": 36,
+      "printed_page": 28,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8548",
+      "raw_term": "1,2",
+      "pdf_page": 36,
+      "printed_page": 28,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8706",
+      "raw_term": "1,2",
+      "pdf_page": 36,
+      "printed_page": 28,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8707",
+      "raw_term": "1,2",
+      "pdf_page": 36,
+      "printed_page": 28,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8708",
+      "raw_term": "1,2",
+      "pdf_page": 37,
+      "printed_page": 29,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA6009",
+      "raw_term": "1,2",
+      "pdf_page": 37,
+      "printed_page": 29,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA7284",
+      "raw_term": "1,2",
+      "pdf_page": 37,
+      "printed_page": 29,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA7285",
+      "raw_term": "2",
+      "pdf_page": 37,
+      "printed_page": 29,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8537",
+      "raw_term": "1",
+      "pdf_page": 37,
+      "printed_page": 29,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8578",
+      "raw_term": "1",
+      "pdf_page": 37,
+      "printed_page": 29,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8579",
+      "raw_term": "1",
+      "pdf_page": 37,
+      "printed_page": 29,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8804",
+      "raw_term": "1",
+      "pdf_page": 37,
+      "printed_page": 29,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8643",
+      "raw_term": "1",
+      "pdf_page": 37,
+      "printed_page": 29,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8645",
+      "raw_term": "1",
+      "pdf_page": 37,
+      "printed_page": 29,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8647",
+      "raw_term": "1",
+      "pdf_page": 37,
+      "printed_page": 29,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8580",
+      "raw_term": "2",
+      "pdf_page": 37,
+      "printed_page": 29,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8581",
+      "raw_term": "2",
+      "pdf_page": 37,
+      "printed_page": 29,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8644",
+      "raw_term": "2",
+      "pdf_page": 37,
+      "printed_page": 29,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8646",
+      "raw_term": "2",
+      "pdf_page": 37,
+      "printed_page": 29,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8669",
+      "raw_term": "2",
+      "pdf_page": 37,
+      "printed_page": 29,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8630",
+      "raw_term": "1,2",
+      "pdf_page": 37,
+      "printed_page": 29,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8635",
+      "raw_term": "1",
+      "pdf_page": 37,
+      "printed_page": 29,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA6005",
+      "raw_term": "1",
+      "pdf_page": 37,
+      "printed_page": 29,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA7548",
+      "raw_term": "1",
+      "pdf_page": 37,
+      "printed_page": 29,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA6006",
+      "raw_term": "2",
+      "pdf_page": 37,
+      "printed_page": 29,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA7553",
+      "raw_term": "1,2",
+      "pdf_page": 37,
+      "printed_page": 29,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA6007",
+      "raw_term": "1",
+      "pdf_page": 37,
+      "printed_page": 29,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8641",
+      "raw_term": "1",
+      "pdf_page": 37,
+      "printed_page": 29,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8649",
+      "raw_term": "1",
+      "pdf_page": 38,
+      "printed_page": 30,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA7503",
+      "raw_term": "1,2",
+      "pdf_page": 38,
+      "printed_page": 30,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA7505",
+      "raw_term": "1,2",
+      "pdf_page": 38,
+      "printed_page": 30,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8691",
+      "raw_term": "1,2",
+      "pdf_page": 38,
+      "printed_page": 30,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8820",
+      "raw_term": "1",
+      "pdf_page": 38,
+      "printed_page": 30,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8832",
+      "raw_term": "2",
+      "pdf_page": 38,
+      "printed_page": 30,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8675",
+      "raw_term": "1",
+      "pdf_page": 38,
+      "printed_page": 30,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8002",
+      "raw_term": "1,2",
+      "pdf_page": 38,
+      "printed_page": 30,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8702",
+      "raw_term": "1,2",
+      "pdf_page": 38,
+      "printed_page": 30,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8692",
+      "raw_term": "1,2",
+      "pdf_page": 38,
+      "printed_page": 30,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8693",
+      "raw_term": "1,2",
+      "pdf_page": 38,
+      "printed_page": 30,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8807",
+      "raw_term": "2",
+      "pdf_page": 38,
+      "printed_page": 30,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8819",
+      "raw_term": "1",
+      "pdf_page": 38,
+      "printed_page": 30,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8831",
+      "raw_term": "2",
+      "pdf_page": 38,
+      "printed_page": 30,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8007",
+      "raw_term": "1,2",
+      "pdf_page": 38,
+      "printed_page": 30,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8008",
+      "raw_term": "1,2",
+      "pdf_page": 38,
+      "printed_page": 30,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8709",
+      "raw_term": "1,2",
+      "pdf_page": 38,
+      "printed_page": 30,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8710",
+      "raw_term": "1,2",
+      "pdf_page": 38,
+      "printed_page": 30,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA7540",
+      "raw_term": "1,2",
+      "pdf_page": 38,
+      "printed_page": 30,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA3022",
+      "raw_term": "2",
+      "pdf_page": 38,
+      "printed_page": 30,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA3003",
+      "raw_term": "2",
+      "pdf_page": 38,
+      "printed_page": 30,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA3001",
+      "raw_term": "1,2",
+      "pdf_page": 38,
+      "printed_page": 30,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA3074",
+      "raw_term": "1,2",
+      "pdf_page": 38,
+      "printed_page": 30,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8616",
+      "raw_term": "1",
+      "pdf_page": 38,
+      "printed_page": 30,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA7560",
+      "raw_term": "2",
+      "pdf_page": 38,
+      "printed_page": 30,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA7562",
+      "raw_term": "1,2",
+      "pdf_page": 39,
+      "printed_page": 31,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA3013",
+      "raw_term": "1",
+      "pdf_page": 39,
+      "printed_page": 31,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA3069",
+      "raw_term": "1,2",
+      "pdf_page": 39,
+      "printed_page": 31,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8589",
+      "raw_term": "1",
+      "pdf_page": 39,
+      "printed_page": 31,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA7551",
+      "raw_term": "1,2",
+      "pdf_page": 39,
+      "printed_page": 31,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA3070",
+      "raw_term": "1,2",
+      "pdf_page": 39,
+      "printed_page": 31,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA3071",
+      "raw_term": "1,2",
+      "pdf_page": 39,
+      "printed_page": 31,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA7506",
+      "raw_term": "1,2",
+      "pdf_page": 39,
+      "printed_page": 31,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA3009",
+      "raw_term": "1,2",
+      "pdf_page": 39,
+      "printed_page": 31,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8588",
+      "raw_term": "1,2",
+      "pdf_page": 39,
+      "printed_page": 31,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA7552",
+      "raw_term": "1,2",
+      "pdf_page": 39,
+      "printed_page": 31,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8808",
+      "raw_term": "1",
+      "pdf_page": 39,
+      "printed_page": 31,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8837",
+      "raw_term": "2",
+      "pdf_page": 39,
+      "printed_page": 31,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA2008",
+      "raw_term": "2",
+      "pdf_page": 39,
+      "printed_page": 31,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA3012",
+      "raw_term": "1,2",
+      "pdf_page": 39,
+      "printed_page": 31,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8674",
+      "raw_term": "1",
+      "pdf_page": 39,
+      "printed_page": 31,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA3015",
+      "raw_term": "1,2",
+      "pdf_page": 39,
+      "printed_page": 31,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA3019",
+      "raw_term": "1",
+      "pdf_page": 39,
+      "printed_page": 31,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8557",
+      "raw_term": "1,2",
+      "pdf_page": 39,
+      "printed_page": 31,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA7563",
+      "raw_term": "2",
+      "pdf_page": 39,
+      "printed_page": 31,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8634",
+      "raw_term": "1",
+      "pdf_page": 39,
+      "printed_page": 31,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA7532",
+      "raw_term": "1,2",
+      "pdf_page": 39,
+      "printed_page": 31,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA3025",
+      "raw_term": "1,2",
+      "pdf_page": 39,
+      "printed_page": 31,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8514",
+      "raw_term": "1,2",
+      "pdf_page": 39,
+      "printed_page": 31,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8662",
+      "raw_term": "1,2",
+      "pdf_page": 40,
+      "printed_page": 32,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA7542",
+      "raw_term": "1",
+      "pdf_page": 40,
+      "printed_page": 32,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA7541",
+      "raw_term": "2",
+      "pdf_page": 40,
+      "printed_page": 32,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8590",
+      "raw_term": "1",
+      "pdf_page": 40,
+      "printed_page": 32,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8591",
+      "raw_term": "1",
+      "pdf_page": 40,
+      "printed_page": 32,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8603",
+      "raw_term": "1",
+      "pdf_page": 40,
+      "printed_page": 32,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8593",
+      "raw_term": "2",
+      "pdf_page": 40,
+      "printed_page": 32,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8594",
+      "raw_term": "2",
+      "pdf_page": 40,
+      "printed_page": 32,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA3048",
+      "raw_term": "1,2",
+      "pdf_page": 40,
+      "printed_page": 32,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA7558",
+      "raw_term": "1",
+      "pdf_page": 40,
+      "printed_page": 32,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA3032",
+      "raw_term": "1,2",
+      "pdf_page": 40,
+      "printed_page": 32,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA3033",
+      "raw_term": "1,2",
+      "pdf_page": 40,
+      "printed_page": 32,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA3045",
+      "raw_term": "1,2",
+      "pdf_page": 40,
+      "printed_page": 32,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA3043",
+      "raw_term": "1,2",
+      "pdf_page": 40,
+      "printed_page": 32,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA3052",
+      "raw_term": "1,2",
+      "pdf_page": 40,
+      "printed_page": 32,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA7537",
+      "raw_term": "1,2",
+      "pdf_page": 40,
+      "printed_page": 32,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8519",
+      "raw_term": "1,2",
+      "pdf_page": 40,
+      "printed_page": 32,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8518",
+      "raw_term": "1,2",
+      "pdf_page": 40,
+      "printed_page": 32,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8559",
+      "raw_term": "2",
+      "pdf_page": 40,
+      "printed_page": 32,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8573",
+      "raw_term": "1",
+      "pdf_page": 40,
+      "printed_page": 32,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8830",
+      "raw_term": "1",
+      "pdf_page": 40,
+      "printed_page": 32,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8826",
+      "raw_term": "1",
+      "pdf_page": 40,
+      "printed_page": 32,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8827",
+      "raw_term": "2",
+      "pdf_page": 40,
+      "printed_page": 32,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8828",
+      "raw_term": "1",
+      "pdf_page": 40,
+      "printed_page": 32,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8829",
+      "raw_term": "2",
+      "pdf_page": 40,
+      "printed_page": 32,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8836",
+      "raw_term": "1,2",
+      "pdf_page": 40,
+      "printed_page": 32,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA7033",
+      "raw_term": "1,2",
+      "pdf_page": 41,
+      "printed_page": 33,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA7308",
+      "raw_term": "1",
+      "pdf_page": 41,
+      "printed_page": 33,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA7309",
+      "raw_term": "2",
+      "pdf_page": 41,
+      "printed_page": 33,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA7003",
+      "raw_term": "1,2",
+      "pdf_page": 41,
+      "printed_page": 33,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA7265",
+      "raw_term": "2",
+      "pdf_page": 41,
+      "printed_page": 33,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8629",
+      "raw_term": "2",
+      "pdf_page": 41,
+      "printed_page": 33,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA7283",
+      "raw_term": "1,2",
+      "pdf_page": 41,
+      "printed_page": 33,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8596",
+      "raw_term": "2",
+      "pdf_page": 41,
+      "printed_page": 33,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8597",
+      "raw_term": "2",
+      "pdf_page": 41,
+      "printed_page": 33,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8661",
+      "raw_term": "1,2",
+      "pdf_page": 41,
+      "printed_page": 33,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA7260",
+      "raw_term": "1,2",
+      "pdf_page": 41,
+      "printed_page": 33,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8516",
+      "raw_term": "1,2",
+      "pdf_page": 41,
+      "printed_page": 33,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8562",
+      "raw_term": "1",
+      "pdf_page": 41,
+      "printed_page": 33,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8563",
+      "raw_term": "2",
+      "pdf_page": 41,
+      "printed_page": 33,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8564",
+      "raw_term": "1",
+      "pdf_page": 41,
+      "printed_page": 33,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8565",
+      "raw_term": "2",
+      "pdf_page": 41,
+      "printed_page": 33,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA7301",
+      "raw_term": "1,2",
+      "pdf_page": 41,
+      "printed_page": 33,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA7300",
+      "raw_term": "1,2",
+      "pdf_page": 41,
+      "printed_page": 33,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8639",
+      "raw_term": "1",
+      "pdf_page": 41,
+      "printed_page": 33,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8640",
+      "raw_term": "2",
+      "pdf_page": 41,
+      "printed_page": 33,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8536",
+      "raw_term": "1,2",
+      "pdf_page": 41,
+      "printed_page": 33,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA7004",
+      "raw_term": "1,2",
+      "pdf_page": 41,
+      "printed_page": 33,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA7005",
+      "raw_term": "1,2",
+      "pdf_page": 41,
+      "printed_page": 33,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA7006",
+      "raw_term": "1,2",
+      "pdf_page": 41,
+      "printed_page": 33,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA7007",
+      "raw_term": "1,2",
+      "pdf_page": 41,
+      "printed_page": 33,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA7008",
+      "raw_term": "1,2",
+      "pdf_page": 41,
+      "printed_page": 33,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA7019",
+      "raw_term": "1,2",
+      "pdf_page": 42,
+      "printed_page": 34,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8609",
+      "raw_term": "1",
+      "pdf_page": 42,
+      "printed_page": 34,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8612",
+      "raw_term": "2",
+      "pdf_page": 42,
+      "printed_page": 34,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA4006",
+      "raw_term": "1,2",
+      "pdf_page": 42,
+      "printed_page": 34,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA4020",
+      "raw_term": "1,2",
+      "pdf_page": 42,
+      "printed_page": 34,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8628",
+      "raw_term": "1",
+      "pdf_page": 42,
+      "printed_page": 34,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA4009",
+      "raw_term": "1,2",
+      "pdf_page": 42,
+      "printed_page": 34,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA7528",
+      "raw_term": "1,2",
+      "pdf_page": 42,
+      "printed_page": 34,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8601",
+      "raw_term": "2",
+      "pdf_page": 42,
+      "printed_page": 34,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8605",
+      "raw_term": "2",
+      "pdf_page": 42,
+      "printed_page": 34,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8598",
+      "raw_term": "1,2",
+      "pdf_page": 42,
+      "printed_page": 34,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8600",
+      "raw_term": "1,2",
+      "pdf_page": 42,
+      "printed_page": 34,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8670",
+      "raw_term": "1,2",
+      "pdf_page": 42,
+      "printed_page": 34,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8803",
+      "raw_term": "2",
+      "pdf_page": 42,
+      "printed_page": 34,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8701",
+      "raw_term": "1,2",
+      "pdf_page": 42,
+      "printed_page": 34,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8543",
+      "raw_term": "1",
+      "pdf_page": 42,
+      "printed_page": 34,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8544",
+      "raw_term": "2",
+      "pdf_page": 42,
+      "printed_page": 34,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8560",
+      "raw_term": "1",
+      "pdf_page": 42,
+      "printed_page": 34,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8561",
+      "raw_term": "2",
+      "pdf_page": 42,
+      "printed_page": 34,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8583",
+      "raw_term": "1,2",
+      "pdf_page": 42,
+      "printed_page": 34,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8528",
+      "raw_term": "1,2",
+      "pdf_page": 42,
+      "printed_page": 34,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8531",
+      "raw_term": "1,2",
+      "pdf_page": 42,
+      "printed_page": 34,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8534",
+      "raw_term": "1,2",
+      "pdf_page": 42,
+      "printed_page": 34,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA5049",
+      "raw_term": "하계",
+      "pdf_page": 42,
+      "printed_page": 34,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA5051",
+      "raw_term": "1",
+      "pdf_page": 43,
+      "printed_page": 35,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA7334",
+      "raw_term": "하계",
+      "pdf_page": 43,
+      "printed_page": 35,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA7516",
+      "raw_term": "2",
+      "pdf_page": 43,
+      "printed_page": 35,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA7515",
+      "raw_term": "1,2",
+      "pdf_page": 43,
+      "printed_page": 35,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8535",
+      "raw_term": "1,2",
+      "pdf_page": 43,
+      "printed_page": 35,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA7567",
+      "raw_term": "1,2",
+      "pdf_page": 43,
+      "printed_page": 35,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA7568",
+      "raw_term": "1,2",
+      "pdf_page": 43,
+      "printed_page": 35,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA7569",
+      "raw_term": "1,2",
+      "pdf_page": 43,
+      "printed_page": 35,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA7570",
+      "raw_term": "1,2",
+      "pdf_page": 43,
+      "printed_page": 35,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA7571",
+      "raw_term": "1,2",
+      "pdf_page": 43,
+      "printed_page": 35,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA7572",
+      "raw_term": "1,2",
+      "pdf_page": 43,
+      "printed_page": 35,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA7573",
+      "raw_term": "1,2",
+      "pdf_page": 43,
+      "printed_page": 35,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA7574",
+      "raw_term": "1,2",
+      "pdf_page": 43,
+      "printed_page": 35,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8524",
+      "raw_term": "1,2",
+      "pdf_page": 43,
+      "printed_page": 35,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8678",
+      "raw_term": "하계\n동계",
+      "pdf_page": 43,
+      "printed_page": 35,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8821",
+      "raw_term": "1",
+      "pdf_page": 43,
+      "printed_page": 35,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8822",
+      "raw_term": "2",
+      "pdf_page": 43,
+      "printed_page": 35,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8823",
+      "raw_term": "1",
+      "pdf_page": 43,
+      "printed_page": 35,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8824",
+      "raw_term": "2",
+      "pdf_page": 43,
+      "printed_page": 35,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8825",
+      "raw_term": "1",
+      "pdf_page": 43,
+      "printed_page": 35,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8636",
+      "raw_term": "1",
+      "pdf_page": 43,
+      "printed_page": 35,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA5053",
+      "raw_term": "1,2",
+      "pdf_page": 43,
+      "printed_page": 35,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA5054",
+      "raw_term": "1,2",
+      "pdf_page": 43,
+      "printed_page": 35,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA5050",
+      "raw_term": "1,2",
+      "pdf_page": 43,
+      "printed_page": 35,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA7331",
+      "raw_term": "1,2",
+      "pdf_page": 43,
+      "printed_page": 35,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8533",
+      "raw_term": "1,2",
+      "pdf_page": 44,
+      "printed_page": 36,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA7518",
+      "raw_term": "2",
+      "pdf_page": 44,
+      "printed_page": 36,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA3042",
+      "raw_term": "1",
+      "pdf_page": 44,
+      "printed_page": 36,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA3044",
+      "raw_term": "1,2",
+      "pdf_page": 44,
+      "printed_page": 36,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA3066",
+      "raw_term": "1,2",
+      "pdf_page": 44,
+      "printed_page": 36,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA7555",
+      "raw_term": "2",
+      "pdf_page": 44,
+      "printed_page": 36,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8570",
+      "raw_term": "2",
+      "pdf_page": 44,
+      "printed_page": 36,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8556",
+      "raw_term": "1",
+      "pdf_page": 44,
+      "printed_page": 36,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8541",
+      "raw_term": "2",
+      "pdf_page": 44,
+      "printed_page": 36,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA7290",
+      "raw_term": "1",
+      "pdf_page": 44,
+      "printed_page": 36,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA7289",
+      "raw_term": "2",
+      "pdf_page": 44,
+      "printed_page": 36,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8602",
+      "raw_term": "1",
+      "pdf_page": 44,
+      "printed_page": 36,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA7526",
+      "raw_term": "2",
+      "pdf_page": 44,
+      "printed_page": 36,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA1005",
+      "raw_term": "1,2",
+      "pdf_page": 44,
+      "printed_page": 36,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA7536",
+      "raw_term": "1,2",
+      "pdf_page": 44,
+      "printed_page": 36,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8522",
+      "raw_term": "1",
+      "pdf_page": 44,
+      "printed_page": 36,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8542",
+      "raw_term": "2",
+      "pdf_page": 44,
+      "printed_page": 36,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA7521",
+      "raw_term": "1,2",
+      "pdf_page": 44,
+      "printed_page": 36,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA5052",
+      "raw_term": "하계\n동계",
+      "pdf_page": 44,
+      "printed_page": 36,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA3049",
+      "raw_term": "1,2",
+      "pdf_page": 44,
+      "printed_page": 36,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8679",
+      "raw_term": "1,2",
+      "pdf_page": 44,
+      "printed_page": 36,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8520",
+      "raw_term": "1,2",
+      "pdf_page": 44,
+      "printed_page": 36,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA7546",
+      "raw_term": "1,2",
+      "pdf_page": 44,
+      "printed_page": 36,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8668",
+      "raw_term": "1",
+      "pdf_page": 45,
+      "printed_page": 37,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8687",
+      "raw_term": "1",
+      "pdf_page": 45,
+      "printed_page": 37,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8686",
+      "raw_term": "1",
+      "pdf_page": 45,
+      "printed_page": 37,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8690",
+      "raw_term": "2",
+      "pdf_page": 45,
+      "printed_page": 37,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8818",
+      "raw_term": "이룸",
+      "pdf_page": 45,
+      "printed_page": 37,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8689",
+      "raw_term": "이룸",
+      "pdf_page": 45,
+      "printed_page": 37,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8682",
+      "raw_term": "1",
+      "pdf_page": 45,
+      "printed_page": 37,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8683",
+      "raw_term": "1",
+      "pdf_page": 45,
+      "printed_page": 37,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8684",
+      "raw_term": "1",
+      "pdf_page": 45,
+      "printed_page": 37,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8815",
+      "raw_term": "1",
+      "pdf_page": 45,
+      "printed_page": 37,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8816",
+      "raw_term": "2",
+      "pdf_page": 45,
+      "printed_page": 37,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8805",
+      "raw_term": "1",
+      "pdf_page": 45,
+      "printed_page": 37,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8695",
+      "raw_term": "1",
+      "pdf_page": 45,
+      "printed_page": 37,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8696",
+      "raw_term": "2",
+      "pdf_page": 45,
+      "printed_page": 37,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8697",
+      "raw_term": "1",
+      "pdf_page": 45,
+      "printed_page": 37,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8698",
+      "raw_term": "2",
+      "pdf_page": 45,
+      "printed_page": 37,
+      "verification_status": "VERIFIED"
+    },
+    {
+      "course_id": "GEA8800",
+      "raw_term": "1,2",
+      "pdf_page": 45,
+      "printed_page": 37,
+      "verification_status": "VERIFIED"
+    }
+  ]
+}

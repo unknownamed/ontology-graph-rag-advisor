@@ -53,7 +53,7 @@ def interpret_with_local_llm(question: str, catalog: dict, context: dict | None 
     deterministic_intent = (deterministic.get("structured_query") or {}).get("intent")
     if deterministic_intent == "POLICY_LOOKUP":
         return {**deterministic, "llm": {"status": "NOT_USED_FOR_POLICY_LOOKUP"}}
-    if deterministic_intent in {"CATALOG_AGGREGATE", "ENTITY_CHECK", "CONSISTENCY_CHECK", "TRACE_EXPLAIN", "REMAINING_PLAN"}:
+    if deterministic_intent in {"CATALOG_AGGREGATE", "ENTITY_CHECK", "CONSISTENCY_CHECK", "TRACE_EXPLAIN", "REMAINING_PLAN", "PLACEMENT_LOOKUP"} or (deterministic.get("structured_query") or {}).get("placement_requested"):
         return {**deterministic, "llm": {"status": "NOT_USED_FOR_DETERMINISTIC_QUERY"}}
     try:
         suggestion, metrics = (transport or _ollama_call)(question)

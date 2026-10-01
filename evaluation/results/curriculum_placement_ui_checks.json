@@ -1,0 +1,105 @@
+{
+  "notice": "PUBLIC SYNTHETIC FIXTURE ONLY; independent original user tab not inspected or changed",
+  "checks": [
+    {
+      "actualOfferingNotAsserted": true,
+      "answerMatches": true,
+      "candidateCourseNodesPresent": true,
+      "candidateIds": [
+        "CDA0017",
+        "CDA0023",
+        "CDA0034",
+        "CDA0088",
+        "CDA0143"
+      ],
+      "expectedIds": [
+        "CDA0017",
+        "CDA0023",
+        "CDA0034",
+        "CDA0088",
+        "CDA0143"
+      ],
+      "listMatches": true,
+      "placementTrace": true,
+      "rulesetVersion": 3,
+      "scenario": "remaining_required_semester2",
+      "sourceLinks": true,
+      "sourcePages": [
+        262,
+        263
+      ],
+      "svgEdgesMatch": true,
+      "svgNodesMatch": true
+    },
+    {
+      "answerMatches": true,
+      "gradeStatus": "MISSING",
+      "noInventedSemester": true,
+      "rawTerm": "이룸",
+      "scenario": "unverified_term_literal",
+      "sourceLinkPresent": true,
+      "sourcePage": 35,
+      "termStatus": "UNVERIFIED"
+    },
+    {
+      "allDisplayedCoursesReturned": true,
+      "allRowsHaveActualRequirementEdges": true,
+      "allRowsHavePDF": true,
+      "answerLength": 321,
+      "answerMatches": true,
+      "candidateCount": 311,
+      "ruleSet": 3,
+      "scenario": "grouped_remaining_seasonal_and_unknown",
+      "shownCourseCount": 14,
+      "unknownIds": [
+        "GEA8689",
+        "GEA8694",
+        "GEA8818"
+      ],
+      "unknownRowsShown": true
+    },
+    {
+      "answerMatches": true,
+      "noGraduationCalculation": true,
+      "rawValue": "2-2",
+      "scenario": "single_course_grade_term",
+      "slot": {
+        "grade": 2,
+        "grade_scope": "LIST",
+        "term": "SEMESTER_2"
+      },
+      "sourceLinkPresent": true,
+      "sourcePage": 262,
+      "svgEdgesMatch": true
+    },
+    {
+      "answerMatches": true,
+      "catalogCount": 201,
+      "drawnCourses": 12,
+      "graphLimitedTo12": true,
+      "limitNotice": true,
+      "noPersonalCalculation": true,
+      "ruleSet": 3,
+      "scenario": "studentless_large_catalog_limited_graph",
+      "svgEdgesMatch": true,
+      "unknownCount": 3
+    },
+    {
+      "allClassificationsMatch": true,
+      "answerMatches": true,
+      "countMatches": true,
+      "expectedCountFromSourceAndSyntheticInput": 17,
+      "graphRelationsActual": true,
+      "matchedCount": 17,
+      "noCompletedOrZeroCreditElective": true,
+      "queryPlanClassifications": [
+        "MAJOR_ELECTIVE"
+      ],
+      "queryPlanTerms": [
+        "SEMESTER_2"
+      ],
+      "rulesetVersion": 3,
+      "scenario": "remaining_elective_term_class_intersection"
+    }
+  ]
+}

@@ -11,10 +11,11 @@ from copy import deepcopy
 from .authority import scope_applies, scope_status
 from .graph import Graph, canonical
 from .remaining import candidate_courses, summarize_remaining
+from .placement import CLASSES, group_placement, select_placement, validate_filter
 
 INTENTS = {"COURSE_LOOKUP", "CREDIT_SUMMARY", "REQUIREMENT_GAPS", "WHAT_IF", "GRADUATION_STATUS",
            "POLICY_LOOKUP", "CATALOG_AGGREGATE", "ENTITY_CHECK", "CONSISTENCY_CHECK", "TRACE_EXPLAIN",
-           "REMAINING_PLAN"}
+           "REMAINING_PLAN", "PLACEMENT_LOOKUP"}
 CORE_SINGLE_RULE_IDS = frozenset({
     "R-CE-2026-ADVANCED-CREDITS", "R-CE-2026-MAJOR-ELECTIVE-CREDITS",
     "R-CE-2026-MAJOR-REQUIRED-CREDITS", "R-CE-2026-MAJOR-TOTAL-CREDITS",
@@ -56,6 +57,25 @@ def _validate(student: dict, query: dict) -> None:
             raise ValueError(f"{year_key} must be a year or null")
     if query.get("intent") not in INTENTS:
         raise ValueError("Unsupported StructuredQuery intent")
+    for key in ("placement_requested", "group_by_placement"):
+        if key in query and type(query[key]) is not bool:
+            raise ValueError("Placement flags must be boolean")
+    if query.get("next_term_basis") not in {None, "UNSPECIFIED"}:
+        raise ValueError("Next-term basis cannot be inferred from a label")
+    if "placement_filter" in query:
+        if query["intent"] not in {"PLACEMENT_LOOKUP", "COURSE_LOOKUP", "REMAINING_PLAN"}:
+            raise ValueError("Placement filter is not valid for this intent")
+        validate_filter(query["placement_filter"])
+    if query.get("intent") == "PLACEMENT_LOOKUP":
+        if query.get("curriculum_id") != "CURRICULUM-CE-2026" or query.get("department_id") != "DEPT-COMPUTER-ENGINEERING":
+            raise ValueError("Placement catalog scope is not verified")
+        classes = query.get("classifications")
+        if not isinstance(classes, list) or not classes or len(classes) > 5 or not set(classes).issubset(CLASSES):
+            raise ValueError("Placement classifications are not allowlisted")
+    if query.get("intent") == "REMAINING_PLAN" and "classifications" in query:
+        classes = query["classifications"]
+        if not isinstance(classes, list) or not classes or len(classes) > 5 or not set(classes).issubset(CLASSES):
+            raise ValueError("Remaining placement classifications are not allowlisted")
     if query.get("intent") == "POLICY_LOOKUP":
         topics = query.get("topics")
         if not isinstance(topics, list) or not topics or len(topics) > 8 or any(topic not in POLICY_RULE_TOPICS | POLICY_FACT_TOPICS for topic in topics):
@@ -205,6 +225,33 @@ def _catalog_aggregate(graph: Graph, query: dict, trace: list[dict], bundle: dic
                 "lookup_result": result, "requirement_results": [], "credited_amount": None,
                 "missing_amount": None, "missing_courses": None, "needs_information": [],
                 "data_snapshot_id": graph.snapshot_id, "rule_set_hash": digest(graph.catalog["requirements"])}
+    decision["canonical_result_hash"] = digest(decision)
+    decision["decision_id"] = "DEC-" + decision["canonical_result_hash"][:16]
+    _event(trace, "DECISION", result={"decision_id": decision["decision_id"], "lookup_status": "FOUND"})
+    return decision
+
+
+def _placement_lookup(graph: Graph, query: dict, trace: list[dict], bundle: dict) -> dict:
+    entries = graph.query("FETCH_CATALOG_SET", curriculum_id=query["curriculum_id"], classifications=query["classifications"])
+    _event(trace, "GRAPH_QUERY", operation="FETCH_CATALOG_SET",
+           filters={"curriculum_id": query["curriculum_id"], "classifications": query["classifications"]},
+           returned_ids=[id for entry in entries for id in (entry["entry_id"], entry["classification_id"], *entry["relationship_ids"])])
+    for entry in entries:
+        _remember_entry(entry, bundle)
+    selection = select_placement(entries, query.get("placement_filter", {}))
+    selected = set(selection["matched_course_ids"])
+    unknown = set(selection["needs_verification_course_ids"])
+    result = {"curriculum_id": query["curriculum_id"], "selection": selection,
+              "courses": [e for e in entries if e["course_id"] in selected],
+              "needs_verification": [e for e in entries if e["course_id"] in unknown],
+              "groups": group_placement([e for e in entries if e["course_id"] in selected]),
+              "next_term_basis": query.get("next_term_basis")}
+    _event(trace, "PLACEMENT_SELECTION", input_refs=[e["entry_id"] for e in entries], result=selection)
+    decision = {"contract_version": "1", "intent": "PLACEMENT_LOOKUP", "decision_status": None,
+                "graduation_outcome": "NOT_REQUESTED", "lookup_status": "FOUND", "lookup_result": result,
+                "requirement_results": [], "credited_amount": None, "missing_amount": None,
+                "missing_courses": None, "needs_information": [], "data_snapshot_id": graph.snapshot_id,
+                "rule_set_hash": digest(graph.catalog["requirements"])}
     decision["canonical_result_hash"] = digest(decision)
     decision["decision_id"] = "DEC-" + decision["canonical_result_hash"][:16]
     _event(trace, "DECISION", result={"decision_id": decision["decision_id"], "lookup_status": "FOUND"})
@@ -964,9 +1011,13 @@ def execute(graph: Graph, student: dict, query: dict) -> dict:
             operations.append("FETCH_POLICY_FACTS")
     elif query["intent"] == "CATALOG_AGGREGATE":
         operations = ["FETCH_CATALOG_SET", "AGGREGATE_" + query["aggregate"]]
+    elif query["intent"] == "PLACEMENT_LOOKUP":
+        operations = ["FETCH_CATALOG_SET", "FILTER_CURRICULUM_PLACEMENT", "GROUP_CURRICULUM_PLACEMENT"]
     elif query["intent"] == "REMAINING_PLAN":
         operations = ["FETCH_CATALOG_ENTRY", "FETCH_REQUIREMENTS", "FETCH_CATALOG_SET",
                       "FETCH_COURSE_REQUIREMENT_LINKS", "SUMMARIZE_REMAINING", "CLASSIFY_CANDIDATES"]
+        if "placement_filter" in query or query.get("group_by_placement"):
+            operations += ["FILTER_CURRICULUM_PLACEMENT", "GROUP_CURRICULUM_PLACEMENT"]
     else:
         operations = ["FETCH_CATALOG_ENTRY"] if query["intent"] == "COURSE_LOOKUP" else ["FETCH_CATALOG_ENTRY", "FETCH_REQUIREMENTS"]
     _event(trace, "QUERY_PLAN", intent=query["intent"], operations=operations, input_hash=input_id,
@@ -974,13 +1025,19 @@ def execute(graph: Graph, student: dict, query: dict) -> dict:
            authoritative_document_set_version=document_set["set_version"],
            ruleset_id=ruleset["ruleset_id"], ruleset_version=ruleset["ruleset_version"],
            student_state_version=student_version, candidate_rule_ids=ruleset["included_rule_ids"],
+           placement_filter=query.get("placement_filter"),
+           placement_classifications=query.get("classifications") if query["intent"] in {"PLACEMENT_LOOKUP", "REMAINING_PLAN"} else None,
            document_relation_ids=[r["relation_id"] for r in graph.catalog["document_relations"]])
     scenario_decision = None
     if query["intent"] == "POLICY_LOOKUP":
         decision = _policy_lookup(graph, student, query, trace, bundle)
     elif query["intent"] == "CATALOG_AGGREGATE":
         decision = _catalog_aggregate(graph, query, trace, bundle)
-    elif student["applicability_status"] != "VERIFIED" or student.get("credit_policy_year") != 2026 or student.get("catalog_year") != 2026:
+    elif query["intent"] == "PLACEMENT_LOOKUP":
+        decision = _placement_lookup(graph, query, trace, bundle)
+    elif (student["applicability_status"] != "VERIFIED" or student.get("credit_policy_year") != 2026 or student.get("catalog_year") != 2026) and not (
+        query["intent"] == "COURSE_LOOKUP" and query.get("placement_requested")
+    ):
         needs = ["VERIFIED_2026_CREDIT_AND_CATALOG_APPLICABILITY"]
         decision = {"contract_version": "1", "intent": query["intent"], "decision_status": "NEEDS_INFORMATION",
                     "graduation_outcome": "UNKNOWN" if query["intent"] == "GRADUATION_STATUS" else "NOT_REQUESTED",
@@ -1038,6 +1095,15 @@ def execute(graph: Graph, student: dict, query: dict) -> dict:
             decision["remaining_requirements"] = summary
             decision["candidate_courses"] = candidates
             decision["requested_course_id"] = query.get("course_id")
+            if "placement_filter" in query or query.get("group_by_placement"):
+                active = [c for c in candidates if c["candidate_status"] in {"REQUIRED", "ELIGIBLE_OPTION"}
+                          and (not query.get("classifications") or c["course_classification"] in query["classifications"])]
+                selection = select_placement(active, query.get("placement_filter", {}))
+                selected = set(selection["matched_course_ids"])
+                decision["placement_view"] = {"selection": selection,
+                    "groups": group_placement([c for c in active if c["course_id"] in selected]),
+                    "next_term_basis": query.get("next_term_basis")}
+                _event(trace, "PLACEMENT_SELECTION", input_refs=[c["provenance"]["entry_id"] for c in active], result=selection)
             _rehash_decision(decision)
             prior = next(e for e in reversed(trace) if e["event_type"] == "DECISION")
             prior["result"]["decision_id"] = decision["decision_id"]

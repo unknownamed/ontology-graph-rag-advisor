@@ -94,7 +94,7 @@ class Handler(BaseHTTPRequestHandler):
                 return self._json(200, {"interpretation": parsed,
                                         "answer_text": "질문에서 과목이나 의도를 확정할 수 없습니다. 표현을 더 구체적으로 알려 주세요."})
             if state is None:
-                if query["intent"] not in {"COURSE_LOOKUP", "POLICY_LOOKUP", "CATALOG_AGGREGATE", "ENTITY_CHECK"}:
+                if query["intent"] not in {"COURSE_LOOKUP", "POLICY_LOOKUP", "CATALOG_AGGREGATE", "ENTITY_CHECK", "PLACEMENT_LOOKUP"}:
                     fallback = partial_policy_query(request.get("utterance", "")) if parsed is not None else None
                     if fallback is None:
                         raise ValueError("StudentState is required for personal credit and graduation decisions")

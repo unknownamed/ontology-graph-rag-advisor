@@ -4,6 +4,8 @@ from __future__ import annotations
 import hashlib
 import json
 
+from .placement import normalize_placement, group_placement, select_placement
+
 
 def _digest(value: object) -> str:
     return hashlib.sha256(json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode()).hexdigest()
@@ -55,6 +57,10 @@ def verify_payload(payload: dict) -> None:
         if locator["source_document_id"] not in included_documents:
             raise ValueError("Evidence locator refers to a non-official document")
     fact_ids = {fact["fact_id"] for fact in evidence["facts"]}
+    entry_by_code = {fact['course_id']: fact for fact in evidence['facts'] if fact.get('entry_id')}
+    for fact in entry_by_code.values():
+        if fact.get('curriculum_placement') != normalize_placement(fact):
+            raise ValueError('Placement differs from returned raw catalog cells or source')
     relationship_ids = set(evidence["relationships"])
     details = {edge["id"]: edge for edge in evidence["relationship_details"]}
     node_ids = {node["id"] for node in evidence["nodes"]}
@@ -87,6 +93,11 @@ def verify_payload(payload: dict) -> None:
         recognized = {r["course_id"] for r in decision.get("recognitions", [])}
         missing_required = set(decision.get("missing_courses") or [])
         for candidate in decision["candidate_courses"]:
+            entry = entry_by_code.get(candidate['course_id'])
+            if entry and candidate['curriculum_placement'] != entry['curriculum_placement']:
+                raise ValueError('Candidate placement differs from actual CatalogEntry')
+            if candidate['next_term_offering_status'] != 'NOT_VERIFIED' or candidate['student_eligibility_status'] != 'NOT_VERIFIED':
+                raise ValueError('Curriculum placement was mistaken for verified offering or eligibility')
             rid_list = candidate["satisfies_requirement_ids"]
             rel_list = candidate["relationship_ids"]
             if candidate["already_completed"] != (candidate["course_id"] in recognized):
@@ -112,6 +123,26 @@ def verify_payload(payload: dict) -> None:
         if count != {status: sum(c["candidate_status"] == status for c in decision["candidate_courses"])
                      for status in ("REQUIRED", "ELIGIBLE_OPTION", "ALREADY_COMPLETED", "NOT_APPLICABLE")}:
             raise ValueError("Displayed candidate counts differ from calculation trace")
+    decision = payload['decision']
+    pv = decision.get('placement_view') or (decision.get('lookup_result') if decision['intent'] == 'PLACEMENT_LOOKUP' else None)
+    if pv is not None:
+        courses = ([c for c in decision['candidate_courses'] if c['candidate_status'] in {'REQUIRED', 'ELIGIBLE_OPTION'}
+                    and (not selected[0].get('placement_classifications') or c['course_classification'] in selected[0]['placement_classifications'])]
+                   if decision['intent'] == 'REMAINING_PLAN' else list(entry_by_code.values()))
+        selection = select_placement(courses, selected[0]['placement_filter'] or {})
+        events_placement = [e for e in events if e['event_type'] == 'PLACEMENT_SELECTION']
+        refs = {c['provenance']['entry_id'] if decision['intent'] == 'REMAINING_PLAN' else c['entry_id'] for c in courses}
+        if (len(events_placement) != 1 or events_placement[0]['result'] != selection or pv['selection'] != selection
+                or set(events_placement[0]['input_refs']) != refs or not refs.issubset(query_returned)):
+            raise ValueError('Placement selection differs from actual queried entries or requested filters')
+        matches = set(selection['matched_course_ids'])
+        if pv['groups'] != group_placement([c for c in courses if c['course_id'] in matches]):
+            raise ValueError('Placement grouping differs from selected catalog facts')
+        if decision['intent'] == 'PLACEMENT_LOOKUP':
+            expected = sorted((c for c in courses if c['course_id'] in matches), key=lambda c: c['course_id'])
+            unknown = sorted((c for c in courses if c['course_id'] in selection['needs_verification_course_ids']), key=lambda c: c['course_id'])
+            if pv['courses'] != expected or pv['needs_verification'] != unknown:
+                raise ValueError('Placement lookup result hides or changes returned course facts')
     if payload["decision"]["intent"] == "CATALOG_AGGREGATE":
         result = payload["decision"]["lookup_result"]
         aggregation = [event for event in events if event["event_type"] == "CATALOG_AGGREGATION"]

@@ -1,6 +1,6 @@
 {
   "notice": "테스트용 모의 성적표 / 실제 학생 자료 아님",
-  "ruleset_version": 2,
+  "ruleset_version": 3,
   "results": [
     {
       "fixture_id": "mock_2026_complete",
@@ -19,8 +19,8 @@
         "SATISFIED": 18,
         "NOT_APPLICABLE": 1
       },
-      "decision_id": "DEC-b29cca5ccc27a903",
-      "execution_id": "EX-86dbddd91fbc3140",
+      "decision_id": "DEC-164dac36e83f560a",
+      "execution_id": "EX-662f1449fb6933da",
       "trace_events": 109,
       "graph_relationships": 148,
       "pdf_source_locator_count": 8,
@@ -58,8 +58,8 @@
         "NOT_APPLICABLE": 1,
         "SATISFIED": 12
       },
-      "decision_id": "DEC-3a7d9877320cb0b0",
-      "execution_id": "EX-a30d3f735a79f8d8",
+      "decision_id": "DEC-4c9e3eaafb20cec7",
+      "execution_id": "EX-a034fee0f7c56ef6",
       "trace_events": 80,
       "graph_relationships": 106,
       "pdf_source_locator_count": 8,
@@ -91,8 +91,8 @@
         "NOT_APPLICABLE": 1,
         "UNSATISFIED": 1
       },
-      "decision_id": "DEC-f52ed17bc89e2fa6",
-      "execution_id": "EX-5285df7f3cdfa019",
+      "decision_id": "DEC-039804f60117328b",
+      "execution_id": "EX-3b0293da76979e2a",
       "trace_events": 108,
       "graph_relationships": 148,
       "pdf_source_locator_count": 8,
@@ -153,8 +153,8 @@
         "NOT_APPLICABLE": 1,
         "NEEDS_INFORMATION": 2
       },
-      "decision_id": "DEC-aa3bedb62e93f715",
-      "execution_id": "EX-930d5366099da836",
+      "decision_id": "DEC-ddd339a3ebfb87b1",
+      "execution_id": "EX-7679e77cfcb6250e",
       "trace_events": 108,
       "graph_relationships": 145,
       "pdf_source_locator_count": 8,

@@ -521,6 +521,34 @@ class RuleSetStore:
         temporary.replace(self.pointer)
         return catalog
 
+    def activate_placement_refinement(self, catalog: dict) -> dict:
+        """Append literal placement cells without changing rules or existing course facts."""
+        current = self.load_active()
+        if (set(catalog) != set(current) or any(catalog[k] != current[k] for k in set(current) - {"courses", "curriculum_ruleset"})):
+            raise ValueError("Placement refinement cannot change rules, sources, or scope")
+        old, new = current["curriculum_ruleset"], catalog["curriculum_ruleset"]
+        metadata = {"ruleset_version", "created_at", "verification_summary"}
+        if (set(old) != set(new) or new["ruleset_version"] != old["ruleset_version"] + 1
+                or any(new[k] != old[k] for k in set(old) - metadata)):
+            raise ValueError("Placement refinement must preserve executable RuleSet membership")
+        if len(catalog["courses"]) != len(current["courses"]):
+            raise ValueError("Placement refinement cannot add/remove courses")
+        changed = False
+        for before, after in zip(current["courses"], catalog["courses"]):
+            added = {"placement_term_raw", "placement_verification_status"}
+            if (not set(before).issubset(after) or set(after) - set(before) - added
+                    or any(after[k] != v for k, v in before.items())
+                    or after.get("placement_verification_status", before["verification_status"]) != before["verification_status"]):
+                raise ValueError("Placement refinement cannot overwrite existing course facts")
+            changed |= before != after
+        if not changed:
+            raise ValueError("Placement refinement needs newly verified source cells")
+        entry = self._save(catalog)
+        temporary = self.directory / "active.json.tmp"
+        temporary.write_text(json.dumps(entry, indent=2) + "\n", encoding="utf-8")
+        temporary.replace(self.pointer)
+        return catalog
+
     def archive_decision(self, payload: dict) -> Path:
         """Opt-in immutable local record; never archives raw StudentState automatically."""
         decision = payload["decision"]

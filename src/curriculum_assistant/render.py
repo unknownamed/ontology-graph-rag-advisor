@@ -1,6 +1,8 @@
 """Server-owned Korean rendering of locked decision values."""
 from __future__ import annotations
 
+from .placement import placement_label, TERMS
+
 AREA_LABELS = {"GRADUATION_TOTAL": "졸업 총학점", "GENERAL_TOTAL": "교양", "GENERAL_BASIC": "기초교양",
                "GENERAL_BALANCED": "균형교양", "GENERAL_EXPANDED": "확대교양", "MAJOR_REQUIRED": "전공필수", "MAJOR_ELECTIVE": "최소전공 전공선택",
                "MAJOR_ADVANCED": "심화전공", "MAJOR_TOTAL": "전공 합계", "FREE_CHOICE": "자유선택 잔여학점"}
@@ -113,6 +115,26 @@ def build_remaining_presentation(payload: dict) -> dict | None:
                                  + [_needs_name(item) for item in summary["student_information_needed"]]}
 
 
+def _placement_answer(view: dict, courses: list[dict], unknown: list[dict], personal: bool = False) -> str:
+    filters = view['selection']['filters']
+    requested = '·'.join(TERMS[t] for t in filters.get('terms', [])) or '학기별'
+    if filters.get('grade'):
+        requested = f"{filters['grade']}학년 " + requested
+    if filters.get('term_match') == 'ALL' and len(filters.get('terms', [])) > 1:
+        requested += ' 모두'
+    label = '남은 요건을 채울 졸업요건상 후보' if personal else '2026 교육과정 과목'
+    parts = [f"{requested} 편성 조건에 해당하는 {label}: {len(courses)}개."]
+    if len(courses) <= 12:
+        parts.append('\n'.join(f"- {c.get('course_name', c.get('name'))}({c['course_id']}) · {placement_label(c['curriculum_placement'])}"
+                               + (' · 반드시 이수' if c.get('candidate_status') == 'REQUIRED' else ' · 선택 후보' if personal else '') for c in courses))
+    parts.append('일치 과목의 전체 편성학기: ' + ' / '.join(f"{g['label']} {g['course_count']}개" for g in view['groups']) + '. 여러 학기 편성 과목은 각 학기에 포함됩니다. 전체 과목·출처는 펼쳐보기.')
+    parts.append(f"편성학기 또는 학년 확인 필요: {len(unknown)}개. 이 항목도 펼쳐보기에서 확인할 수 있습니다.")
+    if view.get('next_term_basis') == 'UNSPECIFIED':
+        parts.append('다음 학기의 기준이 없어 특정 학기를 선택하지 않았습니다. 원하시는 학기를 알려 주세요.')
+    parts.append('PDF상의 편성정보입니다. 실제 개설·개인 수강 가능·선수조건은 미확인이고, 편성 학년은 수강 제한을 뜻하지 않습니다.')
+    return '\n'.join(p for p in parts if p)
+
+
 def _render_policy(payload: dict) -> str:
     result = payload["decision"].get("lookup_result")
     if not result:
@@ -154,9 +176,9 @@ def _render_policy(payload: dict) -> str:
     if focus == "COUNSELING_SCHEDULE":
         course = next((item for item in result["courses"] if item["course_id"] == "CDA0088"), None)
         if course:
-            schedule = " 전 학년 1·2학기에 신청 가능합니다." if course.get("grade_term") == "전-1,2" else ""
+            schedule = " 교육과정상 " + placement_label(course["curriculum_placement"]) + " 편성입니다."
             direct.insert(0, "심층상담은 0학점 전공필수입니다." + schedule
-                          + " 신청 가능 학기와 의무 횟수는 다르며, 현재 편성표만으로 2026 적용자의 별도 의무 횟수는 확정할 수 없습니다")
+                          + " 편성학기와 의무 횟수는 다르며, 실제 개설·수강 가능 여부와 2026 적용자의 별도 의무 횟수는 확정할 수 없습니다")
     if "APPLICABILITY" in result["topics"] and result.get("entry_year") is not None:
         year = result["entry_year"]
         if year == 2026:
@@ -249,9 +271,9 @@ def _render_policy(payload: dict) -> str:
                 f"{course['name']}({course['course_id']})" for course in sorted(minor_courses, key=lambda c: c["course_id"])))
     counseling = next((course for course in result["courses"] if course["course_id"] == "CDA0088"), None)
     if "REQUIRED_COURSES" in result["topics"] and counseling and focus != "COUNSELING_SCHEDULE":
-        schedule = (" 전 학년 1·2학기에 신청 가능한 편성입니다." if counseling.get("grade_term") == "전-1,2" else "")
+        schedule = " 교육과정상 " + placement_label(counseling["curriculum_placement"]) + " 편성입니다."
         parts.append("심층상담은 0학점 전공필수입니다." + schedule
-                     + " 신청 가능 학기와 의무 이수 횟수는 다른 개념이며, 2026 적용자의 별도 의무 횟수는 현재 확인한 편성표만으로 확정하지 않습니다")
+                     + " 편성 학기와 의무 이수 횟수는 다른 개념이며, 실제 개설·수강 가능 여부와 2026 적용자의 별도 의무 횟수는 현재 확인한 편성표만으로 확정하지 않습니다")
     if "GENERAL_AREAS" in result["topics"] and any(
         rule["rule_type"] == "ALL_AREAS" and result.get("rule_applicability", {}).get(rule["rule_id"], {}).get("status") == "APPLICABLE"
         for rule in result["rules"]
@@ -326,12 +348,16 @@ def _render_locked(payload: dict) -> str:
                      "GENERAL_EXPANDED": "확대교양"}.get(entry["classification"], entry["classification"])
             scope = {"FOREIGN_ONLY": "유학생 전용 편성 과목이므로 학생별 인정은 적용 대상 확인이 필요합니다.",
                      "NON_ENGINEERING_ONLY": "컴퓨터공학과 대상 편성 과목이 아니므로 컴퓨터공학과 학생의 인정학점으로 자동 산입하지 않습니다."}.get(entry["eligible_scope"], "")
-            return (f"{entry['name']}({entry['course_id']})의 2026 교육과정 분류는 {label}, "
+            return (f"{entry['name']}({entry['course_id']})의 교육과정상 편성: {placement_label(entry['curriculum_placement'])}. "
+                    f"2026 교육과정 분류는 {label}, "
                     f"학점은 {entry['catalog_credits']}학점입니다. {scope + ' ' if scope else ''}"
-                    f"근거: 교육과정 PDF {entry['source']['pdf_page']}쪽.")
+                    f"근거: 교육과정 PDF {entry['source']['pdf_page']}쪽. 실제 특정 학기의 개설·수강 가능 여부는 미확인입니다.")
         if decision.get("lookup_status") == "NOT_FOUND":
             return "확인된 2026 교육과정 편성표에서 해당 과목을 찾지 못했습니다. 과목코드와 적용 교육과정을 확인해 주세요."
         return "과목 분류를 확정하려면 원문 또는 적용 교육과정 정보를 추가로 확인해야 합니다."
+    if intent == "PLACEMENT_LOOKUP":
+        result = decision["lookup_result"]
+        return _placement_answer(result, result['courses'], result['needs_verification'])
     amount = decision.get("credited_amount")
     if amount is None:
         return "적용 교육과정이 확인되지 않아 학점과 요건을 계산할 수 없습니다."
@@ -343,6 +369,14 @@ def _render_locked(payload: dict) -> str:
         summary = decision["remaining_requirements"]
         candidates = decision["candidate_courses"]
         view = payload.get("remaining_presentation") or build_remaining_presentation(payload)
+        if decision.get("placement_view"):
+            pv = decision["placement_view"]
+            selected = set(pv["selection"]["matched_course_ids"])
+            unknown = set(pv["selection"]["needs_verification_course_ids"])
+            return (credit_text + f" 전체 요건: 충족 {view['satisfied_count']} · 미충족 {view['unsatisfied_count']} · 확인 필요 {view['needs_information_count']}.\n"
+                    + _placement_answer(pv, [c for c in candidates if c['course_id'] in selected],
+                                        [c for c in candidates if c['course_id'] in unknown], personal=True)
+                    + (" 이수기록 확인 전에는 미이수 필수과목을 확정할 수 없습니다." if view['required_courses_status'] == 'NEEDS_INFORMATION' else ''))
         progress = summary["progress"]
         def progress_line(key: str, label: str) -> str:
             item = progress.get(key)

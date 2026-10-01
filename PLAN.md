@@ -1,5 +1,15 @@
 # 프로젝트 계획
 
+## 교육과정 편성정보 활용 보강 (2026-10-01)
+
+- **상태: DONE / Scoped Quality Gate PASS.** 교육과정상 편성 학년·학기를 일반 과목 조회·학년/학기별 목록·미이수 필수 교집합·후보 묶음·답변/UI에 연결했다. 실제 개설과 개인 수강 가능은 NOT_VERIFIED로 유지하며 편성 학년을 수강 제한으로 쓰지 않는다.
+- **Builder:** 원문 `grade_term` 보존·쌍 정규화, 허용된 PLACEMENT_LOOKUP, 분류/학기 필터와 별도 placement_view, CandidateCourse 출처/확인 상태를 구현했다. 교양 편성표의 누락된 학기 셀 280개를 검토하고 불변 CRS-CE-2026-CORE v3에 보강했다. ADS v1·19개 Rule·요구값·기존 과목 사실·v1/v2 스냅샷은 유지한다.
+- **Reviewer:** 신규 33개 테스트 중 15개 반례로 원문 공란·교양 학년 미기재·쌍 확대·미검증 승격·타 학과/연도·분류 혼합·근거 변조·migration 제한·과거 학생 일반 조회를 확인했다. 초기 정책/집계 의도 회귀와 큰 그래프 표시를 수정했다. 새 테스트의 편성 수/기여 후보 수 혼동은 PDF의 이미 이수한 행과 0학점 선택 행으로 재확인해 수정했으며 요구사항·기존 기대값을 낮추지 않았다. 같은 작업자의 역할별 검토이며 독립 외부 검수로 주장하지 않는다.
+- **Verifier:** 공식 PDF 262–264 및 34–45 전 페이지를 렌더링 대조했다. 학생 자료 없는 질문과 공개 합성 학생의 별도 브라우저에서 답변·편성·후보·SATISFIES·Rule·SVG·PDF·trace를 확인했다. 실제 학생 탭·자료와 평가 승인 요청서를 사용하지 않았다.
+- **검증:** 전체 회귀 250/250, 편성 HTTP/경계 테스트 33/33, 실제 API 편성 질문 10/10 및 LLM ON/OFF·반복·원본 보존·provenance 일치, 브라우저 기록 6/6, 학생용 API 100/100·반례 4/4, 모의 PDF E2E 4/4, 독립 49 PASS·0 FAIL·1 SKIP. 실행: `python -m unittest discover -s tests -q`, `python scripts/verify_curriculum_placement.py --port 18575`.
+- **남은 제한:** 교양 편성 학년은 원문 미기재(MISSING); `이룸` 3셀은 학기 의미 UNVERIFIED; GEA8617 코드 충돌 유지. 실제 개설·선수조건·개인 수강 가능과 기존 Extended Scope/CTX_04는 보류한다. 편성정보 부족을 새 졸업 불가 조건으로 추가하지 않는다. 기존 18473 서버는 학생 세션 보호를 위해 자동 재시작하지 않았으며 새 테스트 서버 18575는 v3다.
+- **기록:** `docs/design/curriculum_placement.md`, `evaluation/results/curriculum_placement_acceptance.md`, 편성 API/UI 검증 JSON. README·현재 계약·아키텍처를 활성 v3로 동기화했다. 아래 기존 단계/과거 완료 기록의 범위와 제한은 유지한다.
+
 상태는 `TODO`, `IN PROGRESS`, `DONE`, `BLOCKED` 중 하나로 기록합니다. 단계 착수 시 `IN PROGRESS`, 구현과 검증 완료 시 `DONE`으로 바꾸고, 막히면 `BLOCKED`와 사유를 기록합니다.
 
 | 단계 | 작업 | 상태 |
